@@ -21,8 +21,8 @@
     <div class="main">
       {{!-- USER PARTIALS --}}
       {{#if indexPage}}{{> tweets}}{{/if}}
-      {{#if userTweetsPage}}{{> profileTweets}}{{/if}}
       {{#if tweetPage}}{{> tweet}}{{/if}}
+      {{#if userTweetsPage}}{{> profileTweets}}{{/if}}
       {{#if userRepliesPage}}{{> profileReplies}}{{/if}}
       {{#if userLikesPage}}{{> profileLikes}}{{/if}}
       {{#if userFollowersPage}}{{> profileFollower}}{{/if}}
@@ -47,11 +47,12 @@
             </span>
           </a>
           {{#if this.isFollowing}}
-          <form action="/followships/{{this.id}}/unfollow" name="userId" method="post">
+          <form action="/followships/{{this.id}}/follow" method="post">
             <button type="submit" class="btn-fill sm" href="#followship">正在跟隨</button>
           </form>
           {{else}}
-          <form action="/followships/{{this.id}}/follow" name="userId" method="post">
+          <form action="/followships" method="post">
+            <input type="hidden" name="id" value="{{this.id}}">
             <button type="submit" class="btn-outline sm" href="#followship">跟隨</button>
           </form>
           {{/if}}
