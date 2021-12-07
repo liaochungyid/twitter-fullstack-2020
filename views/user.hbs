@@ -47,9 +47,13 @@
           </span>
         </a>
         {{#if this.isFollowing}}
-        <a class="btn-fill sm" href="#followship">正在追蹤</a>
+        <form action="/followships/{{this.id}}/unfollow" name="userId" method="post">
+          <button type="submit" class="btn-fill sm" href="#followship">正在跟隨</button>
+        </form>
         {{else}}
-        <a class="btn-outline sm" href="#followship">跟隨</a>
+        <form action="/followships/{{this.id}}/follow" name="userId" method="post">
+          <button type="submit" class="btn-outline sm" href="#followship">跟隨</button>
+        </form>
         {{/if}}
       </div>
       {{/each}}

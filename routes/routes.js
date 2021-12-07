@@ -45,8 +45,8 @@ router.get('/users/:userId/replies', authenticated, pageController.getUserReplie
 router.get('/users/:userId/likes', authenticated, pageController.getUserLikes)
 router.get('/users/:userId/followers', pageController.getUserFollowers)
 router.get('/users/:userId/followings', pageController.getUserFollowings)
-router.post('/followships', authenticated, followshipController.addFollow)
-router.delete('/followships/:userId', authenticated, followshipController.removeFollow)
+router.post('/followships/:thisId/follow', authenticated, followshipController.addFollow)
+router.post('/followships/:thisId/unfollow', authenticated, followshipController.removeFollow)
 
 // admin 相關
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))

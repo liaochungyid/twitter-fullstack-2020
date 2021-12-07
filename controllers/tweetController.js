@@ -144,7 +144,7 @@ const tweetController = {
       let isLiked = !!await Like.findOne({ where: { UserId: userId, TweetId: req.params.tweetId } })
 
       const pops = await tweetController.getPopular(req, res)
-      
+
       return res.render('user', { 
         tweet: tweet.toJSON(),
         replies: replies.map(reply => reply.toJSON()),
