@@ -38,15 +38,16 @@ router.get('/tweets/:tweetId/replies', authenticated, replyController.getReplies
 router.post('/tweets/:tweetId/replies', authenticated, replyController.addReply)  // 新增留言
 
 // user 相關
+router.put('/users/:userId/settings', authenticated, userController.updateSettings)
 router.get('/users/:userId/settings', authenticated, pageController.getSettings)
 router.put('/users/:userId/settings', authenticated, userController.updateSettings)
 router.get('/users/:userId/tweets', authenticated, pageController.getUserTweets)
 router.get('/users/:userId/replies', authenticated, pageController.getUserReplies)
 router.get('/users/:userId/likes', authenticated, pageController.getUserLikes)
-router.get('/users/:userId/followers', pageController.getUserFollowers)
-router.get('/users/:userId/followings', pageController.getUserFollowings)
-router.post('/followships/:thisId/follow', authenticated, followshipController.addFollow)
-router.post('/followships/:thisId/unfollow', authenticated, followshipController.removeFollow)
+router.get('/users/:userId/followers', authenticated, pageController.getUserFollowers)
+router.get('/users/:userId/followings', authenticated, pageController.getUserFollowings)
+router.post('/followships', authenticated, followshipController.addFollow)
+router.delete('/followships/:userId', authenticated, followshipController.removeFollow)
 
 // admin 相關
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))

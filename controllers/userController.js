@@ -93,7 +93,7 @@ const userController = {
           {
             model: Tweet,
             attributes: [],
-            include: [{ model: User, attributes: ['id', 'account'] }]
+            include: [{ model: User, attributes: ['id', 'account'], require: false }]
           }
         ],
         order: [['createdAt', 'DESC']],
@@ -131,7 +131,8 @@ const userController = {
                 ),
                 'likeCount'
               ]
-            ]
+            ],
+            require: false
           }
         ],
         order: [['createdAt', 'DESC']],
@@ -155,7 +156,8 @@ const userController = {
           {
             model: User,
             as: 'Followers',
-            attributes: ['id', 'name', 'avatar', 'introduction', 'account']
+            attributes: ['id', 'name', 'avatar', 'introduction', 'account'],
+            require: false
           }
         ]
       })
@@ -165,7 +167,7 @@ const userController = {
         id: follower.id,
         name: follower.name,
         avatar: follower.avatar,
-        introduction: follower.avatar,
+        introduction: follower.introduction,
         account: follower.account,
         followshipCreatedAt: follower.Followship.createdAt,
         isFollowed: follower.Followship.followerId === UserId
@@ -191,7 +193,8 @@ const userController = {
           {
             model: User,
             as: 'Followings',
-            attributes: ['id', 'name', 'avatar', 'introduction', 'account']
+            attributes: ['id', 'name', 'avatar', 'introduction', 'account'],
+            require: false
           }
         ]
       })
@@ -200,9 +203,9 @@ const userController = {
         id: following.id,
         name: following.name,
         avatar: following.avatar,
-        introduction: following.avatar,
+        introduction: following.introduction,
         account: following.account,
-        followshipCreatedAt: following.Followship.createdAt,
+        followshipCreatedAt: following.Followship.createdAt
       }))
       return followings
     } catch (err) {
@@ -224,11 +227,11 @@ const userController = {
       const [user1, user2] = await Promise.all([user1Promise, user2Promise])
 
       if (user1) {
-        errors.push({ message: '帳號已重複！' })
+        errors.push({ message: 'account 已重覆註冊！' })
       }
 
       if (user2) {
-        errors.push({ message: 'Email 已重複重複！' })
+        errors.push({ message: 'email 已重複重複！' })
       }
 
       if (errors.length) {
@@ -271,11 +274,10 @@ const userController = {
 
   updateSettings: async (req, res) => {
     try {
-      const userId = req.params.userId
-
-      if (req.user.id !== Number(userId)) {
+      const userId = Number(req.params.userId)
+      if (helpers.getUser(req).id !== userId) {
         req.flash('error_messages', '你無權查看此頁面')
-        return res.redirect('/tweets')
+        return res.redirect('back')
       }
 
       let user = await User.findByPk(userId)
@@ -295,11 +297,11 @@ const userController = {
       const [user1, user2] = await Promise.all([user1Promise, user2Promise])
 
       if (user1) {
-        errors.push({ message: '帳號已重複！' })
+        errors.push({ message: 'account 已重覆註冊！' })
       }
 
       if (user2) {
-        errors.push({ message: 'Email 已重複重複！' })
+        errors.push({ message: 'email 已重複重複！' })
       }
 
       if (errors.length) {
@@ -314,7 +316,7 @@ const userController = {
       })
 
       req.flash('success_messages', '成功編輯帳號！')
-      return res.render('edit', { user: user.toJSON() })
+      return res.redirect('back')
     } catch (err) {
       console.error(err)
     }
