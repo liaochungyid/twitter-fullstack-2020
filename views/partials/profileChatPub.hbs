@@ -62,11 +62,15 @@
     </div>
 
     {{!-- 輸入欄位 --}}
-    <form action="" class="onlineSendbox">
+    <form class="onlineSendbox">
       <textarea name="message" rows="1" placeholder="輸入訊息..." autofocus required maxlength="500"
         id="textareaAutogrow"></textarea>
-      <button type="submit"><i class="send"></i></button>
+      <button type="button"><i class="send" id="send" data-loginuserid="{{loginUser.id}}"
+          data-loginusername="{{loginUser.name}}" data-loginuseravatar="{{loginUser.avatar}}"></i></button>
     </form>
 
   </div>
 </div>
+
+<script src="https://cdn.socket.io/4.4.0/socket.io.js"></script>
+<script src="/javascripts/socket.js"></script>
