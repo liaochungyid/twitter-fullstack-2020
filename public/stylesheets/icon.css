@@ -3,6 +3,7 @@ input[type="button"].camera,
 input[type="button"].X-white {
   display: inline-block;
   background: url('../icons/css_sprites.png');
+  position: relative;
 }
 button.active {
   color: #E0245E !important;
@@ -146,4 +147,15 @@ input[type="button"].X-white {
   background-position: -116px -145px;
   height: 16px;
   width: 16px;
+}
+i.dot-noti::before {
+  position: absolute;
+  right: -2px;
+  top: -2px;
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #f60;
+  border: 2px solid #fff;
 }
