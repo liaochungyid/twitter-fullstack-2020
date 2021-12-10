@@ -29,19 +29,19 @@
               {{#ifCond partial "profileNotis"}}
               <a class="active" href='/users/{{loginUser.id}}/profileNotis'><i class='noti active'></i>通知</a>
               {{else}}
-              <a class="" href='/users/{{loginUser.id}}/profileNotis'><i class='noti'></i>通知</a>
+              <a class="" href='/users/{{loginUser.id}}/profileNotis'><i class='noti dot-noti'></i>通知</a>
               {{/ifCond}}
 
               {{#ifCond partial "profileChatPub"}}
               <a class="active" href='/users/{{loginUser.id}}/profileChatPub'><i class='message active'></i>公開聊天室</a>
               {{else}}
-              <a class="" href='/users/{{loginUser.id}}/profileChatPub'><i class='message'></i>公開聊天室</a>
+              <a class="" href='/users/{{loginUser.id}}/profileChatPub'><i class='message dot-noti'></i>公開聊天室</a>
               {{/ifCond}}
 
               {{#ifCond partial "profileChatPris"}}
               <a class="active" href='/users/{{loginUser.id}}/profileChatPris'><i class='message active'></i>私人訊息</a>
               {{else}}
-              <a class="" href='/users/{{loginUser.id}}/profileChatPris'><i class='message'></i>私人訊息</a>
+              <a class="" href='/users/{{loginUser.id}}/profileChatPris'><i class='message dot-noti'></i>私人訊息</a>
               {{/ifCond}}
 
               {{#ifCond loginUser.id user.id}}
