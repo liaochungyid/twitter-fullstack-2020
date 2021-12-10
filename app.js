@@ -38,7 +38,16 @@ app.use((req, res, next) => {
   next()
 })
 
-app.listen(PORT, () => console.log(`App listening on http://localhost:${PORT}`))
+// 即時聊天
+const { Server } = require("socket.io")
+const server = require('http').createServer(app)
+const io = new Server(server)
+
+// app.set('socketio', io)
+
+require('./config/sockio')(io)
+
+server.listen(PORT, () => console.log(`App listening on http://localhost:${PORT}`))
 
 require('./routes')(app)
 

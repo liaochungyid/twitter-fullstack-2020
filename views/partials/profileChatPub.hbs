@@ -20,68 +20,7 @@
           </div>
         </div>
       </div>
-      {{!-- each 結束 下面是排版用 --}}
-
-      <div class="usercard">
-        <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png">
-        <div class="userfile">
-          <div class="who">
-            <div class="nameplace">
-              <span class="name">Banana</span>
-              <span class="at-name">@Banana</span>
-            </div>
-            <div class="lastcall">
-              5月20日
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="usercard">
-        <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png">
-        <div class="userfile">
-          <div class="who">
-            <div class="nameplace">
-              <span class="name">Chery</span>
-              <span class="at-name">@Chery</span>
-            </div>
-            <div class="lastcall">
-              1小時前
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="usercard">
-        <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png">
-        <div class="userfile">
-          <div class="who">
-            <div class="nameplace">
-              <span class="name">Dan Lin</span>
-              <span class="at-name">@Dan Lin</span>
-            </div>
-            <div class="lastcall">
-              10月10日
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="usercard">
-        <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png">
-        <div class="userfile">
-          <div class="who">
-            <div class="nameplace">
-              <span class="name">Elephant</span>
-              <span class="at-name">@Elephant</span>
-            </div>
-            <div class="lastcall">
-              99999天前
-            </div>
-          </div>
-        </div>
-      </div>
-      {{!-- 排版用結束 之後請刪除 --}}
+      {{!-- each 結束 --}}
 
     </div>
   </div>
@@ -123,11 +62,15 @@
     </div>
 
     {{!-- 輸入欄位 --}}
-    <div class="onlineSendbox">
-      <textarea name="message" rows="1" placeholder="輸入訊息" autofocus required maxlength="500"
+    <form class="onlineSendbox">
+      <textarea name="message" rows="1" placeholder="輸入訊息..." autofocus required maxlength="500"
         id="textareaAutogrow"></textarea>
-      <button type="submit"><i class="send"></i></button>
-    </div>
+      <button type="button"><i class="send" id="send" data-loginuserid="{{loginUser.id}}"
+          data-loginusername="{{loginUser.name}}" data-loginuseravatar="{{loginUser.avatar}}"></i></button>
+    </form>
 
   </div>
 </div>
+
+<script src="https://cdn.socket.io/4.4.0/socket.io.js"></script>
+<script src="/javascripts/socket.js"></script>

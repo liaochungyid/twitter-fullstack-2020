@@ -146,6 +146,13 @@ if (inputs) {
 }
 
 if (chatTextarea) {
+
+  // chatTextarea.addEventListener('keydown', function ononTextareaKeypress(event) {
+  //   if (event.keyCode === 13) {
+  //     document.querySelector("#send").click()
+  //   }
+  // })
+
   chatTextarea.addEventListener('keyup', function onTextareaKeyup(event) {
     const target = event.target
     const keycode = event.keyCode

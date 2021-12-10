@@ -1653,6 +1653,8 @@ div.invalid::after {
   width: 30%;
   height: 100%;
   border-right: 1px solid #E6ECF0;
+  display: flex;
+  flex-flow: column nowrap;
 }
 
 .onlineChatroom {
@@ -1660,6 +1662,13 @@ div.invalid::after {
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
+}
+
+.onlineUser > .users {
+  flex: 1 0 0;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .onlineUser > .users > .usercard {
@@ -1719,6 +1728,7 @@ div.invalid::after {
   font-weight: 700;
   margin-right: 5px;
   max-width: 40%;
+  word-break: keep-all;
 }
 
 .onlineUser > .users > .usercard > .userfile > .who > .nameplace > .at-name,
@@ -1726,7 +1736,8 @@ div.invalid::after {
 .onlineChatroom > .title > .who > .at-name {
   color: #657786;
   font-weight: 500;
-  max-width: 40%;
+  flex: 1 0 0;
+  word-break: keep-all;
 }
 
 .onlineUser > .users > .usercard > .userfile > .whoMessage {
@@ -1756,16 +1767,16 @@ div.invalid::after {
 }
 
 .onlineChatroom > .stream-message {
-  padding: 10px;
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: flex-end;
-  color: #1c1c1c;
   flex: 1 0 0;
+  padding: 10px;
+  color: #1c1c1c;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .onlineChatroom > .stream-message > div {
-  padding: 5px 0;
+  padding: 10px 0;
   font-size: 14px;
   font-weight: 500;
   line-height: 18px;
@@ -1775,13 +1786,14 @@ div.invalid::after {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
+  color: #657786;
 }
 
 .onlineChatroom > .stream-message > .noti-message > span {
-  background-color: #e5e5e5;
+  background-color: #E5E5E5;
   font-weight: 700;
-  border-radius: 9px;
-  padding: 0 10px;
+  border-radius: 20px;
+  padding: 4px 10px;
 }
 
 .onlineChatroom > .stream-message > .self-message > .content,
@@ -1796,10 +1808,10 @@ div.invalid::after {
 }
 
 .onlineChatroom > .stream-message > .self-message > .content {
-  border-radius: 20px 20px 0;
+  border-radius: 25px 25px 0;
   background-color: #f60;
   color: #fff;
-  padding: 8px;
+  padding: 10px;
 }
 
 .onlineChatroom > .stream-message > .other-message {
@@ -1822,9 +1834,9 @@ div.invalid::after {
 }
 
 .onlineChatroom > .stream-message > .other-message > .content > .content {
-  border-radius: 20px 20px 20px 0;
-  background-color: #e1e7eb;
-  padding: 8px;
+  border-radius: 25px 25px 25px 0;
+  background-color: #E6ECF0;
+  padding: 10px;
 }
 
 .onlineChatroom > .stream-message .time {
@@ -1841,7 +1853,7 @@ div.invalid::after {
   border-top: 1px solid #E6ECF0;
 }
 
-.onlineChatroom > .onlineSendbox > textarea {
+.onlineChatroom > .onlineSendbox textarea {
   flex: 1 0 0;
   border: none;
   border-radius: 15px;
