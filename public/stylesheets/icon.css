@@ -160,8 +160,7 @@ i.dot-noti::before {
   border: 2px solid #fff;
 }
 i.send {
-  background: url("../icons/send.jpg");
-  width: 30px;
-  height: 30px;
-  background-size: contain;
+  background: url("../icons/send.svg");
+  width: 24px;
+  height: 24px;
 }
