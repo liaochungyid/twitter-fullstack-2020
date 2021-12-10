@@ -46,6 +46,22 @@ i.logout {
   height: 18px;
   width: 20px;
 }
+i.noti {
+  background: url("../icons/noti.svg");
+  width: 21px;
+  height: 20px;
+}
+i.noti.active {
+  background: url("../icons/noti-active.svg");
+}
+i.message {
+  background: url("../icons/message.svg");
+  width: 19px;
+  height: 17px;
+}
+i.message.active {
+  background: url("../icons/message-active.svg");
+}
 i.btn-message {
   background-position: -46px -62px;
   height: 35px;

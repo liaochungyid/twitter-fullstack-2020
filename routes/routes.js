@@ -46,6 +46,9 @@ router.get('/users/:userId/replies', authenticated, pageController.getUserReplie
 router.get('/users/:userId/likes', authenticated, pageController.getUserLikes)
 router.get('/users/:userId/followers', authenticated, pageController.getUserFollowers)
 router.get('/users/:userId/followings', authenticated, pageController.getUserFollowings)
+router.get('/users/:userId/profileNotis', authenticated, pageController.getNotis)
+router.get('/users/:userId/profileChatPub', authenticated, pageController.getChatPublic)
+router.get('/users/:userId/profileChatPris', authenticated, pageController.getChatPrivates)
 // user 動作
 router.put('/users/:userId/settings', authenticated, userController.updateSettings)
 router.put('/users/:userId/update', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.updateProfile)

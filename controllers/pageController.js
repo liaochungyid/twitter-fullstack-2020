@@ -3,6 +3,18 @@ const userController = require('./userController')
 const tweetController = require('./tweetController')
 
 const pageController = {
+  getNotis: (req, res) => {
+    return res.render('user', { partial: 'profileNotis' })
+  },
+
+  getChatPublic: (req, res) => {
+    return res.render('user', { partial: 'profileChatPub' })
+  },
+
+  getChatPrivates: (req, res) => {
+    return res.render('user', { partial: 'profileChatPris' })
+  },
+
   getSignUp: (req, res) => {
     return res.render('signup')
   },

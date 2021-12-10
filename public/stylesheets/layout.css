@@ -200,11 +200,14 @@ html, body {
 }
 
 .leftside > .navigation > a:nth-child(2),
-.leftside > .navigation > a:nth-child(3) {
+.leftside > .navigation > a:nth-child(3),
+.leftside > .navigation > a:nth-child(4),
+.leftside > .navigation > a:nth-child(5),
+.leftside > .navigation > a:nth-child(6) {
   margin-bottom: 35px;
 }
 
-.leftside > .navigation > a:nth-child(4) {
+.leftside > .navigation > a:nth-child(7) {
   margin-bottom: 25px;
 }
 
