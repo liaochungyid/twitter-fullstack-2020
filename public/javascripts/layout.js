@@ -25,7 +25,9 @@ body.addEventListener('click', async (event) => {
     // 如果按下個別"回覆"icon，開啟 replying modal
     // axios here to get tweet info
     let tweetId = target.dataset.tweetid
-    if (!tweetId) tweetId = target.parentElement.dataset.tweetid
+    if (!tweetId) {
+      tweetId = target.parentElement.dataset.tweetid
+    }
 
     const response = await axios.get(
       `${window.location.origin}/api/tweets/${tweetId}`

@@ -499,15 +499,18 @@ const userController = {
       const coverPath = files.cover ? files.cover[0].path : false
       const user = await User.findByPk(userId)
 
+      
       if (avatarPath) {
         imgur.setClientID(IMGUR_CLIENT_ID)
         await imgur.upload(avatarPath, (err, img) => {
           if (err) return console.error(err)
           user.update({
             avatar: avatarPath ? img.data.link : user.avatar
-          })
+          }).then(user =>  console.log(user))
         })
       }
+      
+      
 
       if (coverPath) {
         imgur.setClientID(IMGUR_CLIENT_ID)
