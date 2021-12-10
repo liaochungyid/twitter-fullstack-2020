@@ -1658,12 +1658,9 @@ div.invalid::after {
 .onlineChatroom {
   width: 70%;
   height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
 }
-
-/* .onlineUser > .title, 
-.onlineUser > .users {
-  border-right: 1px solid #E6ECF0;
-} */
 
 .onlineUser > .users > .usercard {
   width: 90%;
@@ -1756,4 +1753,105 @@ div.invalid::after {
 
 .onlineChatroom > .title > .who > .at-name {
   font-size: 9px;
+}
+
+.onlineChatroom > .stream-message {
+  padding: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  color: #1c1c1c;
+  flex: 1 0 0;
+}
+
+.onlineChatroom > .stream-message > div {
+  padding: 5px 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.onlineChatroom > .stream-message > .noti-message {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+}
+
+.onlineChatroom > .stream-message > .noti-message > span {
+  background-color: #e5e5e5;
+  font-weight: 700;
+  border-radius: 9px;
+  padding: 0 10px;
+}
+
+.onlineChatroom > .stream-message > .self-message > .content,
+.onlineChatroom > .stream-message > .other-message > .content {
+  max-width: 60%;
+}
+
+.onlineChatroom > .stream-message > .self-message {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-end;
+}
+
+.onlineChatroom > .stream-message > .self-message > .content {
+  border-radius: 20px 20px 0;
+  background-color: #f60;
+  color: #fff;
+  padding: 8px;
+}
+
+.onlineChatroom > .stream-message > .other-message {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.onlineChatroom > .stream-message > .other-message > img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.onlineChatroom > .stream-message > .other-message > .content {
+  margin-left: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+}
+
+.onlineChatroom > .stream-message > .other-message > .content > .content {
+  border-radius: 20px 20px 20px 0;
+  background-color: #e1e7eb;
+  padding: 8px;
+}
+
+.onlineChatroom > .stream-message .time {
+  color: #657786;
+}
+
+
+.onlineChatroom > .onlineSendbox {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  border-top: 1px solid #E6ECF0;
+}
+
+.onlineChatroom > .onlineSendbox > textarea {
+  flex: 1 0 0;
+  border: none;
+  border-radius: 15px;
+  background-color: #e6ecf0;
+  resize: none;
+  margin-right: 9px;
+  min-height: 30px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 18px;
+  padding: 6px 10px;
+  vertical-align: middle;
 }

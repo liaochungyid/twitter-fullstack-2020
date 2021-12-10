@@ -13,6 +13,8 @@ const modalPostFormTextarea = document.querySelector(
 )
 const inputs = document.querySelectorAll('input,textarea')
 
+const chatTextarea = document.querySelector('#textareaAutogrow')
+
 // // 全畫面監聽器
 body.addEventListener('click', async (event) => {
   const target = event.target
@@ -140,6 +142,26 @@ if (inputs) {
     el.addEventListener('invalid', onInputInvalid)
 
     el.addEventListener('keyup', onInputKeyup)
+  })
+}
+
+if (chatTextarea) {
+  chatTextarea.addEventListener('keyup', function onTextareaKeyup(event) {
+    const target = event.target
+    const keycode = event.keyCode
+
+    let clientheight = target.clientHeight
+
+    if ([8, 46].includes(keycode)) {
+      target.style.height = '30px'
+      clientheight = 30
+    }
+
+    let adjustedheight = target.scrollHeight
+
+    if (adjustedheight > clientheight) {
+      target.style.height = adjustedheight + 'px';
+    }
   })
 }
 
