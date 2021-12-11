@@ -26,8 +26,11 @@ socket.on('connect', () => {
   socket.emit('connectUser', onlineUserId)
 })
 
-socket.on('notification', (data) => {
-  console.log(data)
+socket.on('notifySignin', (user) => {
+  let div = document.createElement('div')
+  div.classList.add('noti-message')
+  div.innerHTML = `<span class="content">${user.name} 上線</span>`
+  streamMsgDiv.append(div)
 })
 
 socket.on('getPreviousMessages', (data) => {

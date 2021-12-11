@@ -6,6 +6,18 @@ module.exports = (io) => {
     let user
 
     // 使用者上線
+    socket.on('connectUser', async (userId) => {
+      io.emit(
+        'notifySignin',
+        await User.findByPk(userId, {
+          attributes: ['id', 'name', 'avatar'],
+          raw: true
+        })
+      )
+    })
+
+
+
     // socket.on('connectUser', async (id) => {
     //   data = await User.findByPk(id, { attributes: ['id', 'name', 'avatar'], raw: true })
     //   console.log('onlineUser', user)
