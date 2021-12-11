@@ -74,6 +74,7 @@ socket.on('getNewMessage', (data) => {
           <span class="time">${data.createdAt}</span>
         `
     streamMsgDiv.append(div)
+    scrollDownToBottom()
   } else {
     div.classList.add('other-message')
     div.innerHTML = `
@@ -87,4 +88,10 @@ socket.on('getNewMessage', (data) => {
     streamMsgDiv.append(div)
   }
   // 滾動螢幕
+  scrollDownToBottom()
 })
+
+
+function scrollDownToBottom() {
+  streamMsgDiv.lastElementChild.scrollIntoView()
+}
