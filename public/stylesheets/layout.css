@@ -50,9 +50,6 @@ img {
   width: 100%;
   height: 100%;
   display: block;
-  font-size: 5px;
-  line-height: 6px;
-  word-break: break-all;
 }
 
 .btn,
@@ -76,17 +73,16 @@ button[disabled] {
   pointer-events: none;
 }
 
-input,
-input:required,
-input:invalid,
-input:valid,
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+input {
   padding: 0;
+}
+
+input:required {
   box-shadow: none;
-  background-color: transparent !important;
+}
+
+input:invalid {
+  box-shadow: none;
 }
 
 ::-webkit-scrollbar {
@@ -383,10 +379,14 @@ html, body {
   color: #1c1c1c;
   font-size: 15px;
   font-weight: 500;
+  line-height: 17px;
   width: 510px;
   height: 66px;
   text-align: left;
   padding: 0;
+  overflow: scroll;
+  overflow-y: hidden;
+  overflow-x: auto;
 }
 
 .main > .tweets > .tweet > .postcontent > .action {
@@ -433,7 +433,7 @@ html, body {
   margin-top: -1px;
 }
 
-.main > .tweets > .tweet > .postcontent > .replyto > .at-name {
+.main > .tweets > .tweet > .postcontent > .replyto .at-name {
   color: #f60;
 }
 
@@ -557,8 +557,6 @@ html, body {
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
-  height: 23px;
-  border: 1px solid #f60;
 }
 
 .main > .information > .followship > .following {
@@ -765,7 +763,6 @@ html, body {
   border-bottom: 1px solid #E6ECF0;
   display: flex;
   flex-flow: row nowrap;
-  padding-right: 15px;
 }
 
 .main > .replies > .reply > a {
@@ -818,9 +815,10 @@ html, body {
   font-weight: 400;
   line-height: 22px;
   max-height: 44px;
-  max-width: 510px;
+  width: 510px;
+  padding-right: 10px;
   overflow: scroll;
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -944,6 +942,33 @@ html, body {
   min-height: 300px;
   margin: 54px auto 0;
   border-radius: 14px;
+}
+
+.modal > .mask > .dialog.sm {
+  width: 394px;
+  height: 130px;
+  min-height: 130px;
+  padding: 10px;
+}
+
+.modal > .mask > .dialog > .warning-title {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  color: #1C1C1C;
+}
+
+.modal > .mask > .dialog > .buttons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-evenly;
+  margin-top: 15px;
+}
+
+.modal > .mask > .dialog > .buttons button {
+  width: 90px;
+  height: 35px;
 }
 
 .modal > .mask > .dialog > .dialog-header > a {
@@ -1257,6 +1282,12 @@ html, body {
   border-top: 0;
 }
 
+#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetdescription {
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 /* sign-template main */
 
 .sign-template > .sign-main {
@@ -1295,6 +1326,16 @@ html, body {
   border-radius: 4px;
   margin-bottom: 30px;
   padding: 5px 10px 0;
+}
+
+.user-template-setting > .main > form > .edit-text > .at-sign {
+  position: absolute;
+  top: 26px;
+  left: 10px;
+  color: #1C1C1C;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 22px;
 }
 
 .sign-template > .sign-main > form > .edit-text > label,
