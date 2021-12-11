@@ -1,22 +1,22 @@
+const db = require('./../models')
+const { Message, User } = db
+
 module.exports = (io) => {
-  let onlineUser = []
+  const onlineUser = []
 
   io.on('connection', (socket) => {
-
     updateOnlineUser()
-    console.log(socket)
-
     let user
 
     socket.on('noti-message-login', (data) => {
       onlineUser.push(data)
       user = data
-      socket.emit('noti-message-login', data)
+      io.emit('noti-message-login', data)
       updateOnlineUser()
     })
 
     socket.on('send pub msg', (data) => {
-      socket.emit('pub msg', data)
+      io.emit('pub msg', data)
     })
 
     socket.on('disconnect', () => {
