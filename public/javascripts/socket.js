@@ -33,6 +33,13 @@ socket.on('notifySignin', (user) => {
   streamMsgDiv.append(div)
 })
 
+socket.on('notifySignout', (user) => {
+  let div = document.createElement('div')
+  div.classList.add('noti-message')
+  div.innerHTML = `<span class="content">${user.name} 下線</span>`
+  streamMsgDiv.append(div)
+})
+
 socket.on('getPreviousMessages', (data) => {
   data.forEach((item) => {
     if (Number(onlineUserId) === Number(item.User.id)) {

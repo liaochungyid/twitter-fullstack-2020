@@ -7,22 +7,17 @@ module.exports = (io) => {
 
     // 使用者上線
     socket.on('connectUser', async (userId) => {
-      io.emit(
-        'notifySignin',
-        await User.findByPk(userId, {
-          attributes: ['id', 'name', 'avatar'],
-          raw: true
-        })
-      )
+      user = await User.findByPk(userId, {
+        attributes: ['id', 'name', 'avatar'],
+        raw: true
+      })
+      io.emit('notifySignin', user)
     })
 
-
-
-    // socket.on('connectUser', async (id) => {
-    //   data = await User.findByPk(id, { attributes: ['id', 'name', 'avatar'], raw: true })
-    //   console.log('onlineUser', user)
-    //   // io.emit('notify', data)
-    // })
+    // 使用者下線
+    socket.on('disconnect', () => {
+      io.emit('notifySignout', user)
+    })
 
     // 取得歷史訊息
     const previousMessages = await Message.findAll({
