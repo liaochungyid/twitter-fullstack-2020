@@ -52,7 +52,7 @@ socket.once('getPreviousMessages', (data) => {
     if (Number(onlineUserId) === Number(item.User.id)) {
       streamMsgDiv.innerHTML += `
       <div class="self-message">
-        <span class="content">${item.text}</span>
+        <span class="content">${slashNtoBr(item.text)}</span>
         <span class="time">${item.createdAt}</span>
       </div>
       `
@@ -62,7 +62,7 @@ socket.once('getPreviousMessages', (data) => {
         <img src="${item.User.avatar}">
         <div class="content">
           <span class="name">${item.User.name}</span>
-          <span class="content">${item.text}</span>
+          <span class="content">${slashNtoBr(item.text)}</span>
           <span class="time">${item.createdAt}</span>
         </div>
       </div>
@@ -79,7 +79,7 @@ socket.on('getNewMessage', (data) => {
   if (Number(onlineUserId) === Number(data.User.id)) {
     div.classList.add('self-message')
     div.innerHTML = `
-          <span class="content">${data.text}</span>
+          <span class="content">${slashNtoBr(data.text)}</span>
           <span class="time">${data.createdAt}</span>
         `
     streamMsgDiv.append(div)
@@ -90,7 +90,7 @@ socket.on('getNewMessage', (data) => {
         <img src="${data.User.avatar}">
         <div class="content">
           <span class="name">${data.User.id}</span>
-          <span class="content">${data.text}</span>
+          <span class="content">${slashNtoBr(data.text)}</span>
           <span class="time">${data.createdAt}</span>
         </div>
         `
@@ -124,8 +124,3 @@ socket.on('getOnlineUser', (data) => {
   onlineUser.innerHTML = html
   onlineUserCount.innerText = data.onlineUserCount
 })
-
-// 滾動聊天畫面至最下方
-function scrollDownToBottom() {
-  streamMsgDiv.lastElementChild.scrollIntoView()
-}

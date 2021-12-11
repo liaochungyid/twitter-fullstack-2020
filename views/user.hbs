@@ -214,4 +214,14 @@
       </div>
       {{/if}}
 
+      {{#ifCond partial "profileChatPris"}}
+      <div class="modal d-none" id="modal-findChatUser">
+        <div class="mask">
+          <div class="dialog findchat">
+          </div>
+        </div>
+      </div>
+      <script src="/javascripts/prisocket.js"></script>
+      {{/ifCond}}
+
     </div>
