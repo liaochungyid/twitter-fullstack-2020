@@ -1,22 +1,27 @@
+const { NONE } = require('sequelize')
 const db = require('./../models')
 const { Message, User } = db
 
 module.exports = (io) => {
+  const onlineUser = []
+
   io.on('connection', async (socket) => {
     let user
 
     // 使用者上線
     socket.on('connectUser', async (userId) => {
       user = await User.findByPk(userId, {
-        attributes: ['id', 'name', 'avatar'],
+        attributes: ['id', 'name', 'account', 'avatar'],
         raw: true
       })
       io.emit('notifySignin', user)
+      broadcastOnlineUser(user)
     })
 
     // 使用者下線
     socket.on('disconnect', () => {
       io.emit('notifySignout', user)
+      broadcastOnlineUser(undefined, user)
     })
 
     // 取得歷史訊息
@@ -24,7 +29,7 @@ module.exports = (io) => {
       include: [
         {
           model: User,
-          attributes: ['id', 'name', 'avatar']
+          attributes: ['id', 'name', 'account', 'avatar']
         }
       ],
       attributes: ['id', 'text', 'createdAt'],
@@ -64,4 +69,17 @@ module.exports = (io) => {
       }
     })
   })
+
+
+  function broadcastOnlineUser(userON, userOFF = undefined) {
+    if (userON) { onlineUser.push(userON) }
+    if (userOFF) {
+      onlineUser
+        .splice(onlineUser.indexOf(userOFF), 1)
+    }
+    return io.emit('getOnlineUser', {
+      onlineUser,
+      onlineUserCount: onlineUser.length
+    })
+  }
 }

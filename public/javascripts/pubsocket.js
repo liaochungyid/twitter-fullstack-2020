@@ -8,8 +8,7 @@ const streamMsgDiv = document.querySelector('.stream-message')
 const onlineUser = document.querySelector('#onlineUser')
 const onlineUserCount = document.querySelector('#onlineUserCount')
 
-// 從這裡開始
-
+// 發出訊息
 send.addEventListener('click', function onSendClick(event) {
   event.preventDefault()
 
@@ -24,10 +23,12 @@ send.addEventListener('click', function onSendClick(event) {
   }
 })
 
+// 連線發出自己Id
 socket.on('connect', () => {
   socket.emit('connectUser', onlineUserId)
 })
 
+// 接收上線通知
 socket.on('notifySignin', (user) => {
   let div = document.createElement('div')
   div.classList.add('noti-message')
@@ -36,6 +37,7 @@ socket.on('notifySignin', (user) => {
   scrollDownToBottom()
 })
 
+// 接收離線通知
 socket.on('notifySignout', (user) => {
   let div = document.createElement('div')
   div.classList.add('noti-message')
@@ -44,6 +46,7 @@ socket.on('notifySignout', (user) => {
   scrollDownToBottom()
 })
 
+// 執行一次，歷史訊息
 socket.once('getPreviousMessages', (data) => {
   data.forEach((item) => {
     if (Number(onlineUserId) === Number(item.User.id)) {
@@ -69,6 +72,7 @@ socket.once('getPreviousMessages', (data) => {
   scrollDownToBottom()
 })
 
+// 接收訊息
 socket.on('getNewMessage', (data) => {
   let div = document.createElement('div')
 
@@ -95,9 +99,8 @@ socket.on('getNewMessage', (data) => {
   scrollDownToBottom()
 })
 
+// 接收上線使用者們
 socket.on('getOnlineUser', (data) => {
-  console.log(data)
-
   let html = ''
 
   data.onlineUser.forEach(item => {
@@ -119,7 +122,7 @@ socket.on('getOnlineUser', (data) => {
   })
 
   onlineUser.innerHTML = html
-  onlineUserCount.innertext = data.onlineUserCount
+  onlineUserCount.innerText = data.onlineUserCount
 })
 
 // 滾動聊天畫面至最下方
