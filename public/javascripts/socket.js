@@ -2,11 +2,7 @@ const socket = io()
 
 const send = document.querySelector('#send')
 
-const onlineUser = {
-  id: send.dataset.loginuserid,
-  name: send.dataset.loginusername,
-  avatar: send.dataset.loginuseravatar
-}
+const onlineUserId = send.dataset.loginuserid
 
 const streamMsgDiv = document.querySelector('.stream-message')
 
@@ -19,7 +15,7 @@ send.addEventListener('click', function onSendClick(event) {
 
   if (!isEmpty(target)) {
     socket.emit('createMessage', {
-      ...onlineUser,
+      UserId: onlineUserId,
       text: target.value
     })
     target.value = ''
@@ -27,7 +23,7 @@ send.addEventListener('click', function onSendClick(event) {
 })
 
 socket.on('connect', () => {
-  socket.emit('connectUser', onlineUser)
+  socket.emit('connectUser', onlineUserId)
 })
 
 socket.on('notification', (data) => {
@@ -36,7 +32,7 @@ socket.on('notification', (data) => {
 
 socket.on('getPreviousMessages', (data) => {
   data.forEach((item) => {
-    if (Number(onlineUser.id) === Number(item.User.id)) {
+    if (Number(onlineUserId) === Number(item.User.id)) {
       streamMsgDiv.innerHTML += `
       <div class="self-message">
         <span class="content">${item.text}</span>
@@ -61,7 +57,7 @@ socket.on('getPreviousMessages', (data) => {
 socket.on('getNewMessage', (data) => {
   let div = document.createElement('div')
 
-  if (Number(onlineUser.id) === Number(data.User.id)) {
+  if (Number(onlineUserId) === Number(data.User.id)) {
     div.classList.add('self-message')
     div.innerHTML = `
           <span class="content">${data.text}</span>

@@ -2,30 +2,15 @@ const db = require('./../models')
 const { Message, User } = db
 
 module.exports = (io) => {
-  const onlineUsers = []
-
   io.on('connection', async (socket) => {
-    updateOnlineUser()
     let user
 
     // 使用者上線
-    socket.on('connectUser', async (data) => {
-      await user
-      io.emit('notification', `${data.name} 上線`)
-
-      onlineUsers.push(data)
-      user = data
-      // io.emit('noti-message-login', data)
-      // updateOnlineUser()
-    })
-
-    // socket.on('send pub msg', (data) => {
-    //   io.emit('pub msg', data)
+    // socket.on('connectUser', async (id) => {
+    //   data = await User.findByPk(id, { attributes: ['id', 'name', 'avatar'], raw: true })
+    //   console.log('onlineUser', user)
+    //   // io.emit('notify', data)
     // })
-
-    socket.on('test', () => {
-      console.log(user)
-    })
 
     // 取得歷史訊息
     const previousMessages = await Message.findAll({
@@ -46,8 +31,8 @@ module.exports = (io) => {
     socket.on('createMessage', async (data) => {
       try {
         const query = await Message.create({
-          text: data.text,
-          UserId: data.id
+          UserId: data.UserId,
+          text: data.text
         })
         // console.log(query.dataValues)
         // 確定建立完資料，才把資料拿出來
@@ -64,17 +49,12 @@ module.exports = (io) => {
           raw: true,
           nest: true
         })
-        console.log(newMessage)
+        console.log('newMessage', newMessage)
 
         io.emit('getNewMessage', newMessage)
       } catch (err) {
         console.error(err)
       }
     })
-
-    function updateOnlineUser() {
-      io.emit('onlineUser', onlineUsers, { onlineCount: onlineUsers.length })
-      console.log(onlineUsers)
-    }
   })
 }
