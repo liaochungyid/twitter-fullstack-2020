@@ -1,11 +1,11 @@
-const { Op } = require('sequelize')
-const db = require('./../models')
-const { Message, User, PrivateMessage } = db
+const { NONE } = require('sequelize')
+const db = require('../models')
+const { Message, User } = db
 
 module.exports = (io) => {
   const onlineUser = []
 
-  io.on('connection', async (socket) => {
+  io.on('connectionPri', async (socket) => {
     let user
 
     // 使用者上線
@@ -68,75 +68,6 @@ module.exports = (io) => {
         console.error(err)
       }
     })
-
-    // 以下 Pri chatroom
-    let room = []
-    let opUsers = []
-
-    socket.on('connectUserPri', async (userId) => {
-      let priMsg = await PrivateMessage.findAll({
-        where: {
-          [Op.or]: [
-            { senderId: userId },
-            { receiverId: userId }
-          ]
-        },
-        raw: true,
-        order: [['createdAt', 'DESC']]
-      })
-
-      // 找出room組合 及所有不是自己的user
-      priMsg.forEach(item => {
-        room.push(item.senderId < item.receiverId ? item.senderId + '=' + item.receiverId : item.receiverId + '=' + item.senderId)
-
-        if (item.senderId !== userId) {
-          opUsers.push(item.senderId)
-        } else {
-          opUsers.push(item.receiverId)
-        }
-
-      })
-      // 清除重複
-      room = [...(new Set(room))]
-      opUsers = [...(new Set(opUsers))]
-
-      // 加入連線
-      socket.join(room)
-
-      opUsers = await Promise.all(opUsers.map(id => {
-        return User.findByPk(id, { raw: true })
-      }))
-
-      socket.emit(`pri users for ${userId}`, opUsers)
-
-    })
-
-    socket.on('connectUserPriRoom', async (userId, roomid, opId) => {
-      let [priMsg, opUser] = await Promise.all([
-        PrivateMessage.findAll({
-          where: {
-            [Op.or]: [
-              { senderId: userId },
-              { receiverId: userId }
-            ]
-          },
-          raw: true,
-          order: [['createdAt', 'DESC']]
-        }),
-        User.findByPk(opId, {
-
-        })
-      ])
-
-      socket.to(roomid).emit('getPriPreMsg', { priMsg, opUser })
-
-
-
-    })
-
-
-
-
   })
 
 
@@ -152,4 +83,6 @@ module.exports = (io) => {
     })
   }
 
+  // 以下是pri chatroom
+  
 }

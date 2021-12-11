@@ -164,3 +164,8 @@ i.send {
   width: 24px;
   height: 24px;
 }
+i.newMsg {
+  background: url("../icons/newMessege.svg");
+  width: 24px;
+  height: 24px;
+}
