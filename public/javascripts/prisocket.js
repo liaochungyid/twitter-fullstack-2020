@@ -53,7 +53,8 @@ findNewPriChat.addEventListener('click', async function onFindNewPriChat(event) 
           target = target.parentElement
         }
 
-
+        // 刷新畫面
+        streamMsgDiv.innerHTML = ''
         const opId = target.dataset.receiverid
 
         // 生成roomid 放進send
@@ -79,6 +80,8 @@ findNewPriChat.addEventListener('click', async function onFindNewPriChat(event) 
         socket.once('getPriPreMsg', (data) => {
           streamMsgDiv.innerHTML = ''
           let unread = true
+          let readMsg = []
+
           data.priMsg.forEach((item) => {
             if (item.unread && unread) {
               streamMsgDiv.innerHTML += `
@@ -88,6 +91,8 @@ findNewPriChat.addEventListener('click', async function onFindNewPriChat(event) 
       `
               unread = false
             }
+
+
             if (Number(onlineUserId) === Number(item.senderId)) {
               streamMsgDiv.innerHTML += `
       <div class="self-message">
@@ -106,9 +111,13 @@ findNewPriChat.addEventListener('click', async function onFindNewPriChat(event) 
         </div>
       </div>
       `
+
+              readMsg.push(item)
             }
           })
           scrollDownToBottom()
+
+          socket.emit('setMsgRead', readMsg)
         })
       }
     })
@@ -116,7 +125,7 @@ findNewPriChat.addEventListener('click', async function onFindNewPriChat(event) 
 
 // 連線發出自己Id OK
 socket.on('connect', () => {
-  socket.emit('connectUserPri', onlineUserId)
+  socket.emit('connectUserPri', Number(onlineUserId))
 })
 
 // 接收user (左列聊天過的使用者紀錄)
@@ -169,6 +178,7 @@ socket.on('getNewPriMsg', (data) => {
 
   msg = data.newMessage
   rec = data.receiver
+  let readMsg = []
 
   if (Number(onlineUserId) === Number(msg.senderId)) {
     div.classList.add('self-message')
@@ -188,6 +198,9 @@ socket.on('getNewPriMsg', (data) => {
         </div>
         `
     streamMsgDiv.append(div)
+    readMsg.push(data.newMessage)
   }
   scrollDownToBottom()
+
+  socket.emit('setMsgRead', readMsg)
 })

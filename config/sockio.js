@@ -89,6 +89,7 @@ module.exports = (io) => {
     // 有user連線到 profileChatPris page
     socket.on('connectUserPri', async (userId) => {
       let opUsers = []
+      let selfroom = []
 
       let priMsg = await PrivateMessage.findAll({
         where: {
@@ -113,12 +114,16 @@ module.exports = (io) => {
         }
       })
       // 清除重複
-      room = [...new Set(room)]
-      opUsers = [...new Set(opUsers)]
+
+      selfroom = [...(new Set(selfroom))]
+      opUsers = [...(new Set(opUsers))]
 
       // 加入連線
       // room 重複加?
+      room = room.concat(...selfroom)
       socket.join(room)
+      console.log('room: ', room)
+      console.log('selfroom', selfroom)
 
       opUsers = await Promise.all(
         opUsers.map((id) => {
@@ -195,6 +200,14 @@ module.exports = (io) => {
           }
         }
       }
+      
+      // 離線移除自己的room (兩人同時上線room會有兩個 selfroom只會有一個)
+      socket.on('disconnect', () => {
+        selfroom.forEach(r => {
+          room.splice(r.indexOf(), 1)
+        })
+        socket.join(room.concat(...selfroom))
+      })
 
       // 發出對應使用者 render usercard
       socket.emit(`pri users for ${userId}`, showedPrivateMessages)
@@ -217,6 +230,7 @@ module.exports = (io) => {
         }),
         User.findByPk(opId)
       ])
+      // console.log(priMsg)
 
       priMsg.forEach((msg) => {
         msg.createdAt = chatTime.chatTime(msg.createdAt)
@@ -232,6 +246,7 @@ module.exports = (io) => {
         const receiver = await decodeRoomId(roomid, data.senderId)
         delete data.roomid
         data.receiverId = receiver.id
+
         const query = await PrivateMessage.create(data)
         // console.log('----------------------')
         // console.log(query)
@@ -247,6 +262,16 @@ module.exports = (io) => {
       } catch (err) {
         console.error(err)
       }
+    })
+
+    // send 訊息後，若有reciever接收到 回傳priMsg id 修改unread狀態
+    socket.on('setMsgRead', (readMsg) => {
+      readMsg.forEach((item) => {
+        PrivateMessage.update(
+          { 'unread': false },
+          { where: item }
+        )
+      })
     })
 
     // ------------- 以下 userlogin -------------
@@ -338,4 +363,7 @@ module.exports = (io) => {
       return { fid, bid }
     }
   }
+
+
+
 }
