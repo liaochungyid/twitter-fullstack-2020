@@ -48,7 +48,7 @@ module.exports = (io) => {
       previousMessages.forEach((msg) => {
         msg.createdAt = chatTime.chatTime(msg.createdAt)
       })
-      console.log(previousMessages)
+      // console.log(previousMessages)
 
       io.emit('getPreviousMessages', previousMessages)
     })
@@ -122,8 +122,8 @@ module.exports = (io) => {
       // room 重複加?
       room = room.concat(...selfroom)
       socket.join(room)
-      console.log('room: ', room)
-      console.log('selfroom', selfroom)
+      // console.log('room: ', room)
+      // console.log('selfroom', selfroom)
 
       opUsers = await Promise.all(
         opUsers.map((id) => {
@@ -149,7 +149,7 @@ module.exports = (io) => {
         raw: true
       })
 
-      console.log('privateMessages.length', privateMessages.length)
+      // console.log('privateMessages.length', privateMessages.length)
       const records = []
       const showedPrivateMessages = []
 
@@ -200,7 +200,7 @@ module.exports = (io) => {
           }
         }
       }
-      
+
       // 離線移除自己的room (兩人同時上線room會有兩個 selfroom只會有一個)
       socket.on('disconnect', () => {
         selfroom.forEach(r => {
@@ -230,7 +230,9 @@ module.exports = (io) => {
         }),
         User.findByPk(opId)
       ])
-      // console.log(priMsg)
+
+      room = room.concat(roomid)
+      socket.join(room)
 
       priMsg.forEach((msg) => {
         msg.createdAt = chatTime.chatTime(msg.createdAt)
@@ -249,7 +251,7 @@ module.exports = (io) => {
 
         const query = await PrivateMessage.create(data)
         // console.log('----------------------')
-        // console.log(query)
+        // console.log(receiver)
         // 確定建立完資料，才把資料拿出來`，一直錯誤 仙註解掉
         // const newMessage = PrivateMessage.findOne({
         //   where: { ...query.dataValues },
@@ -352,14 +354,14 @@ module.exports = (io) => {
     const index = roomid.indexOf('=')
     let fid = Number(roomid.slice(0, index))
     let bid = Number(roomid.slice(index + 1))
-    ;[fid, bid] = await Promise.all([
-      User.findByPk(fid, { raw: true }),
-      User.findByPk(bid, { raw: true })
-    ])
+      ;[fid, bid] = await Promise.all([
+        User.findByPk(fid, { raw: true }),
+        User.findByPk(bid, { raw: true })
+      ])
     if (gotId) {
-      return (fid.id = Number(gotId) ? bid : fid)
+      return fid.id === Number(gotId) ? bid : fid
     } else {
-      console.log({ fid, bid })
+      // console.log({ fid, bid })
       return { fid, bid }
     }
   }
