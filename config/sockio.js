@@ -1,6 +1,7 @@
 const { Op } = require('sequelize')
 const db = require('./../models')
 const { Message, User, PrivateMessage } = db
+const chatTime = require('./chatTime')
 
 module.exports = (io) => {
   const onlineUser = []
@@ -36,6 +37,12 @@ module.exports = (io) => {
         raw: true,
         nest: true
       })
+
+      previousMessages.forEach(msg => {
+        msg.createdAt = chatTime.chatTime(msg.createdAt)
+      })
+      console.log(previousMessages)
+      
       io.emit('getPreviousMessages', previousMessages)
     })
 
@@ -61,6 +68,8 @@ module.exports = (io) => {
           raw: true,
           nest: true
         })
+        
+        newMessage.createdAt = chatTime.msgTime(newMessage.createdAt)
 
         io.emit('getNewMessage', newMessage)
       } catch (err) {
