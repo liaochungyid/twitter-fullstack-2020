@@ -1,8 +1,40 @@
 const helpers = require('../_helpers')
 const userController = require('./userController')
 const tweetController = require('./tweetController')
+// 測試用
+const db = require('../models')
+const { sequelize } = db
+const { Op } = db.Sequelize
+const { User, Tweet, Reply, Like, Followship, Message, PrivateMessage } = db
 
 const pageController = {
+  getTest: async (req, res) => {
+    const privateMessagesByMe = await PrivateMessage.findAll({
+      where: { senderId: 31 },
+      raw: true,
+      group: 'senderId'
+    })
+    const privateMessagesFromMe = await PrivateMessage.findAll({
+      where: { receiverId: 31 },
+      raw: true,
+      group: 'receiverId'
+    })
+    console.log('privateMessagesByMe', privateMessagesByMe)
+    console.log('='.repeat(50))
+    console.log('privateMessagesFromMe', privateMessagesFromMe)
+    return res.send('<h1>RUN IT!</h1>')
+
+    // const privateMessages = await PrivateMessage.findAll({
+    //   where: {
+    //     [Op.or]: [{ senderId: 31 }, { receiverId: 31 }]
+    //   },
+    //   group: User,
+    //   order: [['createdAt', 'DESC']],
+    //   raw: true
+    // })
+    // console.log(privateMessages)
+  },
+
   getNotis: async (req, res) => {
     try {
       const [pops] = await Promise.all([
@@ -25,7 +57,7 @@ const pageController = {
     return res.render('user', { partial: 'profileChatPris' })
   },
 
-  getSignUp: (req, res) => {
+  getSignUp: async (req, res) => {
     return res.render('signup')
   },
 
