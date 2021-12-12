@@ -3,8 +3,18 @@ const userController = require('./userController')
 const tweetController = require('./tweetController')
 
 const pageController = {
-  getNotis: (req, res) => {
-    return res.render('user', { partial: 'profileNotis' })
+  getNotis: async (req, res) => {
+    try {
+      const [pops] = await Promise.all([
+        userController.getPopular(req, res)
+      ])
+      return res.render('user', {
+        pops,
+        partial: 'profileNotis'
+      })
+    } catch (err) {
+      console.error(err)
+    }
   },
 
   getChatPublic: (req, res) => {
