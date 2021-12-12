@@ -15,6 +15,8 @@ const inputs = document.querySelectorAll('input,textarea')
 
 const chatTextarea = document.querySelector('#textareaAutogrow')
 
+const notis = document.querySelector('#notis')
+
 // // 全畫面監聽器
 body.addEventListener('click', async (event) => {
   const target = event.target
@@ -172,6 +174,50 @@ if (chatTextarea) {
     }
   })
 }
+
+if (notis) {
+  const response = async function func() {
+    return await axios.get(
+      `${window.location.origin}/api/news`
+    )
+  }()
+
+  response.forEach(item => {
+    if (item.type === '未讀的追蹤者推文') {
+      notis.innHTML += `
+      <a href="/tweets/${item.TweetId}" class="noti">
+        <div class="noti-title">
+          <img class="thumbnail" src="${item.User.avatar}" alt="${item.User.name} avatar">
+
+            <div class="noti-msg">
+              ${item.User.name} 有新的推文通知
+            </div>
+        </div>
+
+        <div class="content">
+          ${item.Tweet.description}
+        </div>
+      </a>
+      `
+    } else if (item.type === '未讀的被讚事件') {
+      notis.innHTML += `
+    <a href="/tweets/${item.TweetId}" class="noti">
+    <div class="noti-title">
+      <img class="thumbnail" src="${item.User.avatar}" alt="${item.User.name} avatar">
+
+      <div class="noti-msg">
+        ${item.User.name} 喜歡妳的貼文
+      </div>
+    </div>
+  </a>
+   `
+    }
+
+  })
+}
+
+
+
 
 function isEmpty(nodeElement) {
   // 無文字回傳true，文字長度大於0，回傳false
