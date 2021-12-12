@@ -17,14 +17,15 @@ const tweetController = {
       }))
       subscribes = notifies.map(sub => sub.observedId) // 取得訂閱名單 array
       
-      let subscribers = await Notify.findAll({ 
-        where: {observedId: userId}, 
-      })
-      subscribers = subscribers.map(suber => ({
-        ...suber.dataValues,
-        type: '未讀的被追蹤事件'
-      }))
-      subscribers = subscribers.filter(suber => (suber.createdAt - activeTime) > 0)
+      // 修改關聯性後再加入 未讀的被追蹤事件
+      // let subscribers = await Notify.findAll({ 
+      //   where: {observedId: userId}, 
+      // })
+      // subscribers = subscribers.map(suber => ({
+      //   ...suber.dataValues,
+      //   type: '未讀的被追蹤事件'
+      // }))
+      // subscribers = subscribers.filter(suber => (suber.createdAt - activeTime) > 0)
 
       let newTweets = await Tweet.findAll({ include: [{ model: User }] })
       newTweets = newTweets.map(newTweet => ({
@@ -42,7 +43,7 @@ const tweetController = {
       newLikes = newLikes.filter(newLike => (newLike.createdAt - activeTime) > 0)
 
       // 三個事件結合整理成一個array
-      let news = [...subscribers, ...newTweets, ...newLikes]
+      let news = [ ...newTweets, ...newLikes] // 預計設訂閱關聯性以後加入 ...subscribers, 
       news = news.sort((a, b) => a.createdAt - b.createdAt)
       news.forEach(n => { n.createdAt = chatTime.msgTime(n.createdAt) })
             
