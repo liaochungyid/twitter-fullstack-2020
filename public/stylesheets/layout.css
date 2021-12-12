@@ -836,6 +836,39 @@ html, body {
   width: 116px;
 }
 
+/* user-template main for profile notis page */
+.main > .notis {
+  height: calc(100vh - 55px);
+  width: 598px;
+  padding: 15px;
+}
+
+.main > .notis > .noti {
+  display: block;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  border-bottom: 1px solid #E6ECF0;
+  margin-top: 10px;
+}
+
+.main > .notis > .noti > .noti-title {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  color: #1C1C1C;
+}
+
+.main > .notis > .noti > .noti-title > img {
+  width: 30px;
+  height: 30px;
+}
+
+.main > .notis > .noti > .content {
+  color:#657786;
+  padding: 5px 0 5px 15px;
+}
 
 /* user-template right side */
 .rightside {
