@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         defaultValue:
           'https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg'
+      },
+      activeTime: {
+        type: DataTypes.DATE,
+        defaultValue: Date.now(),
+        allowNull: false
       }
     },
     {}
@@ -49,6 +54,16 @@ module.exports = (sequelize, DataTypes) => {
       through: models.PrivateMessage,
       foreignKey: 'receiverId',
       as: 'Receivers'
+    })
+    User.belongsToMany(User, {
+      through: models.Notify,
+      foreignKey: 'observedId',
+      as: 'observers'
+    })
+    User.belongsToMany(User, {
+      through: models.Notify,
+      foreignKey: 'observerId',
+      as: 'observeds'
     })
   }
   return User

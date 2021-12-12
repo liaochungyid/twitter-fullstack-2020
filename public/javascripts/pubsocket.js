@@ -1,4 +1,4 @@
-const socket = io()
+// const socket = io()
 
 const send = document.querySelector('#send')
 const onlineUserId = send.dataset.loginuserid

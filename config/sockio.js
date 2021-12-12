@@ -1,6 +1,8 @@
 const { Op } = require('sequelize')
+const { getUserTweets } = require('../controllers/userController')
+const { sequelize } = require('./../models')
 const db = require('./../models')
-const { Message, User, PrivateMessage } = db
+const { Message, User, PrivateMessage, Notify, Tweet } = db
 
 module.exports = (io) => {
   const onlineUser = []
@@ -69,11 +71,13 @@ module.exports = (io) => {
     })
 
     // ------------- 以下 Pri chatroom -------------
+
     let room = []
-    let opUsers = []
 
     // 有user連線到 profileChatPris page
     socket.on('connectUserPri', async (userId) => {
+      let opUsers = []
+
       let priMsg = await PrivateMessage.findAll({
         where: {
           [Op.or]: [
@@ -101,6 +105,7 @@ module.exports = (io) => {
       opUsers = [...(new Set(opUsers))]
 
       // 加入連線
+      // room 重複
       socket.join(room)
 
       opUsers = await Promise.all(opUsers.map(id => {
@@ -155,6 +160,39 @@ module.exports = (io) => {
 
       } catch (err) {
         console.error(err)
+      }
+    })
+
+    // ------------- 以下 userlogin -------------
+    const UL = new Set()
+    socket.on('userLogin', async (userloginId) => {
+      // console.log(data, typeof data)
+      UL.add(Number(userloginId))
+      socket.join(userloginId)
+
+      socket.on('disconnect', () => {
+        UL.delete(Number(userloginId))
+        socket.leave(userloginId)
+        console.log(`--- ${userloginId} leaved ---`)
+      })
+
+      try {
+        const userlogin = await User.findAll({
+          where: { id: Number(userloginId) },
+          attributes: ['id'],
+          include: [
+            {
+              model: User,
+              as: 'observeds',
+              attributes: ['id', 'name', 'avatar'],
+              require: false
+            }
+          ]
+        })
+
+        io.to(userloginId).emit('notiNoti', ...userlogin)
+      } catch (err) {
+        console.log(err)
       }
     })
 

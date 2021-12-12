@@ -1,17 +1,17 @@
-'use strict'
+'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Messages', {
+    return queryInterface.createTable('Notifies', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      text: {
-        type: Sequelize.TEXT
+      observerId: {
+        type: Sequelize.INTEGER
       },
-      UserId: {
+      observedId: {
         type: Sequelize.INTEGER
       },
       createdAt: {
@@ -24,7 +24,8 @@ module.exports = {
       }
     })
   },
+
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Messages')
+    return queryInterface.dropTable('Notifies')
   }
-}
+};
