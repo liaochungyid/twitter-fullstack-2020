@@ -11,7 +11,9 @@ const findchatUsercard = document.querySelector('.dialog.findchat')
 
 const onlineUser = document.querySelector('#onlineUser')
 
-// 開啟新聊天室 選單
+let roomid
+
+// 開啟新聊天室 選單 OK
 findNewPriChat.addEventListener('click', async function onFindNewPriChat(event) {
   modalFindChatUser.classList.remove('d-none')
 
@@ -34,18 +36,19 @@ findNewPriChat.addEventListener('click', async function onFindNewPriChat(event) 
               </div>
             </a>
           `
+
   })
 
   findchatUsercard.innerHTML = html
 })
 
-  // 點擊usercard 開啟新room
+  // 點擊usercard 設定room到send OK
   ;[findchatUsercard, onlineUser].forEach(el => {
     el.addEventListener('click', function onUsercardClick(event) {
       let target = event.target
 
       if (!(target.classList.contains('dialog') || target.classList.contains('users'))) {
-        // 點到dialog/user 內部，但不是本身時
+        // 點到dialog/users 內部，但不是本身時
         while (!target.dataset.receiverid) {
           // 如果沒有 receiverid 的 dataset 往父元素找
           target = target.parentElement
@@ -55,7 +58,7 @@ findNewPriChat.addEventListener('click', async function onFindNewPriChat(event) 
         const opId = target.dataset.receiverid
 
         // 生成roomid 放進send
-        const roomid = onlineUserId < opId ? onlineUserId + '=' + opId : opId + '=' + onlineUserId
+        roomid = onlineUserId < opId ? onlineUserId + '=' + opId : opId + '=' + onlineUserId
 
         send.dataset.roomid = roomid
 
@@ -72,34 +75,56 @@ findNewPriChat.addEventListener('click', async function onFindNewPriChat(event) 
 
         // 關閉modal
         modalFindChatUser.classList.add('d-none')
+
+
+        socket.once('getPriPreMsg', (data) => {
+          let unread = true
+          data.priMsg.forEach((item) => {
+            if (item.unread && unread) {
+              streamMsgDiv.innerHTML += `
+      <div class="noti-message unread">
+        <span class="content unread">未讀訊息</span>
+      </div>
+      `
+              unread = false
+            }
+            if (Number(onlineUserId) === Number(item.senderId)) {
+              streamMsgDiv.innerHTML += `
+      <div class="self-message">
+        <span class="content">${slashNtoBr(item.text)}</span>
+        <span class="time">${item.createdAt}</span>
+      </div>
+      `
+            } else {
+              streamMsgDiv.innerHTML += `
+      <div class="other-message">
+        <img src="${data.opUser.avatar}">
+        <div class="content">
+          <span class="name">${data.opUser.name}</span>
+          <span class="content">${slashNtoBr(item.text)}</span>
+          <span class="time">${item.createdAt}</span>
+        </div>
+      </div>
+      `
+            }
+          })
+          scrollDownToBottom()
+        })
       }
     })
   })
 
-
-// 發出訊息
-send.addEventListener('click', function onSendClick(event) {
-  event.preventDefault()
-
-  const target = event.target.parentElement.previousElementSibling
-
-  if (!isEmpty(target)) {
-    socket.to(roomid).emit('createMessage', {
-      UserId: onlineUserId,
-      text: target.value
-    })
-    target.value = ''
-  }
-})
-
-// 連線發出自己Id
+// 連線發出自己Id OK
 socket.on('connect', () => {
   socket.emit('connectUserPri', onlineUserId)
 })
 
+// 接收user (左列聊天過的使用者紀錄)
 socket.on(`pri users for ${onlineUserId}`, (data) => {
   data.forEach(item => {
-    onlineUser.innerHTML += `
+    if (Number(item.id) !== Number(onlineUserId)) {
+      // 不顯示自己的card
+      onlineUser.innerHTML += `
       <a class="usercard" data-receiverid="${item.id}" data-receivername="${item.name}" data-receiveraccount="${item.account}">
         <img src="${item.avatar}">
         <div class="userfile">
@@ -118,104 +143,54 @@ socket.on(`pri users for ${onlineUserId}`, (data) => {
         </div>
       </a>
       `
-  })
-})
-
-socket.once('getPriPreMsg', (data) => {
-  data.priMsg.forEach((item) => {
-    if (Number(onlineUserId) === Number(item.senderId)) {
-      streamMsgDiv.innerHTML += `
-      <div class="self-message">
-        <span class="content">${slashNtoBr(item.text)}</span>
-        <span class="time">${item.createdAt}</span>
-      </div>
-      `
-    } else {
-      streamMsgDiv.innerHTML += `
-      <div class="other-message">
-        <img src="${data.opUser.avatar}">
-        <div class="content">
-          <span class="name">${data.opUser.name}</span>
-          <span class="content">${slashNtoBr(item.text)}</span>
-          <span class="time">${item.createdAt}</span>
-        </div>
-      </div>
-      `
     }
   })
-  scrollDownToBottom()
 })
 
-// 接收上線通知
-// socket.on('notifySignin', (user) => {
-//   let div = document.createElement('div')
-//   div.classList.add('noti-message')
-//   div.innerHTML = `<span class="content">${user.name} 上線</span>`
-//   streamMsgDiv.append(div)
-//   scrollDownToBottom()
-// })
+// 發出訊息
+send.addEventListener('click', function onSendClick(event) {
+  event.preventDefault()
 
-// 接收離線通知
-// socket.on('notifySignout', (user) => {
-//   let div = document.createElement('div')
-//   div.classList.add('noti-message')
-//   div.innerHTML = `<span class="content">${user.name} 下線</span>`
-//   streamMsgDiv.append(div)
-//   scrollDownToBottom()
-// })
+  const target = event.target.parentElement.previousElementSibling
 
-// 執行一次，歷史訊息
-// socket.once('getPreviousMessages', (data) => {
-//   data.forEach((item) => {
-//     if (Number(onlineUserId) === Number(item.User.id)) {
-//       streamMsgDiv.innerHTML += `
-//       <div class="self-message">
-//         <span class="content">${slashNtoBr(item.text)}</span>
-//         <span class="time">${item.createdAt}</span>
-//       </div>
-//       `
-//     } else {
-//       streamMsgDiv.innerHTML += `
-//       <div class="other-message">
-//         <img src="${item.User.avatar}">
-//         <div class="content">
-//           <span class="name">${item.User.name}</span>
-//           <span class="content">${slashNtoBr(item.text)}</span>
-//           <span class="time">${item.createdAt}</span>
-//         </div>
-//       </div>
-//       `
-//     }
-//   })
-//   scrollDownToBottom()
-// })
+  if (!isEmpty(target)) {
+    socket.emit('createPriMsg', {
+      roomid: roomid,
+      senderId: Number(onlineUserId),
+      text: target.value
+    })
+    target.value = ''
+  }
+})
 
 // 接收訊息
-// socket.on('getNewMessage', (data) => {
-//   let div = document.createElement('div')
+socket.on('getNewPriMsg', (data) => {
+  let div = document.createElement('div')
 
-//   if (Number(onlineUserId) === Number(data.User.id)) {
-//     div.classList.add('self-message')
-//     div.innerHTML = `
-//           <span class="content">${slashNtoBr(data.text)}</span>
-//           <span class="time">${data.createdAt}</span>
-//         `
-//     streamMsgDiv.append(div)
-//     scrollDownToBottom()
-//   } else {
-//     div.classList.add('other-message')
-//     div.innerHTML = `
-//         <img src="${data.User.avatar}">
-//         <div class="content">
-//           <span class="name">${data.User.id}</span>
-//           <span class="content">${slashNtoBr(data.text)}</span>
-//           <span class="time">${data.createdAt}</span>
-//         </div>
-//         `
-//     streamMsgDiv.append(div)
-//   }
-//   scrollDownToBottom()
-// })
+  msg = data.newMessage
+  rec = data.receiver
+
+  if (Number(onlineUserId) === Number(msg.senderId)) {
+    div.classList.add('self-message')
+    div.innerHTML = `
+          <span class="content">${slashNtoBr(msg.text)}</span>
+          <span class="time">${msg.createdAt}</span>
+        `
+    streamMsgDiv.append(div)
+    scrollDownToBottom()
+  } else {
+    div.classList.add('other-message')
+    div.innerHTML = `
+        <img src="${rec.avatar}">
+        <div class="content">
+          <span class="content">${slashNtoBr(msg.text)}</span>
+          <span class="time">${msg.createdAt}</span>
+        </div>
+        `
+    streamMsgDiv.append(div)
+  }
+  scrollDownToBottom()
+})
 
 // 接收上線使用者們
 // socket.on('getOnlineUserPri', (data) => {
