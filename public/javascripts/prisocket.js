@@ -77,6 +77,7 @@ findNewPriChat.addEventListener('click', async function onFindNewPriChat(event) 
 
 
         socket.once('getPriPreMsg', (data) => {
+          streamMsgDiv.innerHTML = ''
           let unread = true
           data.priMsg.forEach((item) => {
             if (item.unread && unread) {
