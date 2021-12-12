@@ -21,7 +21,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         defaultValue:
           'https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg'
-      }
+      },
+      activeTime: { type: DataTypes.DATE, defaultValue: new Date() }
     },
     {}
   )
