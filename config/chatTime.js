@@ -15,7 +15,7 @@ const chatTime = {
   },
   
   localTime: (datetime) => {
-    // 下午 4:33
+    // 下午 4:33   
     let locale = datetime.toLocaleTimeString()
     cho = locale.split('')
     cho.splice(-3, 3)
