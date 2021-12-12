@@ -4,6 +4,7 @@ const router = express.Router()
 
 const userController = require('../controllers/api/userController')
 const tweetServer = require('../controllers/api/tweetServer')
+const newsServer = require('../controllers/api/newsServer')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -16,5 +17,6 @@ router.get('/users/:userId', authenticated, userController.getEditModal)
 router.post('/users/:userId', authenticated, userController.updateUser)
 router.get('/chatusers/:userId', authenticated, userController.getUsers) // find chat api
 router.get('/tweets/:tweetId', authenticated, tweetServer.getTweet) // reply modal api
+router.get('/news', authenticated, newsServer.getNew) // 訂閱物件通知的 api
 
 module.exports = router
