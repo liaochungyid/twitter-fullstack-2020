@@ -3,7 +3,7 @@ const { getUserTweets } = require('../controllers/userController')
 const { sequelize } = require('./../models')
 const db = require('./../models')
 const { Message, User, PrivateMessage, Notify, Tweet } = db
-
+const chatTime = require('./chatTime')
 
 module.exports = (io) => {
   // 群聊使用者
@@ -44,6 +44,12 @@ module.exports = (io) => {
         raw: true,
         nest: true
       })
+
+      previousMessages.forEach(msg => {
+        msg.createdAt = chatTime.chatTime(msg.createdAt)
+      })
+      console.log(previousMessages)
+      
       io.emit('getPreviousMessages', previousMessages)
     })
 
@@ -69,6 +75,8 @@ module.exports = (io) => {
           raw: true,
           nest: true
         })
+        
+        newMessage.createdAt = chatTime.msgTime(newMessage.createdAt)
 
         io.emit('getNewMessage', newMessage)
       } catch (err) {
