@@ -35,7 +35,7 @@ const tweetController = {
       newTweets = newTweets.filter(newTweet => (newTweet.createdAt - activeTime) > 0)
       newTweets = newTweets.filter(newTweet => subscribes.includes(newTweet.UserId))
 
-      let newLikes = await Like.findAll({ include: [{ model: User }] })
+      let newLikes = await Like.findAll({ where: { UserId: userId }, include: [{ model: User }] })
       newLikes = newLikes.map(newLike => ({
         ...newLike.dataValues,
         type: '未讀的被讚事件'
