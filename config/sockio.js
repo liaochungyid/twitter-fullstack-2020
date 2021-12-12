@@ -1,11 +1,17 @@
-const { Op } = require('sequelize')
+const { Op, NONE } = require('sequelize')
 const { getUserTweets } = require('../controllers/userController')
 const { sequelize } = require('./../models')
 const db = require('./../models')
 const { Message, User, PrivateMessage, Notify, Tweet } = db
 
+
 module.exports = (io) => {
+  // 群聊使用者
   const onlineUser = []
+  // 私聊房間
+  let room = []
+  // 登入使用者
+  const UL = new Set()
 
   io.on('connection', async (socket) => {
     let user
@@ -48,7 +54,7 @@ module.exports = (io) => {
           UserId: data.UserId,
           text: data.text
         })
-        console.log('createMessage')
+        // console.log('createMessage')
         // 確定建立完資料，才把資料拿出來
         const newMessage = await Message.findOne({
           where: {
@@ -71,8 +77,6 @@ module.exports = (io) => {
     })
 
     // ------------- 以下 Pri chatroom -------------
-
-    let room = []
 
     // 有user連線到 profileChatPris page
     socket.on('connectUserPri', async (userId) => {
@@ -105,7 +109,7 @@ module.exports = (io) => {
       opUsers = [...(new Set(opUsers))]
 
       // 加入連線
-      // room 重複
+      // room 重複加?
       socket.join(room)
 
       opUsers = await Promise.all(opUsers.map(id => {
@@ -164,18 +168,19 @@ module.exports = (io) => {
     })
 
     // ------------- 以下 userlogin -------------
-    const UL = new Set()
     socket.on('userLogin', async (userloginId) => {
       // console.log(data, typeof data)
       UL.add(Number(userloginId))
       socket.join(userloginId)
+      broadcastOnlineUser(false)
 
       socket.on('disconnect', () => {
         UL.delete(Number(userloginId))
         socket.leave(userloginId)
-        console.log(`--- ${userloginId} leaved ---`)
+        broadcastOnlineUser(false)
       })
 
+      // 資料庫找未讀 通知
       try {
         const userlogin = await User.findAll({
           where: { id: Number(userloginId) },
@@ -190,10 +195,28 @@ module.exports = (io) => {
           ]
         })
 
+        // 未讀 通知 傳回原本user
         io.to(userloginId).emit('notiNoti', ...userlogin)
       } catch (err) {
         console.log(err)
       }
+
+      // 資料庫找未讀 私訊
+      try {
+        const mMsgUnread = await PrivateMessage.findAll({
+          where: {
+            receiverId: Number(userloginId),
+            unread: true
+          },
+          raw: true
+        })
+
+        // 未讀 私訊 傳回原本user
+        io.to(userloginId).emit('PriChatNoti', mMsgUnread)
+      } catch (err) {
+        console.log(err)
+      }
+
     })
 
 
@@ -207,6 +230,13 @@ module.exports = (io) => {
       onlineUser
         .splice(onlineUser.indexOf(userOFF), 1)
     }
+
+    // 廣播所有login的user
+    io.to([...UL].map(r => String(r))).emit('pubChatNoti', onlineUser.length)
+
+    if (!userON & !userOFF) return true
+
+    // 廣播到public頻道
     return io.emit('getOnlineUser', {
       onlineUser,
       onlineUserCount: onlineUser.length

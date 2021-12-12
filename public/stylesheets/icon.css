@@ -176,7 +176,7 @@ i.dot-noti > span {
   font-weight: 700;
   position: absolute;
   top: -14px;
-  left: 15px;
+  left: 16px;
 }
 i.dot-noti.plus::after {
   content: "✚";
@@ -197,6 +197,6 @@ i.dot-noti-sm::before {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #f60;
+  background-color: #6f0;
   border: 2px solid #fff;
 }
