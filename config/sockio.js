@@ -218,6 +218,10 @@ module.exports = (io) => {
         User.findByPk(opId)
       ])
 
+      priMsg.forEach((msg) => {
+        msg.createdAt = chatTime.chatTime(msg.createdAt)
+      })
+
       io.to(roomid).emit('getPriPreMsg', { priMsg, opUser })
     })
 
