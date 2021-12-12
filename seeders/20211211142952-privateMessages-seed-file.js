@@ -9,7 +9,7 @@ module.exports = {
         receiverId: 21,
         text: 'User1 to User2',
         unread: false,
-        createdAt: new Date(new Date() - 86400 + 1000 * 1),
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 1),
         updatedAt: new Date()
       },
       {
@@ -18,7 +18,7 @@ module.exports = {
         receiverId: 11,
         text: 'User2 to User1',
         unread: false,
-        createdAt: new Date(new Date() - 86400 + 1000 * 2),
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 2),
         updatedAt: new Date()
       },
       {
@@ -27,7 +27,7 @@ module.exports = {
         receiverId: 21,
         text: 'User1 to User2',
         unread: false,
-        createdAt: new Date(new Date() - 86400 + 1000 * 3),
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 3),
         updatedAt: new Date()
       },
       {
@@ -36,7 +36,7 @@ module.exports = {
         receiverId: 31,
         text: 'User1 to User3',
         unread: false,
-        createdAt: new Date(new Date() - 86400 + 1000 * 4),
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 4),
         updatedAt: new Date()
       },
       {
@@ -45,7 +45,7 @@ module.exports = {
         receiverId: 11,
         text: 'User3 to User1',
         unread: false,
-        createdAt: new Date(new Date() - 86400 + 1000 * 5),
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 5),
         updatedAt: new Date()
       },
       {
@@ -54,7 +54,7 @@ module.exports = {
         receiverId: 31,
         text: 'User1 to User3',
         unread: false,
-        createdAt: new Date(new Date() - 86400 + 1000 * 6),
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 6),
         updatedAt: new Date()
       },
       {
@@ -63,7 +63,7 @@ module.exports = {
         receiverId: 21,
         text: 'User1 to User2',
         unread: false,
-        createdAt: new Date(new Date() - 86400 + 1000 * 7),
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 7),
         updatedAt: new Date()
       },
       {
@@ -72,7 +72,7 @@ module.exports = {
         receiverId: 21,
         text: 'User1 to User2',
         unread: false,
-        createdAt: new Date(new Date() - 86400 + 1000 * 8),
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 8),
         updatedAt: new Date()
       },
       {
@@ -81,7 +81,7 @@ module.exports = {
         receiverId: 11,
         text: 'User2 to User1',
         unread: false,
-        createdAt: new Date(new Date() - 86400 + 1000 * 9),
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 9),
         updatedAt: new Date()
       },
       {
@@ -90,7 +90,7 @@ module.exports = {
         receiverId: 11,
         text: 'User2 to User1',
         unread: false,
-        createdAt: new Date(new Date() - 86400 + 1000 * 10),
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 10),
         updatedAt: new Date()
       }
     ])
