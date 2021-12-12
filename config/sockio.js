@@ -16,28 +16,28 @@ module.exports = (io) => {
       })
       io.emit('notifySignin', user)
       broadcastOnlineUser(user)
-    })
 
-    // 使用者下線
-    socket.on('disconnect', () => {
-      io.emit('notifySignout', user)
-      broadcastOnlineUser(undefined, user)
-    })
+      // 使用者下線
+      socket.on('disconnect', () => {
+        io.emit('notifySignout', user)
+        broadcastOnlineUser(undefined, user)
+      })
 
-    // 取得歷史訊息
-    const previousMessages = await Message.findAll({
-      include: [
-        {
-          model: User,
-          attributes: ['id', 'name', 'account', 'avatar']
-        }
-      ],
-      attributes: ['id', 'text', 'createdAt'],
-      order: [['createdAt', 'ASC']],
-      raw: true,
-      nest: true
+      // 取得歷史訊息
+      const previousMessages = await Message.findAll({
+        include: [
+          {
+            model: User,
+            attributes: ['id', 'name', 'account', 'avatar']
+          }
+        ],
+        attributes: ['id', 'text', 'createdAt'],
+        order: [['createdAt', 'ASC']],
+        raw: true,
+        nest: true
+      })
+      io.emit('getPreviousMessages', previousMessages)
     })
-    io.emit('getPreviousMessages', previousMessages)
 
     // 建立訊息
     socket.on('createMessage', async (data) => {
@@ -46,7 +46,7 @@ module.exports = (io) => {
           UserId: data.UserId,
           text: data.text
         })
-
+        console.log('createMessage')
         // 確定建立完資料，才把資料拿出來
         const newMessage = await Message.findOne({
           where: {
