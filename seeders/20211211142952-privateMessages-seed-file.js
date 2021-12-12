@@ -1,45 +1,27 @@
 'use strict'
+const faker = require('faker')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('PrivateMessages', [
-      {
-        id: 11,
-        senderId: 11,
-        receiverId: 21,
-        text: 'User1 to User2',
-        unread: true,
-        createdAt: new Date(),
+    await queryInterface.bulkInsert(
+      'PrivateMessages',
+      Array.from({ length: 25 }).map((d, index) => ({
+        id: index * 10 + 1,
+        senderId: (index % 4) * 10 + 11, // 11, 21, 31, 41
+        receiverId: (index % 4) * 10 + 21, // 21, 31, 41, 51
+        text: faker.lorem.sentences().substring(0, 30),
+        createdAt: new Date(new Date() - Math.floor(Math.random() * 86400)),
         updatedAt: new Date()
-      },
-      {
-        id: 21,
-        senderId: 21,
-        receiverId: 11,
-        text: 'User2 to User1',
-        unread: true,
-        createdAt: new Date(),
+      })),
+      Array.from({ length: 25 }).map((d, index) => ({
+        id: index * 10 + 1,
+        senderId: 51 - (index % 4) * 10, // 51, 41, 31, 21
+        receiverId: 41 - (index % 4) * 10, // 41, 31, 21, 11
+        text: faker.lorem.sentences().substring(0, 30),
+        createdAt: new Date(new Date() - Math.floor(Math.random() * 86400)),
         updatedAt: new Date()
-      },
-      {
-        id: 31,
-        senderId: 11,
-        receiverId: 21,
-        text: 'User1 to User2',
-        unread: true,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        id: 41,
-        senderId: 11,
-        receiverId: 31,
-        text: 'User1 to User3',
-        unread: true,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }
-    ])
+      }))
+    )
   },
 
   down: async (queryInterface, Sequelize) => {
