@@ -836,6 +836,40 @@ html, body {
   width: 116px;
 }
 
+/* user-template main for profile notis page */
+.main > .notis {
+  height: calc(100vh - 55px);
+  width: 598px;
+  padding: 15px;
+}
+
+.main > .notis > .noti {
+  display: block;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  border-bottom: 1px solid #E6ECF0;
+  margin-top: 10px;
+}
+
+.main > .notis > .noti > .noti-title {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  color: #1C1C1C;
+  margin-bottom: 5px;
+}
+
+.main > .notis > .noti > .noti-title > img {
+  width: 30px;
+  height: 30px;
+}
+
+.main > .notis > .noti > .content {
+  color:#657786;
+  padding: 0 0 5px 15px;
+}
 
 /* user-template right side */
 .rightside {
@@ -1808,11 +1842,16 @@ div.invalid::after {
 }
 
 .onlineUser > .users > .usercard > .userfile > .who > .nameplace > .at-name,
-.onlineUser > .users > .usercard > .userfile > .who > .lastcall,
-.onlineChatroom > .title > .who > .at-name {
+.onlineUser > .users > .usercard > .userfile > .who > .lastcall {
   color: #657786;
   font-weight: 500;
   flex: 1 0 0;
+  word-break: keep-all;
+}
+
+.onlineChatroom > .title > .who > .at-name {
+  color: #657786;
+  font-weight: 500;
   word-break: keep-all;
 }
 

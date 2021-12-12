@@ -61,7 +61,6 @@ socket.once('getPreviousMessages', (data) => {
       <div class="other-message">
         <img src="${item.User.avatar}">
         <div class="content">
-          <span class="name">${item.User.name}</span>
           <span class="content">${slashNtoBr(item.text)}</span>
           <span class="time">${item.createdAt}</span>
         </div>
@@ -89,7 +88,6 @@ socket.on('getNewMessage', (data) => {
     div.innerHTML = `
         <img src="${data.User.avatar}">
         <div class="content">
-          <span class="name">${data.User.id}</span>
           <span class="content">${slashNtoBr(data.text)}</span>
           <span class="time">${data.createdAt}</span>
         </div>
