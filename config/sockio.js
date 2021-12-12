@@ -45,7 +45,7 @@ module.exports = (io) => {
         nest: true
       })
 
-      previousMessages.forEach(msg => {
+      previousMessages.forEach((msg) => {
         msg.createdAt = chatTime.chatTime(msg.createdAt)
       })
       console.log(previousMessages)
@@ -93,27 +93,28 @@ module.exports = (io) => {
 
       let priMsg = await PrivateMessage.findAll({
         where: {
-          [Op.or]: [
-            { senderId: userId },
-            { receiverId: userId }
-          ]
+          [Op.or]: [{ senderId: userId }, { receiverId: userId }]
         },
         raw: true,
         order: [['createdAt', 'DESC']]
       })
 
       // 找出room組合 及所有不是自己的user
-      priMsg.forEach(item => {
-        selfroom.push(item.senderId < item.receiverId ? item.senderId + '=' + item.receiverId : item.receiverId + '=' + item.senderId)
+      priMsg.forEach((item) => {
+        room.push(
+          item.senderId < item.receiverId
+            ? item.senderId + '=' + item.receiverId
+            : item.receiverId + '=' + item.senderId
+        )
 
         if (Number(item.senderId) !== Number(userId)) {
           opUsers.push(item.senderId)
         } else {
           opUsers.push(item.receiverId)
         }
-
       })
       // 清除重複
+
       selfroom = [...(new Set(selfroom))]
       opUsers = [...(new Set(opUsers))]
 
@@ -124,13 +125,82 @@ module.exports = (io) => {
       console.log('room: ', room)
       console.log('selfroom', selfroom)
 
-      opUsers = await Promise.all(opUsers.map(id => {
-        return User.findByPk(id, { raw: true })
-      }))
+      opUsers = await Promise.all(
+        opUsers.map((id) => {
+          return User.findByPk(id, { raw: true })
+        })
+      )
 
-      // 發出對應使用者 render usercard
-      socket.emit(`pri users for ${userId}`, opUsers)
+      const loginUserId = Number(userId)
+      const privateMessages = await PrivateMessage.findAll({
+        attributes: [
+          'id',
+          'senderId',
+          'receiverId',
+          'text',
+          'unread',
+          'createdAt',
+          'updatedAt'
+        ],
+        where: {
+          [Op.or]: [{ senderId: loginUserId }, { receiverId: loginUserId }]
+        },
+        order: [['createdAt', 'DESC']],
+        raw: true
+      })
 
+      console.log('privateMessages.length', privateMessages.length)
+      const records = []
+      const showedPrivateMessages = []
+
+      for (let i = 0; i < privateMessages.length; i++) {
+        const senderId = Number(privateMessages[i].senderId)
+        const receiverId = Number(privateMessages[i].receiverId)
+        if (senderId === loginUserId) {
+          if (!records.includes(receiverId)) {
+            records.push(receiverId)
+            const showedUser = await User.findByPk(receiverId).then((result) =>
+              result.toJSON()
+            )
+
+            const appended = {
+              pmId: privateMessages[i].id,
+              isIt: false,
+              text: privateMessages[i].text,
+              unread: privateMessages[i].unread,
+              createdAt: chatTime
+                .msgTime(privateMessages[i].createdAt)
+                .replace(' ', '')
+            }
+
+            showedPrivateMessages.push({
+              ...showedUser,
+              ...appended
+            })
+          }
+        } else {
+          if (!records.includes(senderId)) {
+            records.push(senderId)
+            const showedUser = await User.findByPk(senderId).then((result) =>
+              result.toJSON()
+            )
+
+            const appended = {
+              pmId: privateMessages[i].pmId,
+              isIt: false,
+              text: privateMessages[i].text,
+              unread: privateMessages[i].unread,
+              createdAt: chatTime.msgTime(privateMessages[i].createdAt).replace(' ', '')
+            }
+
+            showedPrivateMessages.push({
+              ...showedUser,
+              ...appended
+            })
+          }
+        }
+      }
+      
       // 離線移除自己的room (兩人同時上線room會有兩個 selfroom只會有一個)
       socket.on('disconnect', () => {
         selfroom.forEach(r => {
@@ -139,6 +209,8 @@ module.exports = (io) => {
         socket.join(room.concat(...selfroom))
       })
 
+      // 發出對應使用者 render usercard
+      socket.emit(`pri users for ${userId}`, showedPrivateMessages)
     })
 
     // 進入聊天室 回傳聊天紀錄
@@ -161,6 +233,10 @@ module.exports = (io) => {
 
       room = room.concat(roomid)
       socket.join(room)
+
+      priMsg.forEach((msg) => {
+        msg.createdAt = chatTime.chatTime(msg.createdAt)
+      })
 
       io.to(roomid).emit('getPriPreMsg', { priMsg, opUser })
     })
@@ -185,7 +261,6 @@ module.exports = (io) => {
         const newMessage = query.toJSON()
 
         io.to(roomid).emit('getNewPriMsg', { newMessage, receiver })
-
       } catch (err) {
         console.error(err)
       }
@@ -250,23 +325,19 @@ module.exports = (io) => {
       } catch (err) {
         console.log(err)
       }
-
     })
-
-
-
   })
 
-
   function broadcastOnlineUser(userON, userOFF = undefined) {
-    if (userON) { onlineUser.push(userON) }
+    if (userON) {
+      onlineUser.push(userON)
+    }
     if (userOFF) {
-      onlineUser
-        .splice(onlineUser.indexOf(userOFF), 1)
+      onlineUser.splice(onlineUser.indexOf(userOFF), 1)
     }
 
     // 廣播所有login的user
-    io.to([...UL].map(r => String(r))).emit('pubChatNoti', onlineUser.length)
+    io.to([...UL].map((r) => String(r))).emit('pubChatNoti', onlineUser.length)
 
     if (!userON & !userOFF) return true
 
@@ -283,10 +354,10 @@ module.exports = (io) => {
     const index = roomid.indexOf('=')
     let fid = Number(roomid.slice(0, index))
     let bid = Number(roomid.slice(index + 1))
-      ;[fid, bid] = await Promise.all([
-        User.findByPk(fid, { raw: true }),
-        User.findByPk(bid, { raw: true })
-      ])
+    ;[fid, bid] = await Promise.all([
+      User.findByPk(fid, { raw: true }),
+      User.findByPk(bid, { raw: true })
+    ])
     if (gotId) {
       return fid.id === Number(gotId) ? bid : fid
     } else {
