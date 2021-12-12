@@ -1,128 +1,65 @@
 const socket = io()
 
-const send = document.querySelector('#send')
-const onlineUserId = send.dataset.loginuserid
+const notiNoti = document.querySelector('#noti-noti')
+const pubChatNoti = document.querySelector('#pub-chat-noti')
+const PriChatNoti = document.querySelector('#pri-chat-noti')
 
-const streamMsgDiv = document.querySelector('.stream-message')
+const userloginId = notiNoti.dataset.userlogin
+// console.log(userloginId)
 
-const onlineUser = document.querySelector('#onlineUser')
-const onlineUserCount = document.querySelector('#onlineUserCount')
+if (notiNoti) {
+  socket.on('connect', () => {
+    socket.emit('userLogin', userloginId)
+  })
 
-// 從這裡開始
+  socket.on('notiNoti', (data) => {
 
-send.addEventListener('click', function onSendClick(event) {
-  event.preventDefault()
-
-  const target = event.target.parentElement.previousElementSibling
-
-  if (!isEmpty(target)) {
-    socket.emit('createMessage', {
-      UserId: onlineUserId,
-      text: target.value
-    })
-    target.value = ''
-  }
-})
-
-socket.on('connect', () => {
-  socket.emit('connectUser', onlineUserId)
-})
-
-socket.on('notifySignin', (user) => {
-  let div = document.createElement('div')
-  div.classList.add('noti-message')
-  div.innerHTML = `<span class="content">${user.name} 上線</span>`
-  streamMsgDiv.append(div)
-  scrollDownToBottom()
-})
-
-socket.on('notifySignout', (user) => {
-  let div = document.createElement('div')
-  div.classList.add('noti-message')
-  div.innerHTML = `<span class="content">${user.name} 下線</span>`
-  streamMsgDiv.append(div)
-  scrollDownToBottom()
-})
-
-socket.once('getPreviousMessages', (data) => {
-  data.forEach((item) => {
-    if (Number(onlineUserId) === Number(item.User.id)) {
-      streamMsgDiv.innerHTML += `
-      <div class="self-message">
-        <span class="content">${item.text}</span>
-        <span class="time">${item.createdAt}</span>
-      </div>
-      `
+    const unreadCount = data.observeds.length | 0
+    // console.log(data)
+    if (unreadCount === 0) {
+      notiNoti.innerHTML = ''
+      notiNoti.classList.remove('dot-noti')
+      notiNoti.classList.remove('plus')
+    } else if (unreadCount > 9) {
+      notiNoti.innerHTML = `<span>9<span>`
+      notiNoti.classList.add('dot-noti')
+      notiNoti.classList.add('plus')
     } else {
-      streamMsgDiv.innerHTML += `
-      <div class="other-message">
-        <img src="${item.User.avatar}">
-        <div class="content">
-          <span class="name">${item.User.name}</span>
-          <span class="content">${item.text}</span>
-          <span class="time">${item.createdAt}</span>
-        </div>
-      </div>
-      `
+      notiNoti.innerHTML = `<span>${unreadCount}<span>`
+      notiNoti.classList.add('dot-noti')
     }
-  })
-  scrollDownToBottom()
-})
 
-socket.on('getNewMessage', (data) => {
-  let div = document.createElement('div')
-
-  if (Number(onlineUserId) === Number(data.User.id)) {
-    div.classList.add('self-message')
-    div.innerHTML = `
-          <span class="content">${data.text}</span>
-          <span class="time">${data.createdAt}</span>
-        `
-    streamMsgDiv.append(div)
-    scrollDownToBottom()
-  } else {
-    div.classList.add('other-message')
-    div.innerHTML = `
-        <img src="${data.User.avatar}">
-        <div class="content">
-          <span class="name">${data.User.id}</span>
-          <span class="content">${data.text}</span>
-          <span class="time">${data.createdAt}</span>
-        </div>
-        `
-    streamMsgDiv.append(div)
-  }
-  scrollDownToBottom()
-})
-
-socket.on('getOnlineUser', (data) => {
-  console.log(data)
-
-  let html = ''
-
-  data.onlineUser.forEach(item => {
-    html += `
-      <div class="usercard">
-        <img src="${item.avatar}">
-        <div class="userfile">
-          <div class="who">
-            <div class="nameplace">
-              <span class="name">${item.name}</span>
-              <span class="at-name">@${item.account}</span>
-            </div>
-            <div class="lastcall">
-            </div>
-          </div>
-        </div>
-      </div>
-      `
   })
 
-  onlineUser.innerHTML = html
-  onlineUserCount.innertext = data.onlineUserCount
-})
+  socket.on('pubChatNoti', (data) => {
+    const unreadCount = data | 0
 
-// 滾動聊天畫面至最下方
-function scrollDownToBottom() {
-  streamMsgDiv.lastElementChild.scrollIntoView()
+    if (unreadCount === 0) {
+      pubChatNoti.classList.remove('dot-noti-sm')
+    } else {
+      pubChatNoti.classList.add('dot-noti-sm')
+    }
+
+  })
+
+  socket.on('PriChatNoti', (data) => {
+
+    // or 0 資料庫可能crash
+    const unreadCount = data.length | 0
+    // console.log(data)
+    if (unreadCount === 0) {
+      PriChatNoti.innerHTML = ''
+      PriChatNoti.classList.remove('dot-noti')
+      PriChatNoti.classList.remove('plus')
+    } else if (unreadCount > 9) {
+      PriChatNoti.innerHTML = `<span>9<span>`
+      PriChatNoti.classList.add('dot-noti')
+      PriChatNoti.classList.add('plus')
+    } else {
+      PriChatNoti.innerHTML = `<span>${unreadCount}<span>`
+      PriChatNoti.classList.add('dot-noti')
+    }
+
+  })
+
 }
