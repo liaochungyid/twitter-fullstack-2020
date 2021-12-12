@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       senderId: DataTypes.INTEGER,
       receiverId: DataTypes.INTEGER,
       text: DataTypes.TEXT,
-      unread: { type: DataTypes.BOOLEAN, defaultValue: true }
+      unread: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true }
     },
     {}
   )
