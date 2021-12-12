@@ -78,30 +78,31 @@ findNewPriChat.addEventListener('click', async function onFindNewPriChat(event) 
 
 
         socket.once('getPriPreMsg', (data) => {
-          streamMsgDiv.innerHTML = ''
-          let unread = true
-          let readMsg = []
+          if (data.priMsg) {
+            streamMsgDiv.innerHTML = ''
+            let unread = true
+            let readMsg = []
 
-          data.priMsg.forEach((item) => {
-            if (item.unread && unread) {
-              streamMsgDiv.innerHTML += `
-      <div class="noti-message unread">
-        <span class="content unread">未讀訊息</span>
-      </div>
-      `
-              unread = false
-            }
-
-
-            if (Number(onlineUserId) === Number(item.senderId)) {
-              streamMsgDiv.innerHTML += `
+            data.priMsg.forEach((item) => {
+              if (Number(onlineUserId) === Number(item.senderId)) {
+                streamMsgDiv.innerHTML += `
       <div class="self-message">
         <span class="content">${slashNtoBr(item.text)}</span>
         <span class="time">${item.createdAt}</span>
       </div>
       `
-            } else {
-              streamMsgDiv.innerHTML += `
+              } else {
+
+                if (item.unread && unread) {
+                  streamMsgDiv.innerHTML += `
+      <div class="noti-message unread">
+        <span class="content unread">未讀訊息</span>
+      </div>
+      `
+                  unread = false
+                }
+
+                streamMsgDiv.innerHTML += `
       <div class="other-message">
         <img src="${data.opUser.avatar}">
         <div class="content">
@@ -112,12 +113,13 @@ findNewPriChat.addEventListener('click', async function onFindNewPriChat(event) 
       </div>
       `
 
-              readMsg.push(item)
-            }
-          })
-          scrollDownToBottom()
+                readMsg.push(item)
+              }
+            })
+            scrollDownToBottom()
 
-          socket.emit('setMsgRead', readMsg)
+            socket.emit('setMsgRead', readMsg)
+          }
         })
       }
     })

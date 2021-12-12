@@ -240,7 +240,9 @@ function onInputKeyup(event) {
 
 // 滾動聊天畫面至最下方
 function scrollDownToBottom() {
-  streamMsgDiv.lastElementChild.scrollIntoView()
+  if (streamMsgDiv.lastElementChild) {
+    streamMsgDiv.lastElementChild.scrollIntoView()
+  }
 }
 
 // string 仿 Array.splice 功能

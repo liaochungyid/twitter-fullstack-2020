@@ -49,7 +49,7 @@ module.exports = (io) => {
         msg.createdAt = chatTime.chatTime(msg.createdAt)
       })
       console.log(previousMessages)
-      
+
       io.emit('getPreviousMessages', previousMessages)
     })
 
@@ -75,7 +75,7 @@ module.exports = (io) => {
           raw: true,
           nest: true
         })
-        
+
         newMessage.createdAt = chatTime.msgTime(newMessage.createdAt)
 
         io.emit('getNewMessage', newMessage)
@@ -158,7 +158,9 @@ module.exports = (io) => {
         }),
         User.findByPk(opId)
       ])
-      // console.log(priMsg)
+
+      room = room.concat(roomid)
+      socket.join(room)
 
       io.to(roomid).emit('getPriPreMsg', { priMsg, opUser })
     })
@@ -173,7 +175,7 @@ module.exports = (io) => {
 
         const query = await PrivateMessage.create(data)
         // console.log('----------------------')
-        // console.log(query)
+        // console.log(receiver)
         // 確定建立完資料，才把資料拿出來`，一直錯誤 仙註解掉
         // const newMessage = PrivateMessage.findOne({
         //   where: { ...query.dataValues },
@@ -286,9 +288,9 @@ module.exports = (io) => {
         User.findByPk(bid, { raw: true })
       ])
     if (gotId) {
-      return fid.id = Number(gotId) ? bid : fid
+      return fid.id === Number(gotId) ? bid : fid
     } else {
-      console.log({ fid, bid })
+      // console.log({ fid, bid })
       return { fid, bid }
     }
   }
