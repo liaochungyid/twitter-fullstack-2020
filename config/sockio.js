@@ -129,12 +129,12 @@ module.exports = (io) => {
         PrivateMessage.findAll({
           where: {
             [Op.or]: [
-              { senderId: onlineUserId },
-              { receiverId: onlineUserId }
+              { senderId: onlineUserId, receiverId: opId },
+              { senderId: opId, receiverId: onlineUserId }
             ]
           },
           raw: true,
-          order: [['createdAt', 'Asc']]
+          order: [['createdAt', 'ASC']]
         }),
         User.findByPk(opId)
       ])
