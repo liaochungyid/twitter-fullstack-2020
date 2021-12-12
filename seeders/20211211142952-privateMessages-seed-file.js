@@ -8,7 +8,7 @@ module.exports = {
         id: 11,
         senderId: 11,
         receiverId: 21,
-        text: 'User1 to User2',
+        text: '11, User1 to User2:' + faker.lorem.text().substring(0, 10),
         unread: false,
         createdAt: new Date(new Date() - 86400000 + 1000000 * 1),
         updatedAt: new Date()
@@ -17,7 +17,7 @@ module.exports = {
         id: 21,
         senderId: 21,
         receiverId: 11,
-        text: 'User2 to User1',
+        text: '21, User2 to User1:' + faker.lorem.text().substring(0, 10),
         unread: false,
         createdAt: new Date(new Date() - 86400000 + 1000000 * 2),
         updatedAt: new Date()
@@ -26,7 +26,7 @@ module.exports = {
         id: 31,
         senderId: 11,
         receiverId: 21,
-        text: 'User1 to User2',
+        text: '31, User1 to User2:' + faker.lorem.text().substring(0, 10),
         unread: false,
         createdAt: new Date(new Date() - 86400000 + 1000000 * 3),
         updatedAt: new Date()
@@ -35,7 +35,7 @@ module.exports = {
         id: 41,
         senderId: 11,
         receiverId: 31,
-        text: 'User1 to User3',
+        text: '41! User1 to User3:' + faker.lorem.text().substring(0, 10),
         unread: false,
         createdAt: new Date(new Date() - 86400000 + 1000000 * 4),
         updatedAt: new Date()
@@ -44,7 +44,7 @@ module.exports = {
         id: 51,
         senderId: 31,
         receiverId: 11,
-        text: 'User3 to User1',
+        text: '51! User3 to User1:' + faker.lorem.text().substring(0, 10),
         unread: false,
         createdAt: new Date(new Date() - 86400000 + 1000000 * 5),
         updatedAt: new Date()
@@ -53,7 +53,7 @@ module.exports = {
         id: 61,
         senderId: 11,
         receiverId: 31,
-        text: 'User1 to User3',
+        text: '61! User1 to User3:' + faker.lorem.text().substring(0, 10),
         unread: false,
         createdAt: new Date(new Date() - 86400000 + 1000000 * 6),
         updatedAt: new Date()
@@ -62,7 +62,7 @@ module.exports = {
         id: 71,
         senderId: 11,
         receiverId: 21,
-        text: 'User1 to User2',
+        text: '71! User1 to User2:' + faker.lorem.text().substring(0, 10),
         unread: false,
         createdAt: new Date(new Date() - 86400000 + 1000000 * 7),
         updatedAt: new Date()
@@ -71,7 +71,7 @@ module.exports = {
         id: 81,
         senderId: 11,
         receiverId: 21,
-        text: 'User1 to User2',
+        text: '81! User1 to User2:' + faker.lorem.text().substring(0, 10),
         unread: false,
         createdAt: new Date(new Date() - 86400000 + 1000000 * 8),
         updatedAt: new Date()
@@ -80,7 +80,7 @@ module.exports = {
         id: 91,
         senderId: 21,
         receiverId: 11,
-        text: 'User2 to User1',
+        text: '91! User2 to User1:' + faker.lorem.text().substring(0, 10),
         unread: false,
         createdAt: new Date(new Date() - 86400000 + 1000000 * 9),
         updatedAt: new Date()
@@ -89,7 +89,7 @@ module.exports = {
         id: 101,
         senderId: 21,
         receiverId: 11,
-        text: 'User2 to User1',
+        text: '101! User2 to User1:' + faker.lorem.text().substring(0, 10),
         unread: false,
         createdAt: new Date(new Date() - 86400000 + 1000000 * 10),
         updatedAt: new Date()
