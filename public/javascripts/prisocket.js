@@ -8,7 +8,6 @@ const streamMsgDiv = document.querySelector('.stream-message')
 const findNewPriChat = document.querySelector('#findNewPriChat')
 const modalFindChatUser = document.querySelector('#modal-findChatUser')
 const findchatUsercard = document.querySelector('.dialog.findchat')
-
 const onlineUser = document.querySelector('#onlineUser')
 
 let roomid
@@ -191,33 +190,3 @@ socket.on('getNewPriMsg', (data) => {
   }
   scrollDownToBottom()
 })
-
-// 接收上線使用者們
-// socket.on('getOnlineUserPri', (data) => {
-//   let html = ''
-
-//   data.onlineUser.forEach(item => {
-//     html += `
-//       <a class="usercard" data-receiverid="${item.id}" data-receivername="${item.name}" data-receiveraccount="${item.account}">
-//         <img src="${item.avatar}">
-//         <div class="userfile">
-//           <div class="who">
-//             <div class="nameplace">
-//               <span class="name">${item.name}</span>
-//               <span class="at-name">@${item.account}</span>
-//             </div>
-//             <div class="lastcall">
-//               5秒前
-//             </div>
-//           </div>
-//           <div class="whoMessage">
-//             <span
-//               class="message ellipsis">還沒有最新一筆聊天紀錄，如果沒有就pass 空白!</span>
-//           </div>
-//         </div>
-//       </a>
-//       `
-//   })
-
-//   onlineUser.innerHTML = html
-// })
