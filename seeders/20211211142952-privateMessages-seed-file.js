@@ -93,6 +93,51 @@ module.exports = {
         unread: false,
         createdAt: new Date(new Date() - 86400000 + 1000000 * 10),
         updatedAt: new Date()
+      },
+      {
+        id: 111,
+        senderId: 51,
+        receiverId: 11,
+        text: '111! User5 to User1:' + faker.lorem.text().substring(0, 10),
+        unread: false,
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 11),
+        updatedAt: new Date()
+      },
+      {
+        id: 121,
+        senderId: 21,
+        receiverId: 31,
+        text: '121! User2 to User3:' + faker.lorem.text().substring(0, 10),
+        unread: false,
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 12),
+        updatedAt: new Date()
+      },
+      {
+        id: 131,
+        senderId: 11,
+        receiverId: 51,
+        text: '131! User1 to User5:' + faker.lorem.text().substring(0, 10),
+        unread: false,
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 13),
+        updatedAt: new Date()
+      },
+      {
+        id: 141,
+        senderId: 11,
+        receiverId: 51,
+        text: '141! User1 to User5:' + faker.lorem.text().substring(0, 10),
+        unread: false,
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 14),
+        updatedAt: new Date()
+      },
+      {
+        id: 151,
+        senderId: 51,
+        receiverId: 11,
+        text: '151! User5 to User1:' + faker.lorem.text().substring(0, 10),
+        unread: false,
+        createdAt: new Date(new Date() - 86400000 + 1000000 * 15),
+        updatedAt: new Date()
       }
     ])
   },
