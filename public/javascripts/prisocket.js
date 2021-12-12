@@ -133,12 +133,12 @@ socket.on(`pri users for ${onlineUserId}`, (data) => {
               <span class="name">${item.name}</span>
               <span class="at-name">@${item.account}</span>
             </div>
-            <div class="lastcall">
-              ??啥時間
+            <div class="lastcall" style="width:110%">
+              ${item.createdAt}
             </div>
           </div>
           <div class="whoMessage">
-            <span class="message ellipsis">${item.introduction}</span>
+            <span class="message ellipsis">${item.text}</span>
           </div>
         </div>
       </a>
