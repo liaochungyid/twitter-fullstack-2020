@@ -29,6 +29,7 @@ const authenticatedAdmin = (req, res, next) => {
   return res.redirect('/admin/signin')
 }
 
+router.get('/tt', pageController.getTest)
 // 首頁
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, pageController.getIndex)

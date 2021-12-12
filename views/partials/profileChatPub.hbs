@@ -1,26 +1,24 @@
 <div class="chatroom">
   <div class="onlineUser">
     <div class="title">
-      上線使用者 (<span class="onlineUserCount">5</span>)
+      上線使用者 (<span class="onlineUserCount" id="onlineUserCount">5</span>)
     </div>
-    <div class="users">
+    <div class="users" id="onlineUser">
 
-      {{!-- 這裡使用each 刷每個在線使用者 --}}
-      <div class="usercard">
-        <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png">
+      {{!-- 顯示上線者 --}}
+      {{!-- <div class="usercard">
+        <img src="../../public/images/sample.gif">
         <div class="userfile">
           <div class="who">
             <div class="nameplace">
-              <span class="name">Apple</span>
-              <span class="at-name">@Apple</span>
+              <span class="name">NAME</span>
+              <span class="at-name">@account</span>
             </div>
             <div class="lastcall">
-              {{!-- 不須時間 保留空白div在這 勿刪 --}}
             </div>
           </div>
         </div>
-      </div>
-      {{!-- each 結束 --}}
+      </div> --}}
 
     </div>
   </div>
@@ -32,32 +30,30 @@
 
     <div class="stream-message">
 
-      {{!-- 上下線提示 --}}
-      <div class="noti-message">
+      {{!-- 上線提示 --}}
+      {{!-- <div class="noti-message">
         <span class="content">Dan Lin上線</span>
-      </div>
+      </div> --}}
 
       {{!-- 自己的訊息 --}}
-      <div class="self-message">
-        <span
-          class="content">這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言</span>
+      {{!-- <div class="self-message">
+        <span class="content">這是我自己留言</span>
         <span class="time">下午6:01</span>
-      </div>
+      </div> --}}
 
       {{!-- 別人的訊息 --}}
-      <div class="other-message">
+      {{!-- <div class="other-message">
         <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png">
         <div class="content">
-          <span
-            class="content">這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言</span>
+          <span class="content">這是路人甲留言</span>
           <span class="time">下午6:01</span>
         </div>
-      </div>
+      </div> --}}
 
-      {{!-- 同上，上下線提示 --}}
-      <div class="noti-message">
+      {{!-- 離線提示 --}}
+      {{!-- <div class="noti-message">
         <span class="content">Dan Lin 離線</span>
-      </div>
+      </div> --}}
 
     </div>
 
@@ -65,15 +61,10 @@
     <form class="onlineSendbox">
       <textarea name="message" rows="1" placeholder="輸入訊息..." autofocus required maxlength="500"
         id="textareaAutogrow"></textarea>
-      <button type="button"><i class="send" id="send" data-loginuserid="{{loginUser.id}}"
-          data-loginusername="{{loginUser.name}}" data-loginuseravatar="{{loginUser.avatar}}"></i></button>
+      <button type="button"><i class="send" id="send" data-loginuserid="{{loginUser.id}}"></i></button>
     </form>
 
   </div>
 </div>
 
-<script src="https://cdn.socket.io/4.4.0/socket.io.js"></script>
-<script src="/javascripts/socket.js"></script>
-{{!--
-<script src="/socket.io/socket.io.js"></script>
-<script src="javascripts/mySocket.js"></script> --}}
+<script src="/javascripts/pubsocket.js"></script>

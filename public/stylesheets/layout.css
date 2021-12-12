@@ -836,6 +836,40 @@ html, body {
   width: 116px;
 }
 
+/* user-template main for profile notis page */
+.main > .notis {
+  height: calc(100vh - 55px);
+  width: 598px;
+  padding: 15px;
+}
+
+.main > .notis > .noti {
+  display: block;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  border-bottom: 1px solid #E6ECF0;
+  margin-top: 10px;
+}
+
+.main > .notis > .noti > .noti-title {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  color: #1C1C1C;
+  margin-bottom: 5px;
+}
+
+.main > .notis > .noti > .noti-title > img {
+  width: 30px;
+  height: 30px;
+}
+
+.main > .notis > .noti > .content {
+  color:#657786;
+  padding: 0 0 5px 15px;
+}
 
 /* user-template right side */
 .rightside {
@@ -952,6 +986,13 @@ html, body {
   height: 130px;
   min-height: 130px;
   padding: 10px;
+}
+
+.modal > .mask > .dialog.findchat {
+  height: 60%;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .modal > .mask > .dialog > .warning-title {
@@ -1551,6 +1592,63 @@ html, body {
   color: #657786;
 }
 
+/* modal for findchat */
+#modal-findChatUser .usercard {
+  display: inline-block;
+  width: 186px;
+  height: 220px;
+  margin: 10px 0 0 8px;
+}
+
+#modal-findChatUser .usercard > .imgs {
+  position: relative;
+}
+
+#modal-findChatUser .usercard > .imgs > .thumbnail-card {
+  background-color: #c4c4c4;
+  border: 4px solid #fff;
+  position: absolute;
+  top: 53px;
+  left: 43px;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+#modal-findChatUser .usercard > .imgs > .img-card {
+  background-color: #c4c4c4;
+  width: 186px;
+  height: 124px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#modal-findChatUser .usercard > .texts {
+  color: #1C1C1C;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  background-color: #F6F7F8;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 100%;
+  height: 86px;
+  padding-top: 33px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+#modal-findChatUser .usercard > .texts > .name {
+  font-weight: 900;
+  margin-bottom: 2px;
+}
+
+#modal-findChatUser .usercard > .texts > .account {
+  color: #657786;
+  margin-bottom: 15px;
+}
 
 /* general style */
 .d-none {
@@ -1657,6 +1755,18 @@ div.invalid::after {
   flex-flow: column nowrap;
 }
 
+.onlineUser > .twoitem {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding-right: 10px;
+}
+
+.onlineUser > .twoitem a {
+  display: flex;
+  align-items: center;
+}
+
 .onlineChatroom {
   width: 70%;
   height: 100%;
@@ -1732,11 +1842,16 @@ div.invalid::after {
 }
 
 .onlineUser > .users > .usercard > .userfile > .who > .nameplace > .at-name,
-.onlineUser > .users > .usercard > .userfile > .who > .lastcall,
-.onlineChatroom > .title > .who > .at-name {
+.onlineUser > .users > .usercard > .userfile > .who > .lastcall {
   color: #657786;
   font-weight: 500;
   flex: 1 0 0;
+  word-break: keep-all;
+}
+
+.onlineChatroom > .title > .who > .at-name {
+  color: #657786;
+  font-weight: 500;
   word-break: keep-all;
 }
 
@@ -1787,6 +1902,16 @@ div.invalid::after {
   flex-flow: row nowrap;
   justify-content: center;
   color: #657786;
+}
+
+.onlineChatroom > .stream-message > .noti-message.unread {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.onlineChatroom > .stream-message > .noti-message.unread > .unread {
+  text-align: center;
+  width: 80%;
 }
 
 .onlineChatroom > .stream-message > .noti-message > span {

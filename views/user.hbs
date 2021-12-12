@@ -1,3 +1,5 @@
+<script src="https://cdn.socket.io/4.4.0/socket.io.js"></script>
+
 {{#ifCond partial "profileSettings"}}
 <div class="user-template-setting">
   {{else}}
@@ -69,7 +71,6 @@
         </div>
 
         {{#ifCond partial "userSettingsPage"}}{{else}}
-        {{#ifCond partial "profileNotis"}}{{else}}
         {{#ifCond partial "profileChatPub"}}{{else}}
         {{#ifCond partial "profileChatPris"}}{{else}}
         <div class="rightside">
@@ -102,7 +103,6 @@
           </div>
 
         </div>
-        {{/ifCond}}
         {{/ifCond}}
         {{/ifCond}}
         {{/ifCond}}
@@ -211,5 +211,15 @@
         </div>
       </div>
       {{/if}}
+
+      {{#ifCond partial "profileChatPris"}}
+      <div class="modal d-none" id="modal-findChatUser">
+        <div class="mask">
+          <div class="dialog findchat">
+          </div>
+        </div>
+      </div>
+      <script src="/javascripts/prisocket.js"></script>
+      {{/ifCond}}
 
     </div>
