@@ -31,7 +31,7 @@ const adminService = {
     try {
       const tweetId = Number(req.params.tweetId)
       await Tweet.destroy({ where: { id: tweetId } })
-      return callback({ status: 'success', message: ''})
+      return callback({ status: 'success', message: '' })
     } catch (err) {
       console.error(err)
     }
