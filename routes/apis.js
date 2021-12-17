@@ -18,5 +18,6 @@ router.post('/users/:userId', authenticated, userController.updateUser)
 router.get('/tweets/:tweetId', authenticated, tweetServer.getTweet) // reply modal api
 
 router.get('/admin/tweets', adminController.getTweets)
+router.delete('/admin/tweets/:tweetId', adminController.deleteTweet)
 
 module.exports = router

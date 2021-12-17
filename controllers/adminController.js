@@ -1,34 +1,21 @@
 const db = require('../models')
 const { User, Tweet, Like } = db
 
+const adminService = require('../services/adminService')
+
 const adminController = {
   getTweets: async (req, res) => {
-    try {
-      let tweets = await Tweet.findAll({
-        raw: true,
-        nest: true,
-        order: [['createdAt', 'DESC']],
-        include: [{ model: User }]
-      })
-
-      tweets = tweets.map((tweet) => ({
-        ...tweet,
-        description: tweet.description.slice(0, 50)
-      }))
-
-      return res.render('admin', { tweets, partial: 'adminTweets' })
-    } catch (err) {
-      console.error(err)
-    }
+    adminService.getTweets(req, res, (data) => {
+      return res.render('admin', data)
+    })
   },
 
   deleteTweet: async (req, res) => {
-    try {
-      await Tweet.destroy({ where: { id: req.params.tweetId } })
-      return res.redirect('/admin/tweets')
-    } catch (err) {
-      console.error(err)
-    }
+    adminService.deleteTweet(req, res, (data) => {
+      if (data['status'] === 'success') {
+        return res.redirect('/admin/tweets')
+      }
+    })
   },
 
   adminUsers: async (req, res) => {
