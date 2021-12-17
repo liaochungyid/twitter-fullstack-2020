@@ -1,7 +1,7 @@
-const helpers = require('../_helpers')
 const express = require('express')
 const router = express.Router()
 const passport = require('../config/passport')
+const { authenticated, authenticatedAdmin } = require('../middleware/checkAuth')
 const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
@@ -11,23 +11,6 @@ const tweetController = require('../controllers/tweetController')
 const replyController = require('../controllers/replyController')
 const followshipController = require('../controllers/followshipController')
 const pageController = require('../controllers/pageController')
-
-const authenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    return next()
-  }
-  return res.redirect('/signin')
-}
-
-const authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') {
-      return next()
-    }
-    return res.redirect('/tweets')
-  }
-  return res.redirect('/admin/signin')
-}
 
 // 首頁
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))

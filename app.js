@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const helpers = require('./_helpers')
 const express = require('express')
 const exphbs = require('express-handlebars')
@@ -6,12 +10,8 @@ const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
-
 const app = express()
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT
 
 app.engine('hbs', exphbs({
   defaultLayout: 'main',
