@@ -2,6 +2,7 @@ const helpers = require('../_helpers')
 const express = require('express')
 const router = express.Router()
 
+const adminController = require('../controllers/api/adminController')
 const userController = require('../controllers/api/userController')
 const tweetServer = require('../controllers/api/tweetServer')
 
@@ -15,5 +16,7 @@ const authenticated = (req, res, next) => {
 router.get('/users/:userId', authenticated, userController.getEditModal)
 router.post('/users/:userId', authenticated, userController.updateUser)
 router.get('/tweets/:tweetId', authenticated, tweetServer.getTweet) // reply modal api
+
+router.get('/admin/tweets', adminController.getTweets)
 
 module.exports = router
