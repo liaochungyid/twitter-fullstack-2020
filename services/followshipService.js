@@ -7,13 +7,16 @@ const followshipService = {
     try {
       const followerId = Number(helpers.getUser(req).id)
       const followingId = Number(req.body.id)
+      let result = ''
 
       if (followerId === followingId) {
-        return callback({ status: 'error', message: '不可跟隨自己' })
+        result = { status: 'error', message: '不可跟隨自己' }
+      } else {
+        await Followship.findOrCreate({ where: { followerId, followingId } })
+        result = { status: 'success', message: '跟隨成功' }
       }
 
-      await Followship.findOrCreate({ where: { followerId, followingId } })
-      return callback({ status: 'success', message: '' })
+      return callback(result)
     } catch (err) {
       console.error(err)
     }
@@ -24,7 +27,8 @@ const followshipService = {
       const followerId = Number(helpers.getUser(req).id)
       const followingId = Number(req.params.userId)
       await Followship.destroy({ where: { followerId, followingId } })
-      return callback({ status: 'success', message: '' })
+      const result = { status: 'success', message: '取消跟隨成功' }
+      return callback(result)
     } catch (err) {
       console.error(err)
     }

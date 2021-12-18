@@ -1,6 +1,3 @@
-const db = require('../../models')
-const { User, Tweet } = db
-
 const adminService = require('../../services/adminService')
 
 const adminController = {
@@ -9,7 +6,7 @@ const adminController = {
       return res.json(data)
     })
   },
-  
+
   deleteTweet: async (req, res) => {
     adminService.deleteTweet(req, res, (data) => {
       return res.json(data)

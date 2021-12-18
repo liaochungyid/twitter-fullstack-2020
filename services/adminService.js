@@ -21,7 +21,14 @@ const adminService = {
         description: tweet.description.slice(0, 50)
       }))
 
-      return callback({ tweets, partial: 'adminTweets' })
+      const result = {
+        status: 'success',
+        message: '取得所有推文成功',
+        tweets: tweets,
+        partial: 'adminTweets'
+      }
+
+      return callback(result)
     } catch (err) {
       console.error(err)
     }
@@ -31,11 +38,17 @@ const adminService = {
     try {
       const tweetId = Number(req.params.tweetId)
       await Tweet.destroy({ where: { id: tweetId } })
-      return callback({ status: 'success', message: '' })
+
+      const result = {
+        status: 'success',
+        message: '刪除一筆推文成功'
+      }
+
+      return callback(result)
     } catch (err) {
       console.error(err)
     }
-  },
+  }
 
   // adminUsers 改成 getUsers！
 

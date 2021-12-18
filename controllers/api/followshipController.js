@@ -8,7 +8,7 @@ const followshipController = {
   },
 
   removeFollow: async (req, res) => {
-    adminService.removeFollow(req, res, (data) => {
+    followshipService.removeFollow(req, res, (data) => {
       return res.json(data)
     })
   }
