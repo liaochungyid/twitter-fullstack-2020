@@ -13,6 +13,8 @@ const modalPostFormTextarea = document.querySelector(
 )
 const inputs = document.querySelectorAll('input,textarea')
 
+const chatTextarea = document.querySelector('#textareaAutogrow')
+
 // // 全畫面監聽器
 body.addEventListener('click', async (event) => {
   const target = event.target
@@ -143,7 +145,34 @@ if (inputs) {
   })
 }
 
-function isEmpty (nodeElement) {
+if (chatTextarea) {
+
+  // chatTextarea.addEventListener('keydown', function ononTextareaKeypress(event) {
+  //   if (event.keyCode === 13) {
+  //     document.querySelector("#send").click()
+  //   }
+  // })
+
+  chatTextarea.addEventListener('keyup', function onTextareaKeyup(event) {
+    const target = event.target
+    const keycode = event.keyCode
+
+    let clientheight = target.clientHeight
+
+    if ([8, 46].includes(keycode)) {
+      target.style.height = '30px'
+      clientheight = 30
+    }
+
+    let adjustedheight = target.scrollHeight
+
+    if (adjustedheight > clientheight) {
+      target.style.height = adjustedheight + 'px';
+    }
+  })
+}
+
+function isEmpty(nodeElement) {
   // 無文字回傳true，文字長度大於0，回傳false
   return !nodeElement.value.replace(/\s/g, '').length
 }
