@@ -1,28 +1,6 @@
 <div class="chatroom">
   <div class="onlineUser">
     <div class="title">
-<<<<<<< HEAD
-      上線使用者 (<span class="onlineUserCount">5</span>)
-    </div>
-    <div class="users">
-
-      {{!-- 這裡使用each 刷每個在線使用者 --}}
-      <div class="usercard">
-        <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png">
-        <div class="userfile">
-          <div class="who">
-            <div class="nameplace">
-              <span class="name">Apple</span>
-              <span class="at-name">@Apple</span>
-            </div>
-            <div class="lastcall">
-              {{!-- 不須時間 保留空白div在這 勿刪 --}}
-            </div>
-          </div>
-        </div>
-      </div>
-      {{!-- each 結束 --}}
-=======
       上線使用者 (<span class="onlineUserCount" id="onlineUserCount">0</span>)
     </div>
     <div class="users" id="onlineUser">
@@ -41,7 +19,6 @@
           </div>
         </div>
       </div> --}}
->>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
 
     </div>
   </div>
@@ -53,34 +30,6 @@
 
     <div class="stream-message">
 
-<<<<<<< HEAD
-      {{!-- 上下線提示 --}}
-      <div class="noti-message">
-        <span class="content">Dan Lin上線</span>
-      </div>
-
-      {{!-- 自己的訊息 --}}
-      <div class="self-message">
-        <span
-          class="content">這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言這是我自己留言</span>
-        <span class="time">下午6:01</span>
-      </div>
-
-      {{!-- 別人的訊息 --}}
-      <div class="other-message">
-        <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png">
-        <div class="content">
-          <span
-            class="content">這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言這是路人甲留言</span>
-          <span class="time">下午6:01</span>
-        </div>
-      </div>
-
-      {{!-- 同上，上下線提示 --}}
-      <div class="noti-message">
-        <span class="content">Dan Lin 離線</span>
-      </div>
-=======
       {{!-- 上線提示 --}}
       {{!-- <div class="noti-message">
         <span class="content">Dan Lin上線</span>
@@ -105,7 +54,6 @@
       {{!-- <div class="noti-message">
         <span class="content">Dan Lin 離線</span>
       </div> --}}
->>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
 
     </div>
 
@@ -113,20 +61,10 @@
     <form class="onlineSendbox">
       <textarea name="message" rows="1" placeholder="輸入訊息..." autofocus required maxlength="500"
         id="textareaAutogrow"></textarea>
-<<<<<<< HEAD
-      <button type="button"><i class="send" id="send" data-loginuserid="{{loginUser.id}}"
-          data-loginusername="{{loginUser.name}}" data-loginuseravatar="{{loginUser.avatar}}"></i></button>
-=======
       <button type="button"><i class="send" id="send" data-loginuserid="{{loginUser.id}}"></i></button>
->>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
     </form>
 
   </div>
 </div>
 
-<<<<<<< HEAD
-<script src="https://cdn.socket.io/4.4.0/socket.io.js"></script>
-<script src="/javascripts/socket.js"></script>
-=======
-<script src="/javascripts/pubsocket.js"></script>
->>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
+<script type="model" src="/javascripts/pubsocket.js"></script>

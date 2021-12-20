@@ -1,4 +1,4 @@
-<script src="https://cdn.socket.io/4.4.0/socket.io.js"></script>
+<script type="model" src="https://cdn.socket.io/4.4.0/socket.io.js"></script>
 
 {{#ifCond partial "profileSettings"}}
 <div class="user-template-setting">
@@ -72,20 +72,13 @@
         </div>
 
         <div class="main">
-<<<<<<< HEAD
-=======
-          <script src="/javascripts/socket.js"></script>
-          
->>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
+          <script type="model" async src="/javascripts/socket.js"></script>
+
           {{!-- USER PARTIALS --}}
           {{> (lookup . "partial") }}
         </div>
 
         {{#ifCond partial "userSettingsPage"}}{{else}}
-<<<<<<< HEAD
-        {{#ifCond partial "profileNotis"}}{{else}}
-=======
->>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
         {{#ifCond partial "profileChatPub"}}{{else}}
         {{#ifCond partial "profileChatPris"}}{{else}}
         <div class="rightside">
@@ -121,10 +114,6 @@
         {{/ifCond}}
         {{/ifCond}}
         {{/ifCond}}
-<<<<<<< HEAD
-        {{/ifCond}}
-=======
->>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
 
       </div>
 
@@ -231,8 +220,6 @@
       </div>
       {{/if}}
 
-<<<<<<< HEAD
-=======
       {{#ifCond partial "profileChatPris"}}
       <div class="modal d-none" id="modal-findChatUser">
         <div class="mask">
@@ -240,8 +227,7 @@
           </div>
         </div>
       </div>
-      <script src="/javascripts/prisocket.js"></script>
+      <script type="model" src="/javascripts/prisocket.js"></script>
       {{/ifCond}}
 
->>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
     </div>

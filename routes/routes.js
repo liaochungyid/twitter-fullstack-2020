@@ -12,27 +12,6 @@ const replyController = require('../controllers/replyController')
 const followshipController = require('../controllers/followshipController')
 const pageController = require('../controllers/pageController')
 
-<<<<<<< HEAD
-=======
-const authenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    return next()
-  }
-  return res.redirect('/signin')
-}
-
-const authenticatedAdmin = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    if (helpers.getUser(req).role === 'admin') {
-      return next()
-    }
-    return res.redirect('/tweets')
-  }
-  return res.redirect('/admin/signin')
-}
-
-router.get('/tt', pageController.getTest)
->>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
 // 首頁
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, pageController.getIndex)
