@@ -16,6 +16,7 @@ const authenticated = (req, res, next) => {
 
 router.get('/users/:userId', authenticated, userController.getEditModal)
 router.post('/users/:userId', authenticated, userController.updateUser)
+router.get('/chatusers/:userId', authenticated, userController.getUsers) // find chat api
 router.get('/tweets/:tweetId', authenticated, tweetServer.getTweet) // reply modal api
 
 router.post('/followships', followshipController.addFollow)

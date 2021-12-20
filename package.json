@@ -9,7 +9,9 @@
     "test": "set \"NODE_ENV=test\" && mocha test --exit --recursive --timeout 5000 --color",
     "seed": "set \"NODE_ENV=development\" && npx sequelize db:seed:undo:all && npx sequelize db:seed:all",
     "setup": "npm install && set \"NODE_ENV=development\" && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all && set \"NODE_ENV=test\" && npx sequelize db:create && npx sequelize db:migrate",
-    "reset": "set \"NODE_ENV=development\" && npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all && set \"NODE_ENV=test\" && npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate"
+    "reset": "set \"NODE_ENV=development\" && npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all && set \"NODE_ENV=test\" && npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate",
+    "myTest": "mocha utils/*.test.js",
+    "test-watch": "nodemon --exec \"npm run myTest\""
   },
   "author": "",
   "license": "ISC",
@@ -25,9 +27,9 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "faker": "^4.1.0",
+    "http": "0.0.1-security",
     "imgur-node-api": "^0.1.0",
     "method-override": "^3.0.0",
-    "mocha": "^6.0.2",
     "moment": "^2.29.1",
     "multer": "^1.4.4",
     "mysql2": "^1.6.4",
@@ -38,9 +40,12 @@
     "sequelize": "^4.42.0",
     "sequelize-cli": "^5.5.0",
     "sinon": "^7.2.3",
-    "sinon-chai": "^3.3.0"
+    "sinon-chai": "^3.3.0",
+    "socket.io": "^4.4.0"
   },
   "devDependencies": {
+    "expect": "^27.4.2",
+    "mocha": "^6.2.3",
     "sequelize-test-helpers": "^1.0.7",
     "supertest": "^3.3.0"
   },

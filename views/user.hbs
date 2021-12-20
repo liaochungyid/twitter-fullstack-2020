@@ -1,3 +1,5 @@
+<script src="https://cdn.socket.io/4.4.0/socket.io.js"></script>
+
 {{#ifCond partial "profileSettings"}}
 <div class="user-template-setting">
   {{else}}
@@ -24,21 +26,27 @@
             {{/ifCond}}
 
             {{#ifCond partial "profileNotis"}}
-            <a class="active" href='/users/{{loginUser.id}}/profileNotis'><i class='noti active'></i>通知</a>
+            <a class="active" href='/users/{{loginUser.id}}/profileNotis'><i class='noti active' id="noti-noti"
+                data-userlogin="{{loginUser.id}}"></i>通知</a>
             {{else}}
-            <a class="" href='/users/{{loginUser.id}}/profileNotis'><i class='noti dot-noti'></i>通知</a>
+            <a class="" href='/users/{{loginUser.id}}/profileNotis'><i class='noti' id="noti-noti"
+                data-userlogin="{{loginUser.id}}"></i>通知</a>
             {{/ifCond}}
 
             {{#ifCond partial "profileChatPub"}}
-            <a class="active" href='/users/{{loginUser.id}}/profileChatPub'><i class='message active'></i>公開聊天室</a>
+            <a class="active" href='/users/{{loginUser.id}}/profileChatPub'><i class='message active'
+                id="pub-chat-noti"></i>公開聊天室</a>
             {{else}}
-            <a class="" href='/users/{{loginUser.id}}/profileChatPub'><i class='message dot-noti'></i>公開聊天室</a>
+            <a class="" href='/users/{{loginUser.id}}/profileChatPub'><i class='message'
+                id="pub-chat-noti"></i>公開聊天室</a>
             {{/ifCond}}
 
             {{#ifCond partial "profileChatPris"}}
-            <a class="active" href='/users/{{loginUser.id}}/profileChatPris'><i class='message active'></i>私人訊息</a>
+            <a class="active" href='/users/{{loginUser.id}}/profileChatPris'><i class='message active'
+                id="pri-chat-noti"></i>私人訊息</a>
             {{else}}
-            <a class="" href='/users/{{loginUser.id}}/profileChatPris'><i class='message dot-noti'></i>私人訊息</a>
+            <a class="" href='/users/{{loginUser.id}}/profileChatPris'><i class='message'
+                id="pri-chat-noti"></i>私人訊息</a>
             {{/ifCond}}
 
             {{#ifCond loginUser.id user.id}}
@@ -64,12 +72,20 @@
         </div>
 
         <div class="main">
+<<<<<<< HEAD
+=======
+          <script src="/javascripts/socket.js"></script>
+          
+>>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
           {{!-- USER PARTIALS --}}
           {{> (lookup . "partial") }}
         </div>
 
         {{#ifCond partial "userSettingsPage"}}{{else}}
+<<<<<<< HEAD
         {{#ifCond partial "profileNotis"}}{{else}}
+=======
+>>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
         {{#ifCond partial "profileChatPub"}}{{else}}
         {{#ifCond partial "profileChatPris"}}{{else}}
         <div class="rightside">
@@ -105,7 +121,10 @@
         {{/ifCond}}
         {{/ifCond}}
         {{/ifCond}}
+<<<<<<< HEAD
         {{/ifCond}}
+=======
+>>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
 
       </div>
 
@@ -212,4 +231,17 @@
       </div>
       {{/if}}
 
+<<<<<<< HEAD
+=======
+      {{#ifCond partial "profileChatPris"}}
+      <div class="modal d-none" id="modal-findChatUser">
+        <div class="mask">
+          <div class="dialog findchat">
+          </div>
+        </div>
+      </div>
+      <script src="/javascripts/prisocket.js"></script>
+      {{/ifCond}}
+
+>>>>>>> ba884b47a166c1d955eee9f70e0e6f237ed349e2
     </div>

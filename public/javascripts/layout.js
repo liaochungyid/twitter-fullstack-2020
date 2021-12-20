@@ -15,6 +15,8 @@ const inputs = document.querySelectorAll('input,textarea')
 
 const chatTextarea = document.querySelector('#textareaAutogrow')
 
+const notis = document.querySelector('#notis')
+
 // // 全畫面監聽器
 body.addEventListener('click', async (event) => {
   const target = event.target
@@ -146,20 +148,20 @@ if (inputs) {
 }
 
 if (chatTextarea) {
-
-  // chatTextarea.addEventListener('keydown', function ononTextareaKeypress(event) {
-  //   if (event.keyCode === 13) {
-  //     document.querySelector("#send").click()
-  //   }
-  // })
-
   chatTextarea.addEventListener('keyup', function onTextareaKeyup(event) {
     const target = event.target
     const keycode = event.keyCode
 
     let clientheight = target.clientHeight
 
-    if ([8, 46].includes(keycode)) {
+    if (event.keyCode === 13 && !event.shiftKey) {
+      // enter 送出表單，shift+enter不送出(換行)
+      document.querySelector("#send").click()
+      target.style.height = '30px'
+      clientheight = 30
+      target.value = ''
+    } else if ([8, 46].includes(keycode)) {
+      // backspace或del按鍵，重測行高
       target.style.height = '30px'
       clientheight = 30
     }
@@ -167,10 +169,55 @@ if (chatTextarea) {
     let adjustedheight = target.scrollHeight
 
     if (adjustedheight > clientheight) {
+      // 卷軸高度 大於 現在高度，設定表單高度為卷軸高度
       target.style.height = adjustedheight + 'px';
     }
   })
 }
+
+if (notis) {
+  const response = async function func() {
+    return await axios.get(
+      `${window.location.origin}/api/news`
+    )
+  }()
+
+  response.forEach(item => {
+    if (item.type === '未讀的追蹤者推文') {
+      notis.innHTML += `
+      <a href="/tweets/${item.TweetId}" class="noti">
+        <div class="noti-title">
+          <img class="thumbnail" src="${item.User.avatar}" alt="${item.User.name} avatar">
+
+            <div class="noti-msg">
+              ${item.User.name} 有新的推文通知
+            </div>
+        </div>
+
+        <div class="content">
+          ${item.Tweet.description}
+        </div>
+      </a>
+      `
+    } else if (item.type === '未讀的被讚事件') {
+      notis.innHTML += `
+    <a href="/tweets/${item.TweetId}" class="noti">
+    <div class="noti-title">
+      <img class="thumbnail" src="${item.User.avatar}" alt="${item.User.name} avatar">
+
+      <div class="noti-msg">
+        ${item.User.name} 喜歡妳的貼文
+      </div>
+    </div>
+  </a>
+   `
+    }
+
+  })
+}
+
+
+
 
 function isEmpty(nodeElement) {
   // 無文字回傳true，文字長度大於0，回傳false
@@ -235,4 +282,37 @@ function onInputKeyup (event) {
     // 避免非英文數字輸入account
     target.value = target.value.replace(/[\W]/g, '')
   }
+}
+
+// 滾動聊天畫面至最下方
+function scrollDownToBottom() {
+  if (streamMsgDiv.lastElementChild) {
+    streamMsgDiv.lastElementChild.scrollIntoView()
+  }
+}
+
+// string 仿 Array.splice 功能
+function stringSplice(str, start, delCount, newSubStr) {
+  return str.slice(0, start) + newSubStr + str.slice(start + delCount)
+}
+
+// \n換行符號替換<br>
+function slashNtoBr(str, delStr = '\n', newStr = '<br>') {
+  let result = str
+
+  while (result.indexOf(delStr) !== -1) {
+    // 替換單一 delStr
+    result = stringSplice(result, result.indexOf(delStr), delStr.length, newStr)
+  }
+
+  while (result.indexOf(newStr + newStr) !== -1) {
+    // 替換 連續 newStr
+    result = stringSplice(result, result.indexOf(newStr + newStr), newStr.length * 2, newStr)
+  }
+
+  if (result.indexOf(newStr) === 0) {
+    result = result.slice(newStr.length)
+  }
+
+  return result
 }
