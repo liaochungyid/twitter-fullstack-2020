@@ -51,6 +51,7 @@ i.noti {
   background: url("../icons/noti.svg");
   width: 21px;
   height: 20px;
+  margin-left: 3px;
 }
 i.noti.active {
   background: url("../icons/noti-active.svg");
@@ -59,6 +60,7 @@ i.message {
   background: url("../icons/message.svg");
   width: 19px;
   height: 17px;
+  margin-left: 3px;
 }
 i.message.active {
   background: url("../icons/message-active.svg");
@@ -147,17 +149,6 @@ input[type="button"].X-white {
   background-position: -116px -145px;
   height: 16px;
   width: 16px;
-}
-i.dot-noti::before {
-  position: absolute;
-  right: -2px;
-  top: -2px;
-  content: "";
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: #f60;
-  border: 2px solid #fff;
 }
 i.send {
   background: url("../icons/send.svg");
