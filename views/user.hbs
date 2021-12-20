@@ -1,4 +1,4 @@
-<script type="model" src="https://cdn.socket.io/4.4.0/socket.io.js"></script>
+<script src="https://cdn.socket.io/4.4.0/socket.io.js"></script>
 
 {{#ifCond partial "profileSettings"}}
 <div class="user-template-setting">
@@ -72,7 +72,7 @@
         </div>
 
         <div class="main">
-          <script type="model" async src="/javascripts/socket.js"></script>
+          <script defer src="/javascripts/notiSocket.js"></script>
 
           {{!-- USER PARTIALS --}}
           {{> (lookup . "partial") }}
@@ -227,7 +227,7 @@
           </div>
         </div>
       </div>
-      <script type="model" src="/javascripts/prisocket.js"></script>
+      <script async src="/javascripts/privateSocket.js"></script>
       {{/ifCond}}
 
     </div>
