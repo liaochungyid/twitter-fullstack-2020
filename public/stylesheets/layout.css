@@ -1659,6 +1659,10 @@ html, body {
 }
 
 /* general style */
+*:disabled {
+  opacity:0.2;
+}
+
 .d-none {
   display: none !important;
 }
