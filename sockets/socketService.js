@@ -59,6 +59,66 @@ const socketService = {
     } catch (err) {
       console.log(err)
     }
+  },
+  getUserInfo: async (userId) => {
+    try {
+      return await User.findByPk(userId, {
+        raw: true,
+        attributes: ['id', 'name', 'avatar', 'account']
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  getPreviousMsg: async (userId = false, limit = 25, offset = 0) => {
+    try {
+      if (userId) {
+        console.log('not implement yet!')
+      } else {
+        const msg = await Message.findAll({
+          raw: true,
+          nest: true,
+          attributes: ['text', 'createdAt'],
+          order: [['createdAt', 'DESC']],
+          limit,
+          offset,
+          include: [{
+            model: User,
+            attributes: ['id', 'name', 'account', 'avatar'],
+            require: false
+          }]
+        })
+
+        return msg.reverse()
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  getPreviousUser: async (userIdList) => {
+    try {
+      const userList = await Promise.all(
+        userIdList.map(uid => {
+          return User.findByPk(uid, {
+            raw: true,
+            attributes: ['name', 'avatar', 'account']
+          })
+        })
+      )
+
+      return userList
+    } catch (err) {
+      console.log(err)
+    }
+  },
+  createMessage: async (data) => {
+    try {
+      const message = await Message.create(data)
+
+      return message.dataValues
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 
