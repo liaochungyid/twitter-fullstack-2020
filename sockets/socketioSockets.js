@@ -46,15 +46,20 @@ module.exports = (io) => {
           .splice(notiOnlineUser.indexOf(userId), 1)
       })
 
-      // 這裡需要 getPublicNoti getPrivateNoti getNotiNoti 三個service，以 .length回傳數量
       // 送出歷史通知 (Public, Private, Noti)
-      io.to(userId).emit('getPreviousNoti', {
-        getPublicNoti: true,
-        getPrivateNoti: 10,
-        getNotiNoti: 5
+      Promise.all([
+        socketService.getPublicNoti(userId),
+        socketService.getPrivateNoti(userId),
+        socketService.getNotiNoti(userId)
+      ]).then((results) => {
+        console.log(results)
+        io.to(userId).emit('getPreviousNoti', {
+          getPublicNoti: results[0],
+          getPrivateNoti: results[1],
+          getNotiNoti: results[2]
+        })
       })
 
-      socketService.getPublicNoti(userId)
     })
 
     function broadcastNotiNoti(userIdList, data) {

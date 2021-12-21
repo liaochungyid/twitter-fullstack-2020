@@ -1,33 +1,64 @@
 const db = require('../models')
 const { Op } = require('sequelize')
-const { User, Message, Tweet, Notify, Like } = db
+const { User, Message, PrivateMessage, Notify, Tweet, Like } = db
 const chatTime = require('../config/tweetTime')
 const moment = require('moment')
 
 const socketService = {
-  getPublicNoti: async (userId, callback) => {
+  getPublicNoti: async (userId) => {
     try {
       const activeTime = (await User.findByPk(userId, {
         raw: true,
         attributes: ['activeTime']
       })).activeTime
-      console.log(activeTime)
-      const hasUnread = await Message.findAll({
+
+      const hasUnread = await Message.count({
         where: {
-          'createdAt': { [Op.between]: [moment().subtract(120, 'days').toDate(), moment().toDate()] }
+          'createdAt': { [Op.gt]: activeTime }
         }
       })
-      console.log(hasUnread)
+
+      return hasUnread === 0
 
     } catch (err) {
       console.log(err)
     }
   },
-  getPrivateNoti: (req, res, callback) => {
+  getPrivateNoti: async (userId) => {
+    try {
+      const privateMessage = await PrivateMessage.count({
+        where: {
+          receiverId: userId,
+          unread: true
+        }
+      })
+
+      return privateMessage
+
+    } catch (err) {
+      console.log(err)
+    }
 
   },
-  getNotiNoti: (req, res, callback) => {
+  getNotiNoti: async (userId) => {
+    try {
+      const activeTime = (await User.findByPk(userId, {
+        raw: true,
+        attributes: ['activeTime']
+      })).activeTime
 
+      const notifies = await Notify.count({
+        where: {
+          observerId: userId,
+          'createdAt': { [Op.gt]: activeTime }
+        },
+      })
+
+      return notifies
+
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
 
