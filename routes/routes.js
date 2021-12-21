@@ -6,12 +6,13 @@ const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
 const adminController = require('../controllers/adminController')
-const userController = require('../controllers/userController')
-const tweetController = require('../controllers/tweetController')
-const replyController = require('../controllers/replyController')
 const followshipController = require('../controllers/followshipController')
+const replyController = require('../controllers/replyController')
+const tweetController = require('../controllers/tweetController')
+const userController = require('../controllers/userController')
 const pageController = require('../controllers/pageController')
 
+router.get('/tt', pageController.getTest)
 // 首頁
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, pageController.getIndex)
