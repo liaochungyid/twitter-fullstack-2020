@@ -75,7 +75,7 @@ const socketService = {
       if (userId) {
         console.log('not implement yet!')
       } else {
-        const msg = await Message.findAll({
+        let msg = await Message.findAll({
           raw: true,
           nest: true,
           attributes: ['text', 'createdAt'],
@@ -87,6 +87,13 @@ const socketService = {
             attributes: ['id', 'name', 'account', 'avatar'],
             require: false
           }]
+        })
+
+        msg = await msg.map(m => {
+          return Object.assign(
+            m,
+            { createdAt: chatTime.timeOrDatetime(m.createdAt) }
+          )
         })
 
         return msg.reverse()
@@ -113,9 +120,10 @@ const socketService = {
   },
   createMessage: async (data) => {
     try {
-      const message = await Message.create(data)
+      let msg = (await Message.create(data)).dataValues
+      msg.createdAt = chatTime.timeOrDatetime(msg.createdAt)
 
-      return message.dataValues
+      return msg
     } catch (err) {
       console.log(err)
     }
