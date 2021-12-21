@@ -52,7 +52,6 @@ module.exports = (io) => {
         socketService.getPrivateNoti(userId),
         socketService.getNotiNoti(userId)
       ]).then((results) => {
-        console.log(results)
         io.to(userId).emit('getPreviousNoti', {
           getPublicNoti: results[0],
           getPrivateNoti: results[1],

@@ -18,7 +18,7 @@ const chatTextarea = document.querySelector('#textareaAutogrow')
 
 const notis = document.querySelector('#notis')
 
-// // 全畫面監聽器 (1.關閉modal(all) 2.開啟回覆modal 3.back-arrow返回首頁 4.刪除modal(admin only))
+// // 全畫面監聽器 (1.關閉modal(all) 2.開啟回覆modal 3.back-arrow返回首頁 4.刪除modal(admin only) 5.小鈴鐺訂閱btn-noti)
 body.addEventListener('click', async (event) => {
   const target = event.target
 
@@ -127,6 +127,21 @@ body.addEventListener('click', async (event) => {
     `
 
     modalConfirm.classList.remove('d-none')
+
+  } else if (target.classList.contains('btn-noti')) {
+    // 5.小鈴鐺訂閱btn-noti  data-userId="{{user.id}}"
+    let userId = target.dataset.userid
+    let results
+
+    if (target.classList.contains('active')) {
+      results = await axios.delete(`${location.origin}/api/notify/${userId}`)
+    } else {
+      results = await axios.post(`${location.origin}/api/notify/${userId}`)
+    }
+
+    if (results.data.status === 'success') {
+      target.classList.toggle('active')
+    }
   }
 })
 
