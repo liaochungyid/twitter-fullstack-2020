@@ -1,7 +1,6 @@
 const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
-const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const utility = require('../utils/utility')
 
 const db = require('../models')
 const { sequelize } = db
@@ -502,22 +501,16 @@ const userController = {
       const user = await User.findByPk(userId)
 
       if (avatarPath) {
-        imgur.setClientID(IMGUR_CLIENT_ID)
-        await imgur.upload(avatarPath, (err, img) => {
-          if (err) return console.error(err)
-          user.update({
-            avatar: avatarPath ? img.data.link : user.avatar
-          })
+        const avatarLink = await utility.uploadToImgur(avatarPath)
+        await user.update({
+          avatar: avatarLink
         })
       }
 
       if (coverPath) {
-        imgur.setClientID(IMGUR_CLIENT_ID)
-        await imgur.upload(coverPath, (err, img) => {
-          if (err) return console.error(err)
-          user.update({
-            cover: coverPath ? img.data.link : user.cover
-          })
+        const coverLink = await utility.uploadToImgur(coverPath)
+        await user.update({
+          cover: coverLink
         })
       } else {
         // 若按叉叉後沒有上傳圖片才會進到這，更新預設圖的 svg 連結進資料庫
