@@ -12,7 +12,6 @@ const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
 const pageController = require('../controllers/pageController')
 
-router.get('/tt', pageController.getTest)
 // 首頁
 router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
 router.get('/tweets', authenticated, pageController.getIndex)
