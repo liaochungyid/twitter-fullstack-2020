@@ -5,6 +5,8 @@ const { User, Tweet, Reply, Like } = db
 const tweetTime = require('../config/tweetTime')
 const userController = require('./userController')
 
+const tweetService = require('../services/tweetService')
+
 const tweetController = {
   getTweets: async (req, res) => {
     try {
@@ -62,32 +64,20 @@ const tweetController = {
     }
   },
 
-  addLike: async (req, res) => {
-    try {
-      await Like.findOrCreate({
-        where: {
-          UserId: helpers.getUser(req).id,
-          TweetId: Number(req.params.tweetId)
-        }
-      })
-      return res.redirect('back')
-    } catch (err) {
-      console.error(err)
-    }
+  addLike: (req, res) => {
+    tweetService.addLike(req, res, (data) => {
+      if (data.status === 'success') {
+        return res.redirect('back')
+      }
+    })
   },
 
-  removeLike: async (req, res) => {
-    try {
-      await Like.destroy({
-        where: {
-          UserId: helpers.getUser(req).id,
-          TweetId: req.params.tweetId
-        }
-      })
-      return res.redirect('back')
-    } catch (err) {
-      console.error(err)
-    }
+  removeLike: (req, res) => {
+    tweetService.removeLike(req, res, (data) => {
+      if (data.status === 'success') {
+        return res.redirect('back')
+      }
+    })
   },
 
   getTweet: async (req, res) => {
