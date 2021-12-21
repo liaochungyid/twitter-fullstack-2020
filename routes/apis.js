@@ -7,6 +7,7 @@ const followshipController = require('../controllers/api/followshipController')
 // const replyController = require('../controllers/api/replyController')
 const tweetServer = require('../controllers/api/tweetServer')
 const userController = require('../controllers/api/userController')
+const newsServer = require('../controllers/api/newsServer')
 
 const authenticated = (req, res, next) => {
   if (helpers.ensureAuthenticated(req)) {
@@ -26,6 +27,7 @@ const authenticated = (req, res, next) => {
 // user 動作
 router.get('/users/:userId', authenticated, userController.getEditModal)
 router.post('/users/:userId', authenticated, userController.updateUser)
+router.get('/chatusers/:userId', authenticated, userController.getUsers) // find chat api
 router.get('/tweets/:tweetId', authenticated, tweetServer.getTweet) // reply modal api
 router.post('/followships', followshipController.addFollow)
 router.delete('/followships/:userId', followshipController.removeFollow)
@@ -42,5 +44,7 @@ router.delete('/admin/tweets/:tweetId', adminController.deleteTweet)
 // router.get('/signout', userController.signOut)
 // router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), userController.signIn)
 // router.get('/admin/signout', userController.signOut)
+
+router.get('/news', authenticated, newsServer.getNew) // 訂閱物件通知的 api
 
 module.exports = router

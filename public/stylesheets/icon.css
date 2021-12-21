@@ -3,6 +3,7 @@ input[type="button"].camera,
 input[type="button"].X-white {
   display: inline-block;
   background: url('../icons/css_sprites.png');
+  position: relative;
 }
 button.active {
   color: #E0245E !important;
@@ -45,6 +46,22 @@ i.logout {
   background-position: -52px -145px;
   height: 18px;
   width: 20px;
+}
+i.noti {
+  background: url("../icons/noti.svg");
+  width: 21px;
+  height: 20px;
+}
+i.noti.active {
+  background: url("../icons/noti-active.svg");
+}
+i.message {
+  background: url("../icons/message.svg");
+  width: 19px;
+  height: 17px;
+}
+i.message.active {
+  background: url("../icons/message-active.svg");
 }
 i.btn-message {
   background-position: -46px -62px;
@@ -130,4 +147,56 @@ input[type="button"].X-white {
   background-position: -116px -145px;
   height: 16px;
   width: 16px;
+}
+i.dot-noti::before {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #f60;
+  border: 2px solid #fff;
+}
+i.send {
+  background: url("../icons/send.svg");
+  width: 24px;
+  height: 24px;
+}
+i.newMsg {
+  background: url("../icons/newMessege.svg");
+  width: 24px;
+  height: 24px;
+}
+i.dot-noti > span {
+  color: #fff;
+  font-style:normal;
+  font-size: 12px;
+  font-weight: 700;
+  position: absolute;
+  top: -14px;
+  left: 16px;
+}
+i.dot-noti.plus::after {
+  content: "✚";
+  color: rgb(165, 66, 0);
+  font-style:normal;
+  font-size: 12px;
+  font-weight: 900;
+  position: absolute;
+  top: -18px;
+  left: 24px;
+  text-shadow:0px 0px 15px #aaa;
+}
+i.dot-noti-sm::before {
+  position: absolute;
+  right: -6px;
+  top: -6px;
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #6f0;
+  border: 2px solid #fff;
 }

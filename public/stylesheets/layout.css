@@ -200,11 +200,14 @@ html, body {
 }
 
 .leftside > .navigation > a:nth-child(2),
-.leftside > .navigation > a:nth-child(3) {
+.leftside > .navigation > a:nth-child(3),
+.leftside > .navigation > a:nth-child(4),
+.leftside > .navigation > a:nth-child(5),
+.leftside > .navigation > a:nth-child(6) {
   margin-bottom: 35px;
 }
 
-.leftside > .navigation > a:nth-child(4) {
+.leftside > .navigation > a:nth-child(7) {
   margin-bottom: 25px;
 }
 
@@ -833,6 +836,40 @@ html, body {
   width: 116px;
 }
 
+/* user-template main for profile notis page */
+.main > .notis {
+  height: calc(100vh - 55px);
+  width: 598px;
+  padding: 15px;
+}
+
+.main > .notis > .noti {
+  display: block;
+  width: 100%;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  border-bottom: 1px solid #E6ECF0;
+  margin-top: 10px;
+}
+
+.main > .notis > .noti > .noti-title {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  color: #1C1C1C;
+  margin-bottom: 5px;
+}
+
+.main > .notis > .noti > .noti-title > img {
+  width: 30px;
+  height: 30px;
+}
+
+.main > .notis > .noti > .content {
+  color:#657786;
+  padding: 0 0 5px 15px;
+}
 
 /* user-template right side */
 .rightside {
@@ -949,6 +986,13 @@ html, body {
   height: 130px;
   min-height: 130px;
   padding: 10px;
+}
+
+.modal > .mask > .dialog.findchat {
+  height: 60%;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .modal > .mask > .dialog > .warning-title {
@@ -1398,7 +1442,9 @@ html, body {
 
 /* admin-template main */
 .admin-template > .admin-main > .title,
-.user-template-setting > .main > .title {
+.user-template-setting > .main > .title,
+.onlineUser > .title,
+.onlineChatroom > .title {
   padding-left: 26.55px;
   color:#1C1C1C;
   font-size: 18px;
@@ -1546,6 +1592,63 @@ html, body {
   color: #657786;
 }
 
+/* modal for findchat */
+#modal-findChatUser .usercard {
+  display: inline-block;
+  width: 186px;
+  height: 220px;
+  margin: 10px 0 0 8px;
+}
+
+#modal-findChatUser .usercard > .imgs {
+  position: relative;
+}
+
+#modal-findChatUser .usercard > .imgs > .thumbnail-card {
+  background-color: #c4c4c4;
+  border: 4px solid #fff;
+  position: absolute;
+  top: 53px;
+  left: 43px;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+}
+
+#modal-findChatUser .usercard > .imgs > .img-card {
+  background-color: #c4c4c4;
+  width: 186px;
+  height: 124px;
+  object-fit: cover;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#modal-findChatUser .usercard > .texts {
+  color: #1C1C1C;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 22px;
+  background-color: #F6F7F8;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  width: 100%;
+  height: 86px;
+  padding-top: 33px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+#modal-findChatUser .usercard > .texts > .name {
+  font-weight: 900;
+  margin-bottom: 2px;
+}
+
+#modal-findChatUser .usercard > .texts > .account {
+  color: #657786;
+  margin-bottom: 15px;
+}
 
 /* general style */
 .d-none {
@@ -1634,4 +1737,258 @@ div.invalid::after {
   font-weight: 500;
   line-height: 15px;
   content: attr(err_msg)
+}
+
+/* chatroom */
+.chatroom {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.onlineUser {
+  width: 30%;
+  height: 100%;
+  border-right: 1px solid #E6ECF0;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.onlineUser > .twoitem {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding-right: 10px;
+}
+
+.onlineUser > .twoitem a {
+  display: flex;
+  align-items: center;
+}
+
+.onlineChatroom {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+.onlineUser > .users {
+  flex: 1 0 0;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.onlineUser > .users > .usercard {
+  width: 90%;
+  height: 60px;
+  margin: 10px;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid #E6ECF0;
+}
+
+.onlineUser > .users > .usercard > img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 0;
+}
+
+.onlineUser > .users > .usercard > .userfile {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: start;
+  align-items: center;
+  width: 90%;
+  padding-left: 10px;
+}
+
+.onlineUser > .users > .usercard > .userfile > .who {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.onlineUser > .users > .usercard > .userfile > .who > .nameplace {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: start;
+  align-items: center;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+
+.onlineUser > .users > .usercard > .userfile > .who > .lastcall {
+  font-size: 15px;
+  line-height: 22px;
+  word-break: keep-all;
+}
+
+.onlineUser > .users > .usercard > .userfile > .who > .nameplace > .name,
+.onlineChatroom > .title > .who > .name {
+  color: #1c1c1c;
+  font-weight: 700;
+  margin-right: 5px;
+  max-width: 40%;
+  word-break: keep-all;
+}
+
+.onlineUser > .users > .usercard > .userfile > .who > .nameplace > .at-name,
+.onlineUser > .users > .usercard > .userfile > .who > .lastcall {
+  color: #657786;
+  font-weight: 500;
+  flex: 1 0 0;
+  word-break: keep-all;
+}
+
+.onlineChatroom > .title > .who > .at-name {
+  color: #657786;
+  font-weight: 500;
+  word-break: keep-all;
+}
+
+.onlineUser > .users > .usercard > .userfile > .whoMessage {
+  width: 100%;
+}
+
+.onlineUser > .users > .usercard > .userfile > .whoMessage > .message {
+  width: 100%;
+  color: #1c1c1c;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 22px;
+}
+
+.onlineChatroom > .title > .who {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: 15px;
+  line-height: 22px;
+  height: 54px;
+}
+
+.onlineChatroom > .title > .who > .at-name {
+  font-size: 9px;
+}
+
+.onlineChatroom > .stream-message {
+  flex: 1 0 0;
+  padding: 10px;
+  color: #1c1c1c;
+  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.onlineChatroom > .stream-message > div {
+  padding: 10px 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.onlineChatroom > .stream-message > .noti-message {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  color: #657786;
+}
+
+.onlineChatroom > .stream-message > .noti-message.unread {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.onlineChatroom > .stream-message > .noti-message.unread > .unread {
+  text-align: center;
+  width: 80%;
+}
+
+.onlineChatroom > .stream-message > .noti-message > span {
+  background-color: #E5E5E5;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 4px 10px;
+}
+
+.onlineChatroom > .stream-message > .self-message > .content,
+.onlineChatroom > .stream-message > .other-message > .content {
+  max-width: 60%;
+}
+
+.onlineChatroom > .stream-message > .self-message {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-end;
+}
+
+.onlineChatroom > .stream-message > .self-message > .content {
+  border-radius: 25px 25px 0;
+  background-color: #f60;
+  color: #fff;
+  padding: 10px;
+}
+
+.onlineChatroom > .stream-message > .other-message {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.onlineChatroom > .stream-message > .other-message > img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.onlineChatroom > .stream-message > .other-message > .content {
+  margin-left: 10px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: flex-start;
+}
+
+.onlineChatroom > .stream-message > .other-message > .content > .content {
+  border-radius: 25px 25px 25px 0;
+  background-color: #E6ECF0;
+  padding: 10px;
+}
+
+.onlineChatroom > .stream-message .time {
+  color: #657786;
+}
+
+
+.onlineChatroom > .onlineSendbox {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  border-top: 1px solid #E6ECF0;
+}
+
+.onlineChatroom > .onlineSendbox textarea {
+  flex: 1 0 0;
+  border: none;
+  border-radius: 15px;
+  background-color: #e6ecf0;
+  resize: none;
+  margin-right: 9px;
+  min-height: 30px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 18px;
+  padding: 6px 10px;
+  vertical-align: middle;
 }
