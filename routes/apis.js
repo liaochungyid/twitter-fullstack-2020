@@ -52,7 +52,7 @@ router.delete('/admin/tweets/:tweetId', adminController.deleteTweet)
 // router.get('/admin/users', adminController.adminUsers)
 
 // authentication 相關
-// router.post('/signup', userController.signUp)
+router.post('/signup', userController.signUp)
 router.post('/signin', userController.signIn)
 // router.get('/signout', userController.signOut)
 router.post('/admin/signin', authenticated, authenticatedAdmin, userController.signIn)

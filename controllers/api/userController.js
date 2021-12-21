@@ -93,6 +93,55 @@ const userController = {
     const payload = { id: user.id }
     const token = jwt.sign(payload, process.env.JWT_SECRET)
     return res.json({ status: 'success', message: '成功登入！', token: token, user: user })
+  },
+
+  signUp: async (req, res) => {
+    try {
+      const { account, name, email, password, checkPassword } = req.body
+      const errors = []
+
+      const [user1, user2] = await Promise.all([
+        User.findOne({ where: { account } }),
+        User.findOne({ where: { email } })
+      ])
+
+      if (user1) {
+        errors.push({ message: 'account 已重覆註冊！' })
+      }
+      if (user2) {
+        errors.push({ message: 'email 已重複註冊！' })
+      }
+      if (checkPassword !== password) {
+        errors.push({ message: '兩次密碼輸入不同！' })
+      }
+      if (account.length > 30) {
+        errors.push({ message: 'account 長度不可大於 30 字元！' })
+      }
+      if (account.length < 4) {
+        errors.push({ message: 'account 長度不可小於 4 字元！' })
+      }
+      if (password.length < 4) {
+        errors.push({ message: 'password 長度不可小於 4 字元！' })
+      }
+      if (name.length > 50) {
+        errors.push({ message: 'name 長度不可超過 50 字元' })
+      }
+
+      if (errors.length) {
+        return res.json({ status: 'error', message: '回傳錯誤陣列，之後再看如何實作', errors: errors, a, user: { account, name, email } })
+      }
+
+      await User.create({
+        account,
+        name,
+        email,
+        password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
+      })
+
+      return res.json({ status: 'success', message: '成功註冊帳號！' })
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 
