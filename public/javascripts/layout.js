@@ -12,21 +12,24 @@ const modalPostFormTextarea = document.querySelector(
   '#modal-post-form-textarea'
 )
 const inputs = document.querySelectorAll('input,textarea')
+const allButton = document.querySelectorAll('a, button')
 
 const chatTextarea = document.querySelector('#textareaAutogrow')
 
 const notis = document.querySelector('#notis')
 
-// // 全畫面監聽器
+// // 全畫面監聽器 (1.關閉modal(all) 2.開啟回覆modal 3.back-arrow返回首頁 4.刪除modal(admin only))
 body.addEventListener('click', async (event) => {
   const target = event.target
 
+  // 1.關閉modal(all)
   if (target.classList.contains('close') || target.classList.contains('mask')) {
     // 點擊X icon關閉，另可點擊modal對話框以外地方關閉
     Array.from(modal).forEach((el) => {
       el.classList = 'modal d-none'
     })
   } else if (target.classList.contains('commenting')) {
+    // 2.開啟回覆modal
     // 如果按下個別"回覆"icon，開啟 replying modal
     // axios here to get tweet info
     let tweetId = target.dataset.tweetid
@@ -35,11 +38,11 @@ body.addEventListener('click', async (event) => {
     }
 
     const response = await axios.get(
-      `${window.location.origin}/api/tweets/${tweetId}`
+      `${location.origin}/api/tweets/${tweetId}`
     )
     const { tweet, loginUser } = response.data
 
-    const modalHtml = `
+    modalReply.innerHTML = `
     <div class="mask">
       <div class="dialog">
         <div class="dialog-header">
@@ -86,10 +89,10 @@ body.addEventListener('click', async (event) => {
       </div>
     </div>
     `
-    modalReply.innerHTML = modalHtml
 
     modalReply.classList.remove('d-none')
 
+    // 取得modal表單，驗證資料
     const modalReplyForm = document.querySelector('#modal-reply-form')
     const modalReplyFormTextarea = document.querySelector(
       '#modal-reply-form-textarea'
@@ -97,8 +100,10 @@ body.addEventListener('click', async (event) => {
 
     validityEmpty(modalReplyForm, modalReplyFormTextarea)
   } else if (target.classList.contains('back-arror')) {
-    history.back()
+    // 3.back-arrow返回首頁
+    location.replace('/tweets')
   } else if (target.classList.contains('confirm-del')) {
+    // 4.刪除modal(admin only)
     const tweetId = target.dataset.tweetid
 
     modalConfirm.innerHTML = `
@@ -125,15 +130,30 @@ body.addEventListener('click', async (event) => {
   }
 })
 
+// 避免連續重複按下按鈕
+allButton.forEach(btn => {
+  btn.addEventListener('click', function onAnyButtonClick(event) {
+    setTimeout(() => {
+      event.target.disabled = true
+    }, 0);
+    setTimeout(() => {
+      event.target.disabled = false
+    }, 1800);
+  })
+})
+
 if (tweetsPostForm) {
+  // 首頁推文表單，驗證資料
   validityEmpty(tweetsPostForm, tweetsPostFormTextarea)
 }
 
 if (modalPostForm) {
+  // 左欄推文modal，驗證資料
   validityEmpty(modalPostForm, modalPostFormTextarea)
 }
 
 if (inputs) {
+  // 任一Input tag，驗證資料
   inputs.forEach((el) => {
     el.addEventListener('focus', function onInputFocus(event) {
       el.parentElement.classList.add('focus')
@@ -148,6 +168,7 @@ if (inputs) {
 }
 
 if (chatTextarea) {
+  // 聊天室，驗證與欄高度調整
   chatTextarea.addEventListener('keyup', function onTextareaKeyup(event) {
     const target = event.target
     const keycode = event.keyCode
@@ -176,9 +197,10 @@ if (chatTextarea) {
 }
 
 if (notis) {
+  // 通知頁面，取得歷史通知
   const response = async function func() {
     return await axios.get(
-      `${window.location.origin}/api/news`
+      `${location.origin}/api/news`
     )
   }()
 
@@ -216,9 +238,7 @@ if (notis) {
   })
 }
 
-
-
-
+// -------------以下為復用function-------------
 function isEmpty(nodeElement) {
   // 無文字回傳true，文字長度大於0，回傳false
   return !nodeElement.value.replace(/\s/g, '').length

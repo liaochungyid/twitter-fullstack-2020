@@ -47,4 +47,10 @@ router.delete('/admin/tweets/:tweetId', adminController.deleteTweet)
 
 router.get('/news', authenticated, newsServer.getNew) // 訂閱物件通知的 api
 
+router.post('/followships', followshipController.addFollow)
+router.delete('/followships/:userId', followshipController.removeFollow)
+
+router.get('/admin/tweets', adminController.getTweets)
+router.delete('/admin/tweets/:tweetId', adminController.deleteTweet)
+
 module.exports = router

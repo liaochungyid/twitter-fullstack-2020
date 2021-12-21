@@ -49,7 +49,7 @@ const { Server } = require('socket.io')
 const server = require('http').createServer(app)
 const io = new Server(server)
 
-require('./config/sockio')(io)
+require('./sockets/socketioSockets')(io)
 
 server.listen(PORT, () =>
   console.log(`App listening on http://localhost:${PORT}`)

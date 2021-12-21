@@ -51,6 +51,7 @@ i.noti {
   background: url("../icons/noti.svg");
   width: 21px;
   height: 20px;
+  margin-left: 3px;
 }
 i.noti.active {
   background: url("../icons/noti-active.svg");
@@ -59,6 +60,7 @@ i.message {
   background: url("../icons/message.svg");
   width: 19px;
   height: 17px;
+  margin-left: 3px;
 }
 i.message.active {
   background: url("../icons/message-active.svg");
@@ -169,33 +171,30 @@ i.newMsg {
   width: 24px;
   height: 24px;
 }
-i.dot-noti > span {
+i > .noti {
   color: #fff;
+  background-color: #f60;
   font-style:normal;
-  font-size: 12px;
-  font-weight: 700;
-  position: absolute;
-  top: -14px;
-  left: 16px;
-}
-i.dot-noti.plus::after {
-  content: "✚";
-  color: rgb(165, 66, 0);
-  font-style:normal;
-  font-size: 12px;
+  width: 20px;
+  height: 13px;
+  padding: 0px 2px;
+  font-size: 8px;
+  line-height: 10px;
   font-weight: 900;
+  text-align: center;
   position: absolute;
-  top: -18px;
-  left: 24px;
-  text-shadow:0px 0px 15px #aaa;
+  top: -11px;
+  left: 17px;
+  border-radius: 20px;
+  border: 1px solid #fff;
 }
 i.dot-noti-sm::before {
   position: absolute;
-  right: -6px;
+  right: -10px;
   top: -6px;
   content: "";
-  width: 6px;
-  height: 6px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background-color: #6f0;
   border: 2px solid #fff;

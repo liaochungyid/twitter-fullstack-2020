@@ -72,8 +72,8 @@
         </div>
 
         <div class="main">
-          <script src="/javascripts/socket.js"></script>
-          
+          <script defer src="/javascripts/notiSocket.js"></script>
+
           {{!-- USER PARTIALS --}}
           {{> (lookup . "partial") }}
         </div>
@@ -227,7 +227,7 @@
           </div>
         </div>
       </div>
-      <script src="/javascripts/prisocket.js"></script>
+      <script async src="/javascripts/privateSocket.js"></script>
       {{/ifCond}}
 
     </div>

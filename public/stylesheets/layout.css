@@ -151,6 +151,14 @@ html, body {
   width: 100%;
   height: 100%;
 }
+.user-template-setting {
+  display: grid;
+  grid-template-columns: 1fr 235px 30px 980px 1fr;
+  grid-template-rows: 100%;
+  grid-template-areas: "i leftside j main k";
+  width: 100%;
+  height: 100%;
+}
 
 .sign-template {
   display: grid;
@@ -161,7 +169,7 @@ html, body {
   height: 100%;
 }
 
-.admin-template, .user-template-setting {
+.admin-template {
   display: grid;
   grid-template-columns: 1fr 235px 40px minmax(642px, 1062px);
   grid-template-rows: 100%;
@@ -827,7 +835,7 @@ html, body {
 
 /* user-template-setting main for setting page */
 .user-template-setting > .main > form {
-  width: 647px;
+  width: 70%;
   padding:30px 16px 0;
 }
 
@@ -1651,6 +1659,10 @@ html, body {
 }
 
 /* general style */
+*:disabled {
+  opacity:0.2;
+}
+
 .d-none {
   display: none !important;
 }
