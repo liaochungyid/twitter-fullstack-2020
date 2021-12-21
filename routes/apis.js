@@ -40,7 +40,7 @@ router.delete('/admin/tweets/:tweetId', adminController.deleteTweet)
 
 // authentication 相關
 // router.post('/signup', userController.signUp)
-// router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.post('/signin', userController.signIn)
 // router.get('/signout', userController.signOut)
 // router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), userController.signIn)
 // router.get('/admin/signout', userController.signOut)

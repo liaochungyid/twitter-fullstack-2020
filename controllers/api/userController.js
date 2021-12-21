@@ -1,6 +1,13 @@
 const helpers = require('../../_helpers')
+const bcrypt = require('bcryptjs')
+
 const db = require('../../models')
 const { User, sequelize } = db
+
+const jwt = require('jsonwebtoken')
+const passportJWT = require('passport-jwt')
+const ExtractJwt = passportJWT.ExtractJwt
+const JwtStrategy = passportJWT.Strategy
 
 const userController = {
   getEditModal: async (req, res) => {
@@ -64,6 +71,28 @@ const userController = {
     } catch (err) {
       console.error(err)
     }
+  },
+
+  signIn: async (req, res) => {
+    const { account, password } = req.body
+
+    if (!account || !password) {
+      return res.json({ status: 'error', message: '所有欄位必須填寫！' })
+    }
+
+    const user = await User.findOne({ where: { account } })
+
+    if (!user) {
+      return res.status(401).json({ status: 'error', message: '帳號不存在！' })
+    }
+
+    if (!bcrypt.compareSync(password, user.password)) {
+      return res.status(401).json({ status: 'error', message: '密碼錯誤！' })
+    }
+
+    const payload = { id: user.id }
+    const token = jwt.sign(payload, process.env.JWT_SECRET)
+    return res.json({ status: 'success', message: '成功登入！', token: token, user: user })
   }
 }
 

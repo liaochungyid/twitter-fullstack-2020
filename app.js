@@ -18,8 +18,7 @@ app.engine('hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs',
   helpers: require('./config/handlebars-helpers')
-  })
-)
+}))
 
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
@@ -30,8 +29,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
-  })
-)
+}))
 
 app.use(passport.initialize())
 app.use(passport.session())
