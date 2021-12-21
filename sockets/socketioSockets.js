@@ -1,3 +1,5 @@
+const socketService = require('./socketService')
+
 module.exports = (io) => {
   const notiOnlineUser = []
   const publicOnlineUser = []
@@ -51,6 +53,8 @@ module.exports = (io) => {
         getPrivateNoti: 10,
         getNotiNoti: 5
       })
+
+      socketService.getPublicNoti(userId)
     })
 
     function broadcastNotiNoti(userIdList, data) {
@@ -70,7 +74,7 @@ module.exports = (io) => {
       io.to(userIdList).emit('getPublicNoti', true)
     }
 
-    
+
   })
 
   // function updateOnlineUser() {
@@ -78,5 +82,5 @@ module.exports = (io) => {
   //   console.log(onlineUser)
   // }
 
-  
+
 }
