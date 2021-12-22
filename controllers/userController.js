@@ -6,9 +6,8 @@ const tweetService = require('../services/tweetService')
 const userService = require('../services/userService')
 
 const db = require('../models')
-const { sequelize } = db
 const { Op } = db.Sequelize
-const { User, Tweet, Reply, Like, Followship, Notify } = db
+const { User } = db
 
 module.exports = {
   // PAGES

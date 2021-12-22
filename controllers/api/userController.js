@@ -5,9 +5,6 @@ const db = require('../../models')
 const { User, sequelize } = db
 
 const jwt = require('jsonwebtoken')
-const passportJWT = require('passport-jwt')
-const ExtractJwt = passportJWT.ExtractJwt
-const JwtStrategy = passportJWT.Strategy
 
 module.exports = {
   getEditModal: async (req, res) => {
@@ -128,7 +125,7 @@ module.exports = {
       }
 
       if (errors.length) {
-        return res.json({ status: 'error', message: '回傳錯誤陣列，之後再看如何實作', errors: errors, a, user: { account, name, email } })
+        return res.json({ status: 'error', message: '回傳錯誤陣列，之後再看如何實作', errors: errors, user: { account, name, email } })
       }
 
       await User.create({

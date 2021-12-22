@@ -2,8 +2,7 @@ const helpers = require('../_helpers')
 
 const db = require('../models')
 const { sequelize } = db
-const { User, Tweet, Reply, Like } = db
-const tweetTime = require('../config/tweetTime')
+const { User, Tweet, Like } = db
 
 module.exports = {
   getTweets: async (req, res) => {

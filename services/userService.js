@@ -1,10 +1,7 @@
 const helpers = require('../_helpers')
-const bcrypt = require('bcryptjs')
-const utility = require('../utils/utility')
 
 const db = require('../models')
 const { sequelize } = db
-const { Op } = db.Sequelize
 const { User, Tweet, Reply, Like, Followship, Notify } = db
 
 module.exports = {

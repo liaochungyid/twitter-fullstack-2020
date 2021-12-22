@@ -21,4 +21,3 @@ module.exports = {
     return res.render('user', { partial: 'profileChatPris' })
   }
 }
-
