@@ -7,7 +7,7 @@ module.exports = {
         return res.redirect('back')
       }
       if (data.status === 'error') {
-        req.flash('error_messages', data.message)
+        req.flash('errorMessage', data.message)
         return res.redirect(200, 'back')
       }
     })

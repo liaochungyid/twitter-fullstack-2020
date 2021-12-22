@@ -18,9 +18,9 @@
   {{!-- Content --}}
   {{{body}}}
 
-  {{#if success_messages}}
+  {{#if successMessage}}
   <div class="flash">
-    <span class="text">{{success_messages}}</span>
+    <span class="text">{{successMessage}}</span>
     <i class="success"></i>
   </div>
   <script type="text/javascript">
@@ -28,9 +28,9 @@
   </script>
   {{/if}}
 
-  {{#if error_messages}}
+  {{#if errorMessage}}
   <div class="flash">
-    <span class="text">{{error_messages}}</span>
+    <span class="text">{{errorMessage}}</span>
     <i class="warning"></i>
   </div>
   <script type="text/javascript">

@@ -15,7 +15,7 @@ module.exports = {
   indexPage: async (req, res) => {
     try {
       if (helpers.getUser(req).role === 'admin') {
-        req.flash('error_messages', '你無法瀏覽此頁面')
+        req.flash('errorMessage', '你無法瀏覽此頁面')
         return res.redirect('/admin/tweets')
       }
 
@@ -134,7 +134,7 @@ module.exports = {
   settingsPage: async (req, res) => {
     try {
       if (helpers.getUser(req).id !== Number(req.params.userId)) {
-        req.flash('error_messages', '你無法瀏覽此頁面')
+        req.flash('errorMessage', '你無法瀏覽此頁面')
         return res.redirect('/tweets')
       }
 
@@ -199,7 +199,7 @@ module.exports = {
         password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
       })
 
-      req.flash('success_messages', '成功註冊帳號！')
+      req.flash('successMessage', '成功註冊帳號！')
       return res.redirect('/signin')
     } catch (err) {
       console.error(err)
@@ -207,7 +207,7 @@ module.exports = {
   },
 
   signIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
+    req.flash('successMessage', '成功登入！')
 
     if (helpers.getUser(req).role === 'admin') {
       return res.redirect('/admin/tweets')
@@ -216,7 +216,7 @@ module.exports = {
   },
 
   signOut: (req, res) => {
-    req.flash('success_messages', '成功登出！')
+    req.flash('successMessage', '成功登出！')
 
     if (helpers.getUser(req).role === 'admin') {
       req.logout()
@@ -230,7 +230,7 @@ module.exports = {
     try {
       const userId = Number(req.params.userId)
       if (helpers.getUser(req).id !== userId) {
-        req.flash('error_messages', '你無權查看此頁面')
+        req.flash('errorMessage', '你無權查看此頁面')
         return res.redirect('back')
       }
 
@@ -298,7 +298,7 @@ module.exports = {
         })
       }
 
-      req.flash('success_messages', '成功編輯帳號！')
+      req.flash('successMessage', '成功編輯帳號！')
       return res.redirect('back')
     } catch (err) {
       console.error(err)
@@ -309,7 +309,7 @@ module.exports = {
     try {
       const userId = Number(req.params.userId)
       if (helpers.getUser(req).id !== userId) {
-        req.flash('error_messages', '無權更動此頁面資料')
+        req.flash('errorMessage', '無權更動此頁面資料')
         return res.redirect('back')
       }
 
@@ -318,11 +318,11 @@ module.exports = {
         'https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg'
 
       if (!name.length) {
-        req.flash('error_messages', '名稱長度不能為零')
+        req.flash('errorMessage', '名稱長度不能為零')
         return res.redirect('back')
       }
       if (name.length > 50) {
-        req.flash('error_messages', '名稱長度不能超過50字')
+        req.flash('errorMessage', '名稱長度不能超過50字')
         return res.redirect('back')
       }
 
@@ -357,7 +357,7 @@ module.exports = {
         introduction
       })
 
-      req.flash('success_messages', '成功更新個人資料！')
+      req.flash('successMessage', '成功更新個人資料！')
       return res.redirect('back')
     } catch (err) {
       console.error(err)

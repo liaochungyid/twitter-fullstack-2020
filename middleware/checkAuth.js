@@ -5,7 +5,7 @@ module.exports = {
     if (helpers.ensureAuthenticated(req)) {
       return next()
     }
-    req.flash('error_messages', '請先登入才能使用！')
+    req.flash('errorMessage', '請先登入才能使用！')
     return res.redirect('/signin')
   },
 
@@ -16,7 +16,7 @@ module.exports = {
       }
       return res.redirect('/tweets')
     }
-    req.flash('error_messages', '請先登入才能使用！')
+    req.flash('errorMessage', '請先登入才能使用！')
     return res.redirect('/admin/signin')
   }
 }

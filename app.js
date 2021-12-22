@@ -38,8 +38,8 @@ app.use(flash())
 app.use((req, res, next) => {
   res.locals.loginUser = helpers.getUser(req)
   res.locals.isAuthenticated = helpers.ensureAuthenticated(req)
-  res.locals.success_messages = req.flash('success_messages')
-  res.locals.error_messages = req.flash('error_messages')
+  res.locals.successMessage = req.flash('successMessage')
+  res.locals.errorMessage = req.flash('errorMessage')
   next()
 })
 
