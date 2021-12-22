@@ -4,57 +4,31 @@ const db = require('../models')
 const { sequelize } = db
 const { User, Tweet, Reply, Like, Followship, Notify } = db
 
+const query = require('../repositories/query')
+
 module.exports = {
   getUserProfile: async (req, res) => {
     try {
       const userId = Number(req.params.userId)
       const user = await User.findByPk(userId, {
-        attributes: [
-          'id',
-          'name',
-          'avatar',
-          'introduction',
-          'account',
-          'cover',
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = User.id)'
-            ),
-            'tweetCount'
+        attributes: {
+          include: [
+            [query.getUserTweetCount(userId), 'tweetCount'],
+            [query.getUserReplyCount(userId), 'replyCount'],
+            [query.getUserLikeCount(userId), 'likeCount'],
+            [query.getUserFollowingCount(userId), 'followingCount'],
+            [query.getUserFollowerCount(userId), 'followerCount'],
+            [query.getUserIsFollowed(userId, helpers.getUser(req).id), 'isFollowed']
           ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Replies WHERE Replies.UserId = User.id)'
-            ),
-            'replyCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Likes WHERE Likes.UserId = User.id)'
-            ),
-            'likeCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Followships WHERE Followships.followerId = User.id)'
-            ),
-            'followingCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)'
-            ),
-            'followerCount'
-          ],
-          [
-            sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id AND Followships.followerId = ${
-                helpers.getUser(req).id
-              } LIMIT 1)`
-            ),
-            'isFollowed'
+          exclude: [
+            'email',
+            'password',
+            'role',
+            'activeTime',
+            'createdAt',
+            'updatedAt'
           ]
-        ],
+        },
         raw: true
       })
       return user
