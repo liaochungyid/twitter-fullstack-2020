@@ -1,6 +1,7 @@
 const helpers = require('../_helpers')
 const express = require('express')
 const router = express.Router()
+const passport = require('../config/passport')
 
 const adminController = require('../controllers/api/adminController')
 const followshipController = require('../controllers/api/followshipController')
@@ -10,9 +11,21 @@ const tweetServer = require('../controllers/api/tweetServer')
 const userController = require('../controllers/api/userController')
 const newsServer = require('../controllers/api/newsServer')
 
-const authenticated = (req, res, next) => {
-  if (helpers.ensureAuthenticated(req)) {
-    return next()
+// const authenticated = (req, res, next) => {
+//   if (helpers.ensureAuthenticated(req)) {
+//     return next()
+//   }
+//   return res.json({ status: 'error', message: '你無權查看此頁面' })
+// }
+
+const authenticated = passport.authenticate('jwt', { session: false })
+
+const authenticatedAdmin = (req, res, next) => {
+  if (helpers.getUser(req)) {
+    if (helpers.getUser(req).role === 'admin') {
+      return next()
+    }
+    return res.json({ status: 'error', message: '你無權查看此頁面' })
   }
   return res.json({ status: 'error', message: '你無權查看此頁面' })
 }
@@ -40,10 +53,10 @@ router.delete('/admin/tweets/:tweetId', adminController.deleteTweet)
 // router.get('/admin/users', adminController.adminUsers)
 
 // authentication 相關
-// router.post('/signup', userController.signUp)
-// router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
+router.post('/signup', userController.signUp)
+router.post('/signin', userController.signIn)
 // router.get('/signout', userController.signOut)
-// router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), userController.signIn)
+router.post('/admin/signin', authenticated, authenticatedAdmin, userController.signIn)
 // router.get('/admin/signout', userController.signOut)
 
 router.get('/news', authenticated, newsServer.getNew) // 訂閱物件通知的 api

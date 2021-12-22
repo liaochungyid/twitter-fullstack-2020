@@ -39,6 +39,7 @@ passport.use(
 passport.serializeUser((user, done) => {
   return done(null, user.id)
 })
+
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findByPk(id, {
@@ -50,5 +51,33 @@ passport.deserializeUser(async (id, done) => {
     console.error(err)
   }
 })
+
+// JWT
+const jwt = require('jsonwebtoken')
+const passportJWT = require('passport-jwt')
+const JwtStrategy = passportJWT.Strategy
+const ExtractJwt = passportJWT.ExtractJwt
+
+passport.use(
+  new JwtStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: process.env.JWT_SECRET
+    },
+    async (jwtPayload, done) => {
+      try {
+        const user = await User.findByPk(jwtPayload.id)
+
+        if (!user) {
+          return done(null, false)
+        }
+
+        return done(null, user)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  )
+)
 
 module.exports = passport
