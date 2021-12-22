@@ -13,7 +13,6 @@ module.exports = {
       })
 
       return res.json({ status: 'success', message: '已加入關注' })
-
     } catch (err) {
       console.error(err)
       return res.json({ status: 'error', message: '加入關注失敗' })
@@ -22,7 +21,6 @@ module.exports = {
 
   deleteNotify: async (req, res) => {
     try {
-
       const loginUser = helpers.getUser(req).id
 
       await Notify.destroy({
@@ -33,10 +31,9 @@ module.exports = {
       })
 
       return res.json({ status: 'success', message: '已移除關注' })
-
     } catch (err) {
       console.error(err)
       return res.json({ status: 'error', message: '取消關注失敗' })
     }
-  },
+  }
 }

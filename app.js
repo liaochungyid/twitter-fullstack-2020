@@ -14,27 +14,28 @@ const flash = require('connect-flash')
 
 const app = express()
 
-app.engine('hbs', exphbs({
-  defaultLayout: 'main',
-  extname: '.hbs',
-  helpers: require('./utils/handlebars-helpers')
-}))
-
+app.engine(
+  'hbs',
+  exphbs({
+    defaultLayout: 'main',
+    extname: '.hbs',
+    helpers: require('./utils/handlebars-helpers')
+  })
+)
 app.set('view engine', 'hbs')
 app.use(express.static('public'))
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
-
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: true
-}))
-
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
+  })
+)
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(flash())
-
 app.use((req, res, next) => {
   res.locals.loginUser = helpers.getUser(req)
   res.locals.isAuthenticated = helpers.ensureAuthenticated(req)

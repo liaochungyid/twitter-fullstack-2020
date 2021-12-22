@@ -8,9 +8,7 @@ module.exports = {
     try {
       let tweets = await Tweet.findAll({
         attributes: ['id', 'description', 'createdAt'],
-        order: [
-          ['createdAt', 'DESC']
-        ],
+        order: [['createdAt', 'DESC']],
         include: [
           { model: User, attributes: ['id', 'name', 'avatar', 'account'] }
         ],
@@ -18,7 +16,7 @@ module.exports = {
         nest: true
       })
 
-      tweets = tweets.map((tweet) => ({
+      tweets = tweets.map(tweet => ({
         ...tweet,
         description: tweet.description.slice(0, 50)
       }))
@@ -64,11 +62,11 @@ module.exports = {
       })
 
       users = users
-        .map((user) => ({
+        .map(user => ({
           ...user.dataValues,
           tweetCount: user.Tweets.length,
           likeCount: utility.sumLikes(
-            user.Tweets.map((tweet) => tweet.Likes.length)
+            user.Tweets.map(tweet => tweet.Likes.length)
           ), // 有寫工具function adminController.sumLikes(arr) 計算加總
           followingCount: user.Followings.length,
           followerCount: user.Followers.length

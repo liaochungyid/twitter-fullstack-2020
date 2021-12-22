@@ -37,7 +37,11 @@ module.exports = {
           ]
         ],
         include: [
-          { model: User, attributes: ['id', 'name', 'account', 'avatar'], require: false }
+          {
+            model: User,
+            attributes: ['id', 'name', 'account', 'avatar'],
+            require: false
+          }
         ],
         order: [['createdAt', 'DESC']],
         raw: true,
@@ -65,7 +69,7 @@ module.exports = {
   },
 
   addLike: (req, res) => {
-    tweetService.addLike(req, res, (data) => {
+    tweetService.addLike(req, res, data => {
       if (data.status === 'success') {
         return res.redirect('back')
       }
@@ -73,7 +77,7 @@ module.exports = {
   },
 
   removeLike: (req, res) => {
-    tweetService.removeLike(req, res, (data) => {
+    tweetService.removeLike(req, res, data => {
       if (data.status === 'success') {
         return res.redirect('back')
       }
@@ -103,7 +107,7 @@ module.exports = {
 
       return res.render('user', {
         tweet: tweet.toJSON(),
-        replies: replies.map((reply) => reply.toJSON()),
+        replies: replies.map(reply => reply.toJSON()),
         isLiked,
         partial: 'tweet',
         pops

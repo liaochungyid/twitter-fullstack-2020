@@ -58,11 +58,9 @@ module.exports = {
         ]
       })
       console.log(users)
-      users = users
-        .filter((user) => user.dataValues.role !== 'admin')
+      users = users.filter(user => user.dataValues.role !== 'admin')
 
-      users = users
-        .sort((a, b) => b.followerCount - a.followerCount)
+      users = users.sort((a, b) => b.followerCount - a.followerCount)
 
       return res.json(users) // 返回前除admin外 users array
     } catch (err) {
@@ -89,7 +87,12 @@ module.exports = {
 
     const payload = { id: user.id }
     const token = jwt.sign(payload, process.env.JWT_SECRET)
-    return res.json({ status: 'success', message: '成功登入！', token: token, user: user })
+    return res.json({
+      status: 'success',
+      message: '成功登入！',
+      token: token,
+      user: user
+    })
   },
 
   signUp: async (req, res) => {
@@ -125,7 +128,12 @@ module.exports = {
       }
 
       if (errors.length) {
-        return res.json({ status: 'error', message: '回傳錯誤陣列，之後再看如何實作', errors: errors, user: { account, name, email } })
+        return res.json({
+          status: 'error',
+          message: '回傳錯誤陣列，之後再看如何實作',
+          errors: errors,
+          user: { account, name, email }
+        })
       }
 
       await User.create({

@@ -2,7 +2,7 @@ const followshipService = require('../services/followshipService')
 
 module.exports = {
   addFollow: async (req, res) => {
-    followshipService.addFollow(req, res, (data) => {
+    followshipService.addFollow(req, res, data => {
       if (data.status === 'success') {
         return res.redirect('back')
       }
@@ -14,7 +14,7 @@ module.exports = {
   },
 
   removeFollow: async (req, res) => {
-    followshipService.removeFollow(req, res, (data) => {
+    followshipService.removeFollow(req, res, data => {
       if (data.status === 'success') {
         return res.redirect('back')
       }

@@ -34,7 +34,11 @@ module.exports = {
           ]
         ],
         include: [
-          { model: User, attributes: ['id', 'name', 'account', 'avatar'], require: false }
+          {
+            model: User,
+            attributes: ['id', 'name', 'account', 'avatar'],
+            require: false
+          }
         ],
         order: [['createdAt', 'DESC']],
         raw: true,

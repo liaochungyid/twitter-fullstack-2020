@@ -48,7 +48,8 @@ module.exports = {
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id AND Followships.followerId = ${helpers.getUser(req).id
+              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id AND Followships.followerId = ${
+                helpers.getUser(req).id
               } LIMIT 1)`
             ),
             'isFollowed'
@@ -85,7 +86,8 @@ module.exports = {
           ],
           [
             sequelize.literal(
-              `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${helpers.getUser(req).id
+              `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${
+                helpers.getUser(req).id
               } LIMIT 1)`
             ),
             'isLiked'
@@ -118,7 +120,7 @@ module.exports = {
         nest: true
       })
 
-      replies = replies.map((reply) => ({
+      replies = replies.map(reply => ({
         id: reply.id,
         comment: reply.comment,
         createdAt: reply.createdAt,
@@ -159,7 +161,8 @@ module.exports = {
               ],
               [
                 sequelize.literal(
-                  `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${helpers.getUser(req).id
+                  `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${
+                    helpers.getUser(req).id
                   } LIMIT 1)`
                 ),
                 'isLiked'
@@ -172,7 +175,7 @@ module.exports = {
         nest: true
       })
       const tweets = likes
-        .map((like) => ({
+        .map(like => ({
           id: like.Tweet.id,
           description: like.Tweet.description,
           replyCount: like.Tweet.replyCount,
@@ -204,7 +207,8 @@ module.exports = {
               'account',
               [
                 sequelize.literal(
-                  `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = Followers.id AND Followships.followerId = ${helpers.getUser(req).id
+                  `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = Followers.id AND Followships.followerId = ${
+                    helpers.getUser(req).id
                   } LIMIT 1)`
                 ),
                 'isFollowed'
@@ -216,7 +220,7 @@ module.exports = {
       })
       let followers = followship.toJSON().Followers
 
-      followers = followers.map((follower) => ({
+      followers = followers.map(follower => ({
         id: follower.id,
         name: follower.name,
         avatar: follower.avatar,
@@ -255,9 +259,9 @@ module.exports = {
       let followingsList = await Followship.findAll({
         where: { followerId: helpers.getUser(req).id }
       })
-      followingsList = followingsList.map((data) => data.dataValues.followingId)
+      followingsList = followingsList.map(data => data.dataValues.followingId)
 
-      followings = followings[0].dataValues.Followings.map((following) => ({
+      followings = followings[0].dataValues.Followings.map(following => ({
         id: following.id,
         name: following.name,
         avatar: following.avatar,
@@ -302,14 +306,12 @@ module.exports = {
       let followings = await Followship.findAll({
         where: { followerId: helpers.getUser(req).id }
       })
-      followings = followings.map(
-        (following) => following.dataValues.followingId
-      )
+      followings = followings.map(following => following.dataValues.followingId)
 
-      pops = pops.filter((pop) => pop.dataValues.role !== 'admin')
-      pops = pops.filter((pop) => pop.dataValues.id !== helpers.getUser(req).id)
+      pops = pops.filter(pop => pop.dataValues.role !== 'admin')
+      pops = pops.filter(pop => pop.dataValues.id !== helpers.getUser(req).id)
       pops = pops
-        .map((pop) => ({
+        .map(pop => ({
           ...pop.dataValues,
           isFollowing: followings.includes(pop.dataValues.id)
         }))
@@ -325,7 +327,7 @@ module.exports = {
   getUserIsNotify: async (req, res) => {
     try {
       const userId = helpers.getUser(req).id
-      let isNotify = await Notify.count({
+      const isNotify = await Notify.count({
         where: {
           observerId: userId,
           observedId: req.params.userId
