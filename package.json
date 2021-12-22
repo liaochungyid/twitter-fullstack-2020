@@ -1,5 +1,5 @@
 {
-  "name": "Aphitter",
+  "name": "aphitter",
   "version": "1.0.0",
   "description": "AlphaCamp Twitter",
   "main": "app.js",
@@ -48,8 +48,12 @@
   "devDependencies": {
     "expect": "^27.4.2",
     "mocha": "^6.2.3",
+    "semistandard": "^16.0.1",
     "sequelize-test-helpers": "^1.0.7",
-    "supertest": "^3.3.0"
+    "standard": "^16.0.4",
+    "standardx": "^7.0.0",
+    "supertest": "^3.3.0",
+    "ts-standard": "^11.0.0"
   },
   "standard": {
     "ignore": [
