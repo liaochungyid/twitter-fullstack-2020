@@ -13,8 +13,8 @@ const userController = require('../controllers/userController')
 const pageController = require('../controllers/pageController')
 
 // 首頁
-router.get('/', authenticated, (req, res) => res.redirect('/tweets'))
-router.get('/tweets', authenticated, pageController.getIndex)
+router.get('/', authenticated, (req, res) => res.redirect('/tweets')) // ok!!
+router.get('/tweets', authenticated, userController.indexPage) // ok!!
 // tweet 動作
 router.post('/tweets', authenticated, tweetController.addTweet)
 router.get('/tweets/:tweetId', authenticated, tweetController.getTweet)
@@ -23,12 +23,12 @@ router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike
 router.get('/tweets/:tweetId/replies', authenticated, replyController.getReplies)
 router.post('/tweets/:tweetId/replies', authenticated, replyController.addReply)
 // user 頁面
-router.get('/users/:userId/settings', authenticated, pageController.getSettings)
-router.get('/users/:userId/tweets', authenticated, pageController.getUserTweets)
-router.get('/users/:userId/replies', authenticated, pageController.getUserReplies)
-router.get('/users/:userId/likes', authenticated, pageController.getUserLikes)
-router.get('/users/:userId/followers', authenticated, pageController.getUserFollowers)
-router.get('/users/:userId/followings', authenticated, pageController.getUserFollowings)
+router.get('/users/:userId/tweets', authenticated, userController.tweetsPage) // ok!!
+router.get('/users/:userId/replies', authenticated, userController.repliesPage) // ok!!
+router.get('/users/:userId/likes', authenticated, userController.likesPage) // ok!!
+router.get('/users/:userId/followers', authenticated, userController.followersPage) // ok!!
+router.get('/users/:userId/followings', authenticated, userController.followingsPage) // ok!!
+router.get('/users/:userId/settings', authenticated, userController.settingsPage)
 router.get('/users/:userId/profileNotis', authenticated, pageController.getNotis)
 router.get('/users/:userId/profileChatPub', authenticated, pageController.getChatPublic)
 router.get('/users/:userId/profileChatPris', authenticated, pageController.getChatPrivates)
@@ -43,9 +43,9 @@ router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:tweetId', authenticatedAdmin, adminController.deleteTweet)
 router.get('/admin/users', authenticatedAdmin, adminController.adminUsers)
 // authentication 頁面
-router.get('/signup', pageController.getSignUp)
-router.get('/signin', pageController.getSignIn)
-router.get('/admin/signin', pageController.getSignIn)
+router.get('/signup', userController.signUpPage)
+router.get('/signin', userController.signInPage)
+router.get('/admin/signin', userController.signInPage)
 // authentication 動作
 router.post('/signup', userController.signUp)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
