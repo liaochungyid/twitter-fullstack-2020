@@ -9,9 +9,7 @@
     "test": "set \"NODE_ENV=test\" && mocha test --exit --recursive --timeout 5000 --color",
     "seed": "set \"NODE_ENV=development\" && npx sequelize db:seed:undo:all && npx sequelize db:seed:all",
     "setup": "npm install && set \"NODE_ENV=development\" && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all && set \"NODE_ENV=test\" && npx sequelize db:create && npx sequelize db:migrate",
-    "reset": "set \"NODE_ENV=development\" && npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all && set \"NODE_ENV=test\" && npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate",
-    "myTest": "mocha utils/*.test.js",
-    "test-watch": "nodemon --exec \"npm run myTest\""
+    "reset": "set \"NODE_ENV=development\" && npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate && npx sequelize db:seed:all && set \"NODE_ENV=test\" && npx sequelize db:drop && npx sequelize db:create && npx sequelize db:migrate"
   },
   "author": "",
   "license": "ISC",
@@ -57,10 +55,7 @@
   },
   "standard": {
     "ignore": [
-      "/public",
-      "/test",
-      "/sockets",
-      "/controllers/api/newServer.js"
+      "/test"
     ]
   }
 }
