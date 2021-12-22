@@ -28,24 +28,28 @@ router.get('/users/:userId/replies', authenticated, userController.repliesPage) 
 router.get('/users/:userId/likes', authenticated, userController.likesPage) // ok!!
 router.get('/users/:userId/followers', authenticated, userController.followersPage) // ok!!
 router.get('/users/:userId/followings', authenticated, userController.followingsPage) // ok!!
-router.get('/users/:userId/settings', authenticated, userController.settingsPage)
+router.get('/users/:userId/settings', authenticated, userController.settingsPage) // ok!!
 router.get('/users/:userId/profileNotis', authenticated, pageController.getNotis)
 router.get('/users/:userId/profileChatPub', authenticated, pageController.getChatPublic)
 router.get('/users/:userId/profileChatPris', authenticated, pageController.getChatPrivates)
+// 重新命名路由
+router.get('/users/:userId/notifications')
+router.get('/users/:userId/chatroom')
+router.get('/users/:userId/messages')
 // user 動作
 router.put('/users/:userId/settings', authenticated, userController.updateSettings)
 router.put('/users/:userId/update', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.updateProfile)
 router.post('/followships', authenticated, followshipController.addFollow)
 router.delete('/followships/:userId', authenticated, followshipController.removeFollow)
-// admin 相關不另外寫在 pageController
+// admin 相關
 router.get('/admin', authenticatedAdmin, adminController.tweetsPage) // ok!!
 router.get('/admin/tweets', authenticatedAdmin, adminController.tweetsPage) // ok!!
 router.get('/admin/users', authenticatedAdmin, adminController.usersPage) // ok!!
-router.delete('/admin/tweets/:tweetId', authenticatedAdmin, adminController.deleteTweet)
+router.delete('/admin/tweets/:tweetId', authenticatedAdmin, adminController.deleteTweet) // ok!!
 // authentication 頁面
-router.get('/signup', userController.signUpPage)
-router.get('/signin', userController.signInPage)
-router.get('/admin/signin', userController.signInPage)
+router.get('/signup', userController.signUpPage) // ok!!
+router.get('/signin', userController.signInPage) // ok!!
+router.get('/admin/signin', userController.signInPage) // ok!!
 // authentication 動作
 router.post('/signup', userController.signUp)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
