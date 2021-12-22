@@ -13,7 +13,7 @@ const userController = require('../controllers/userController')
 const pageController = require('../controllers/pageController')
 
 // 首頁
-router.get('/', authenticated, (req, res) => res.redirect('/tweets')) // ok!!
+router.get('/', authenticated, userController.indexPage) // ok!!
 router.get('/tweets', authenticated, userController.indexPage) // ok!!
 // tweet 動作
 router.post('/tweets', authenticated, tweetController.addTweet)
@@ -38,10 +38,10 @@ router.put('/users/:userId/update', authenticated, upload.fields([{ name: 'avata
 router.post('/followships', authenticated, followshipController.addFollow)
 router.delete('/followships/:userId', authenticated, followshipController.removeFollow)
 // admin 相關不另外寫在 pageController
-router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
-router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
+router.get('/admin', authenticatedAdmin, adminController.tweetsPage) // ok!!
+router.get('/admin/tweets', authenticatedAdmin, adminController.tweetsPage) // ok!!
+router.get('/admin/users', authenticatedAdmin, adminController.usersPage) // ok!!
 router.delete('/admin/tweets/:tweetId', authenticatedAdmin, adminController.deleteTweet)
-router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 // authentication 頁面
 router.get('/signup', userController.signUpPage)
 router.get('/signin', userController.signInPage)

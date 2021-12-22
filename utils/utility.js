@@ -12,5 +12,11 @@ module.exports = {
         resolve(res.data.link)
       })
     })
+  },
+
+  sumLikes: (arr) => {
+    let likes = 0
+    arr.forEach((i) => (likes += i))
+    return likes
   }
 }

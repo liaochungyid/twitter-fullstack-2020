@@ -1,3 +1,5 @@
+const utility = require('../utils/utility')
+
 const db = require('../models')
 const { User, Tweet, Like } = db
 
@@ -65,7 +67,7 @@ module.exports = {
         .map((user) => ({
           ...user.dataValues,
           tweetCount: user.Tweets.length,
-          likeCount: adminService.sumLikes(
+          likeCount: utility.sumLikes(
             user.Tweets.map((tweet) => tweet.Likes.length)
           ), // 有寫工具function adminController.sumLikes(arr) 計算加總
           followingCount: user.Followings.length,
@@ -84,11 +86,5 @@ module.exports = {
     } catch (err) {
       console.error(err)
     }
-  },
-
-  sumLikes: (arr) => {
-    let likes = 0
-    arr.forEach((i) => (likes += i))
-    return likes
   }
 }

@@ -1,7 +1,7 @@
 const adminService = require('../services/adminService')
 
 module.exports = {
-  getTweets: async (req, res) => {
+  tweetsPage: async (req, res) => {
     adminService.getTweets(req, res, (data) => {
       if (data.status === 'success') {
         return res.render('admin', data)
@@ -17,7 +17,7 @@ module.exports = {
     })
   },
 
-  getUsers: async (req, res) => {
+  usersPage: async (req, res) => {
     adminService.getUsers(req, res, (data) => {
       if (data.status === 'success') {
         return res.render('admin', data)
