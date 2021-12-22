@@ -17,7 +17,7 @@ const app = express()
 app.engine('hbs', exphbs({
   defaultLayout: 'main',
   extname: '.hbs',
-  helpers: require('./config/handlebars-helpers')
+  helpers: require('./utils/handlebars-helpers')
 }))
 
 app.set('view engine', 'hbs')

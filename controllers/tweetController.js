@@ -2,7 +2,7 @@ const helpers = require('../_helpers')
 const db = require('../models')
 const { sequelize } = db
 const { User, Tweet, Reply, Like } = db
-const tweetTime = require('../config/tweetTime')
+const tweetTime = require('../utils/tweetTime')
 const userController = require('./userController')
 
 const tweetService = require('../services/tweetService')

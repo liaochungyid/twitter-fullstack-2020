@@ -1,7 +1,7 @@
 const db = require('../models')
 const { Op } = require('sequelize')
 const { User, Message, PrivateMessage, Notify, Tweet, Like } = db
-const chatTime = require('../config/tweetTime')
+const chatTime = require('../utils/tweetTime')
 const moment = require('moment')
 
 const socketService = {
