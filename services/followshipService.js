@@ -2,7 +2,7 @@ const helpers = require('../_helpers')
 const db = require('../models')
 const { Followship } = db
 
-const followshipService = {
+module.exports = {
   addFollow: async (req, res, callback) => {
     try {
       const followerId = Number(helpers.getUser(req).id)
@@ -34,5 +34,3 @@ const followshipService = {
     }
   }
 }
-
-module.exports = followshipService

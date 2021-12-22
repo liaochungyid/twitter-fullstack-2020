@@ -1,6 +1,6 @@
 const tweetService = require('../../services/tweetService')
 
-const tweetController = {
+module.exports = {
   addLike: (req, res) => {
     tweetService.addLike(req, res, (data) => {
       return res.json(data)
@@ -13,5 +13,3 @@ const tweetController = {
     })
   }
 }
-
-module.exports = tweetController

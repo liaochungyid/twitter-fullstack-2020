@@ -3,7 +3,7 @@ const helpers = require('../_helpers')
 const db = require('../models')
 const { User, Reply } = db
 
-const replyController = {
+module.exports = {
   getReplies: async (req, res) => {
     try {
       const TweetId = Number(req.params.tweetId)
@@ -40,5 +40,3 @@ const replyController = {
     }
   }
 }
-
-module.exports = replyController

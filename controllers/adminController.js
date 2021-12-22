@@ -1,9 +1,6 @@
-const db = require('../models')
-const { User, Tweet, Like } = db
-
 const adminService = require('../services/adminService')
 
-const adminController = {
+module.exports = {
   getTweets: async (req, res) => {
     adminService.getTweets(req, res, (data) => {
       if (data.status === 'success') {
@@ -28,5 +25,3 @@ const adminController = {
     })
   }
 }
-
-module.exports = adminController

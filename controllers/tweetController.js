@@ -7,7 +7,7 @@ const userController = require('./userController')
 
 const tweetService = require('../services/tweetService')
 
-const tweetController = {
+module.exports = {
   getTweets: async (req, res) => {
     try {
       const userId = helpers.getUser(req).id
@@ -113,5 +113,3 @@ const tweetController = {
     }
   }
 }
-
-module.exports = tweetController

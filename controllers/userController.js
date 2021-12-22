@@ -10,7 +10,7 @@ const { sequelize } = db
 const { Op } = db.Sequelize
 const { User, Tweet, Reply, Like, Followship, Notify } = db
 
-const userController = {
+module.exports = {
   // PAGES
   indexPage: async (req, res) => {
     try {
@@ -364,5 +364,3 @@ const userController = {
     }
   }
 }
-
-module.exports = userController

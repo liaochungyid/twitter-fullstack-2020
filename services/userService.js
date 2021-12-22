@@ -7,7 +7,7 @@ const { sequelize } = db
 const { Op } = db.Sequelize
 const { User, Tweet, Reply, Like, Followship, Notify } = db
 
-const userController = {
+module.exports = {
   getUserProfile: async (req, res) => {
     try {
       const userId = Number(req.params.userId)
@@ -341,5 +341,3 @@ const userController = {
     }
   }
 }
-
-module.exports = userController

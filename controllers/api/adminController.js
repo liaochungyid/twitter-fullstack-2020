@@ -1,6 +1,6 @@
 const adminService = require('../../services/adminService')
 
-const adminController = {
+module.exports = {
   getTweets: async (req, res) => {
     adminService.getTweets(req, res, (data) => {
       return res.json(data)
@@ -13,5 +13,3 @@ const adminController = {
     })
   }
 }
-
-module.exports = adminController

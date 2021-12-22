@@ -1,6 +1,6 @@
 const userController = require('./userController')
 
-const pageController = {
+module.exports = {
   getNotis: async (req, res) => {
     try {
       const [pops] = await Promise.all([userController.getPopular(req, res)])
@@ -22,4 +22,3 @@ const pageController = {
   }
 }
 
-module.exports = pageController

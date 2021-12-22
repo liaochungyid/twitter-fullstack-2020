@@ -2,7 +2,7 @@ const helpers = require('../../_helpers')
 const db = require('../../models')
 const { Notify } = db
 
-const notifyController = {
+module.exports = {
   createNotify: async (req, res) => {
     try {
       const loginUser = helpers.getUser(req).id
@@ -40,5 +40,3 @@ const notifyController = {
     }
   },
 }
-
-module.exports = notifyController

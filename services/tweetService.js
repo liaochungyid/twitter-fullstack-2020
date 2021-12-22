@@ -5,8 +5,8 @@ const { sequelize } = db
 const { User, Tweet, Reply, Like } = db
 const tweetTime = require('../config/tweetTime')
 
-const tweetService = {
-    getTweets: async (req, res) => {
+module.exports = {
+  getTweets: async (req, res) => {
     try {
       const userId = helpers.getUser(req).id
       const tweets = await Tweet.findAll({
@@ -77,5 +77,3 @@ const tweetService = {
     }
   }
 }
-
-module.exports = tweetService

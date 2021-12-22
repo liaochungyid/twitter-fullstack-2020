@@ -1,7 +1,7 @@
 const db = require('../models')
 const { User, Tweet, Like } = db
 
-const adminService = {
+module.exports = {
   getTweets: async (req, res, callback) => {
     try {
       let tweets = await Tweet.findAll({
@@ -92,5 +92,3 @@ const adminService = {
     return likes
   }
 }
-
-module.exports = adminService

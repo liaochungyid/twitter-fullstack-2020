@@ -3,7 +3,7 @@ const db = require('../../models')
 const { User, Tweet, Notify, Like } = db
 const chatTime = require('../../config/tweetTime')
 
-const tweetController = {
+module.exports = {
   getNew: async (req, res) => {
     try {
       const userId = helpers.getUser(req).id 
@@ -53,5 +53,3 @@ const tweetController = {
     }
   }
 }
-
-module.exports = tweetController

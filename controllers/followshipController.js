@@ -1,6 +1,6 @@
 const followshipService = require('../services/followshipService')
 
-const followshipController = {
+module.exports = {
   addFollow: async (req, res) => {
     followshipService.addFollow(req, res, (data) => {
       if (data.status === 'success') {
@@ -21,5 +21,3 @@ const followshipController = {
     })
   }
 }
-
-module.exports = followshipController

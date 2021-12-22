@@ -9,7 +9,7 @@ const passportJWT = require('passport-jwt')
 const ExtractJwt = passportJWT.ExtractJwt
 const JwtStrategy = passportJWT.Strategy
 
-const userController = {
+module.exports = {
   getEditModal: async (req, res) => {
     try {
       if (helpers.getUser(req).id !== Number(req.params.userId)) {
@@ -144,5 +144,3 @@ const userController = {
     }
   }
 }
-
-module.exports = userController
