@@ -18,7 +18,10 @@ module.exports = {
             [query.getUserLikeCount(userId), 'likeCount'],
             [query.getUserFollowingCount(userId), 'followingCount'],
             [query.getUserFollowerCount(userId), 'followerCount'],
-            [query.getUserIsFollowed(userId, helpers.getUser(req).id), 'isFollowed']
+            [
+              query.getUserIsFollowed(userId, helpers.getUser(req).id),
+              'isFollowed'
+            ]
           ],
           exclude: [
             'email',
@@ -42,31 +45,13 @@ module.exports = {
       const userId = Number(req.params.userId)
       const tweets = await Tweet.findAll({
         where: { UserId: userId },
-        attributes: [
-          'id',
-          'description',
-          'createdAt',
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
-            ),
-            'replyCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
-            ),
-            'likeCount'
-          ],
-          [
-            sequelize.literal(
-              `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${
-                helpers.getUser(req).id
-              } LIMIT 1)`
-            ),
-            'isLiked'
+        attributes: {
+          include: [
+            [query.getTweetReplyCount(), 'replyCount'],
+            [query.getTweetLikeCount(), 'likeCount'],
+            [query.getTweetIsLiked(helpers.getUser(req).id), 'isLiked']
           ]
-        ],
+        },
         order: [['createdAt', 'DESC']],
         raw: true
       })

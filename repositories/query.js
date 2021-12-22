@@ -36,5 +36,23 @@ module.exports = {
     return sequelize.literal(
       `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = ${userId} AND Followships.followerId = ${loginUserId} LIMIT 1)`
     )
+  },
+
+  getTweetReplyCount: () => {
+    return sequelize.literal(
+      '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
+    )
+  },
+
+  getTweetLikeCount: () => {
+    return sequelize.literal(
+      '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
+    )
+  },
+
+  getTweetIsLiked: loginUserId => {
+    return sequelize.literal(
+      `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${loginUserId} LIMIT 1)`
+    )
   }
 }
