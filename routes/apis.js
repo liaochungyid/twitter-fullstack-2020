@@ -4,6 +4,7 @@ const router = express.Router()
 
 const adminController = require('../controllers/api/adminController')
 const followshipController = require('../controllers/api/followshipController')
+const notifyController = require('../controllers/api/notifyController')
 // const replyController = require('../controllers/api/replyController')
 const tweetServer = require('../controllers/api/tweetServer')
 const userController = require('../controllers/api/userController')
@@ -52,5 +53,9 @@ router.delete('/followships/:userId', followshipController.removeFollow)
 
 router.get('/admin/tweets', adminController.getTweets)
 router.delete('/admin/tweets/:tweetId', adminController.deleteTweet)
+
+// notify 動作
+router.post('/notify/:userId', authenticated, notifyController.createNotify)
+router.delete('/notify/:userId', authenticated, notifyController.deleteNotify)
 
 module.exports = router

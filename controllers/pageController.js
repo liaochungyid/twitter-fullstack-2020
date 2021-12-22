@@ -76,15 +76,18 @@ const pageController = {
 
   getUserTweets: async (req, res) => {
     try {
-      const [user, tweets, pops] = await Promise.all([
+      const [user, tweets, pops, isNotify] = await Promise.all([
         userController.getUserProfile(req, res),
         userController.getUserTweets(req, res),
-        userController.getPopular(req, res)
+        userController.getPopular(req, res),
+        userController.getUserIsNotify(req, res)
       ])
+
       return res.render('user', {
         user,
         tweets,
         pops,
+        isNotify,
         partial: 'profileTweets'
       })
     } catch (err) {
@@ -94,15 +97,17 @@ const pageController = {
 
   getUserReplies: async (req, res) => {
     try {
-      const [user, replies, pops] = await Promise.all([
+      const [user, replies, pops, isNotify] = await Promise.all([
         userController.getUserProfile(req, res),
         userController.getUserReplies(req, res),
-        userController.getPopular(req, res)
+        userController.getPopular(req, res),
+        userController.getUserIsNotify(req, res)
       ])
       return res.render('user', {
         user,
         replies,
         pops,
+        isNotify,
         partial: 'profileReplies'
       })
     } catch (err) {
@@ -112,15 +117,17 @@ const pageController = {
 
   getUserLikes: async (req, res) => {
     try {
-      const [user, tweets, pops] = await Promise.all([
+      const [user, tweets, pops, isNotify] = await Promise.all([
         userController.getUserProfile(req, res),
         userController.getUserLikes(req, res),
-        userController.getPopular(req, res)
+        userController.getPopular(req, res),
+        userController.getUserIsNotify(req, res)
       ])
       return res.render('user', {
         user,
         tweets,
         pops,
+        isNotify,
         partial: 'profileLikes'
       })
     } catch (err) {
