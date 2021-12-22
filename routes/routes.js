@@ -41,7 +41,7 @@ router.delete('/followships/:userId', authenticated, followshipController.remove
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/tweets'))
 router.get('/admin/tweets', authenticatedAdmin, adminController.getTweets)
 router.delete('/admin/tweets/:tweetId', authenticatedAdmin, adminController.deleteTweet)
-router.get('/admin/users', authenticatedAdmin, adminController.adminUsers)
+router.get('/admin/users', authenticatedAdmin, adminController.getUsers)
 // authentication 頁面
 router.get('/signup', userController.signUpPage)
 router.get('/signin', userController.signInPage)

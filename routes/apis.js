@@ -50,7 +50,7 @@ router.delete('/followships/:userId', followshipController.removeFollow)
 router.get('/admin', (req, res) => res.redirect('/admin/tweets'))
 router.get('/admin/tweets', adminController.getTweets)
 router.delete('/admin/tweets/:tweetId', adminController.deleteTweet)
-// router.get('/admin/users', adminController.adminUsers)
+// router.get('/admin/users', adminController.getUsers)
 
 // authentication 相關
 router.post('/signup', userController.signUp)
