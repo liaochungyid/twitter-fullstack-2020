@@ -103,26 +103,9 @@ module.exports = {
               'id',
               'description',
               'createdAt',
-              [
-                sequelize.literal(
-                  '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
-                ),
-                'replyCount'
-              ],
-              [
-                sequelize.literal(
-                  '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
-                ),
-                'likeCount'
-              ],
-              [
-                sequelize.literal(
-                  `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${
-                    helpers.getUser(req).id
-                  } LIMIT 1)`
-                ),
-                'isLiked'
-              ]
+              [query.getTweetReplyCount(), 'replyCount'],
+              [query.getTweetLikeCount(), 'likeCount'],
+              [query.getTweetIsLiked(helpers.getUser(req).id), 'isLiked']
             ],
             require: false
           }
