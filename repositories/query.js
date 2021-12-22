@@ -2,39 +2,39 @@ const db = require('../models')
 const { sequelize } = db
 
 module.exports = {
-  getUserTweetCount: userId => {
+  getUserTweetCount: () => {
     return sequelize.literal(
-      `(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = ${userId})`
+      '(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = User.id)'
     )
   },
 
-  getUserReplyCount: userId => {
+  getUserReplyCount: () => {
     return sequelize.literal(
-      `(SELECT COUNT(*) FROM Replies WHERE Replies.UserId = ${userId})`
+      '(SELECT COUNT(*) FROM Replies WHERE Replies.UserId = User.id)'
     )
   },
 
-  getUserLikeCount: userId => {
+  getUserLikeCount: () => {
     return sequelize.literal(
-      `(SELECT COUNT(*) FROM Likes WHERE Likes.UserId = ${userId})`
+      '(SELECT COUNT(*) FROM Likes WHERE Likes.UserId = User.id)'
     )
   },
 
-  getUserFollowingCount: userId => {
+  getUserFollowingCount: () => {
     return sequelize.literal(
-      `(SELECT COUNT(*) FROM Followships WHERE Followships.followerId = ${userId})`
+      '(SELECT COUNT(*) FROM Followships WHERE Followships.followerId = User.id)'
     )
   },
 
-  getUserFollowerCount: userId => {
+  getUserFollowerCount: () => {
     return sequelize.literal(
-      `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = ${userId})`
+      '(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)'
     )
   },
 
-  getUserIsFollowed: (userId, loginUserId) => {
+  getUserIsFollowed: loginUserId => {
     return sequelize.literal(
-      `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = ${userId} AND Followships.followerId = ${loginUserId} LIMIT 1)`
+      `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id AND Followships.followerId = ${loginUserId} LIMIT 1)`
     )
   },
 

@@ -13,15 +13,12 @@ module.exports = {
       const user = await User.findByPk(userId, {
         attributes: {
           include: [
-            [query.getUserTweetCount(userId), 'tweetCount'],
-            [query.getUserReplyCount(userId), 'replyCount'],
-            [query.getUserLikeCount(userId), 'likeCount'],
-            [query.getUserFollowingCount(userId), 'followingCount'],
-            [query.getUserFollowerCount(userId), 'followerCount'],
-            [
-              query.getUserIsFollowed(userId, helpers.getUser(req).id),
-              'isFollowed'
-            ]
+            [query.getUserTweetCount(), 'tweetCount'],
+            [query.getUserReplyCount(), 'replyCount'],
+            [query.getUserLikeCount(), 'likeCount'],
+            [query.getUserFollowingCount(), 'followingCount'],
+            [query.getUserFollowerCount(), 'followerCount'],
+            [query.getUserIsFollowed(helpers.getUser(req).id), 'isFollowed']
           ],
           exclude: [
             'email',
