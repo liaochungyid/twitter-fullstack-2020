@@ -216,12 +216,11 @@ module.exports = {
 
   signOut: (req, res) => {
     req.flash('successMessage', '成功登出！')
+    req.logout()
 
-    if (helpers.getUser(req).role === 'admin') {
-      req.logout()
+    if (req.url.includes('admin')) {
       return res.redirect('/admin/signin')
     }
-    req.logout()
     return res.redirect('/signin')
   },
 
