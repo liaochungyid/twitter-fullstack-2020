@@ -4,13 +4,16 @@ module.exports = {
   },
 
   date: (datetime) => {
-    return (
-      datetime.getFullYear() +
-      '年' +
-      datetime.getMonth() +
-      '月' +
-      datetime.getDate() +
-      '日'
-    )
+    return datetime.toLocaleDateString('zh-TW')
+  },
+
+  timeOrDatetime: (datetime) => {
+    const now = (new Date(Date.now())).toLocaleDateString('zh-TW')
+    const input = datetime.toLocaleDateString('zh-TW')
+    if (now !== input) {
+      return input + ' ' + datetime.toLocaleTimeString()
+    } else {
+      return datetime.toLocaleTimeString()
+    }
   }
 }

@@ -6,7 +6,7 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const db = require('../models')
 const { sequelize } = db
 const { Op } = db.Sequelize
-const { User, Tweet, Reply, Like, Followship } = db
+const { User, Tweet, Reply, Like, Followship, Notify } = db
 
 const userController = {
   getUserProfile: async (req, res) => {
@@ -538,7 +538,24 @@ const userController = {
     } catch (err) {
       console.error(err)
     }
-  }
+  },
+
+  getUserIsNotify: async (req, res) => {
+    try {
+      const userId = helpers.getUser(req).id
+      let isNotify = await Notify.count({
+        where: {
+          observerId: userId,
+          observedId: req.params.userId
+        }
+      })
+
+      return isNotify
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
 }
 
 module.exports = userController

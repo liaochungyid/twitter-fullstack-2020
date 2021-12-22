@@ -1751,6 +1751,27 @@ div.invalid::after {
   content: attr(err_msg)
 }
 
+.onlineChatroom > .screen {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.onlineChatroom > .screen > .join {
+  display: inline-block;
+  text-align: center;
+  line-height: 50px;
+  width: 270px;
+  height: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+
 /* chatroom */
 .chatroom {
   width: 100%;
@@ -1784,6 +1805,7 @@ div.invalid::after {
   height: 100%;
   display: flex;
   flex-flow: column nowrap;
+  position: relative;
 }
 
 .onlineUser > .users {

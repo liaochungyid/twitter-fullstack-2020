@@ -2,9 +2,9 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     // random pair of user id, then filter out same id pair
     const pairs = []
-    for (let i = 4 i >= 0 i--) {
+    for (let i = 4; i >= 0; i--) {
       const a = i * 10 + 11
-      for (let j = 0 j < i j++) {
+      for (let j = 0; j < i; j++) {
         if (j === 5) {
           break // 如果種子資料太多，會擋住
         }
@@ -31,6 +31,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Followships', null, {})
+    await queryInterface.bulkDelete('Notifies', null, {})
   }
 }
