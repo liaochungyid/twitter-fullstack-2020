@@ -3,6 +3,7 @@ input[type="button"].camera,
 input[type="button"].X-white {
   display: inline-block;
   background: url('../icons/css_sprites.png');
+  position: relative;
 }
 button.active {
   color: #E0245E !important;
@@ -45,6 +46,24 @@ i.logout {
   background-position: -52px -145px;
   height: 18px;
   width: 20px;
+}
+i.noti {
+  background: url("../icons/noti.svg");
+  width: 21px;
+  height: 20px;
+  margin-left: 3px;
+}
+i.noti.active {
+  background: url("../icons/noti-active.svg");
+}
+i.message {
+  background: url("../icons/message.svg");
+  width: 19px;
+  height: 17px;
+  margin-left: 3px;
+}
+i.message.active {
+  background: url("../icons/message-active.svg");
 }
 i.btn-message {
   background-position: -46px -62px;
@@ -130,4 +149,53 @@ input[type="button"].X-white {
   background-position: -116px -145px;
   height: 16px;
   width: 16px;
+}
+i.dot-noti::before {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  content: "";
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #f60;
+  border: 2px solid #fff;
+}
+i.send {
+  background: url("../icons/send.svg");
+  width: 24px;
+  height: 24px;
+}
+i.newMsg {
+  background: url("../icons/newMessege.svg");
+  width: 24px;
+  height: 24px;
+}
+i > .noti {
+  color: #fff;
+  background-color: #f60;
+  font-style:normal;
+  width: 20px;
+  height: 13px;
+  padding: 0px 2px;
+  font-size: 8px;
+  line-height: 10px;
+  font-weight: 900;
+  text-align: center;
+  position: absolute;
+  top: -11px;
+  left: 17px;
+  border-radius: 20px;
+  border: 1px solid #fff;
+}
+i.dot-noti-sm::before {
+  position: absolute;
+  right: -10px;
+  top: -6px;
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: #6f0;
+  border: 2px solid #fff;
 }

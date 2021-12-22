@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     // random pair of user and tweet, filter out user to itself tweets

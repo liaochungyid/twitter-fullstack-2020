@@ -1,0 +1,15 @@
+{
+  "editor.formatOnSave": true,
+  "prettier.singleQuote": true,
+  "prettier.semi": false,
+  "prettier.printWidth": 80,
+  "prettier.trailingComma": "none",
+  "prettier.tabWidth": 2,
+  "prettier.arrowParens": "avoid",
+  "cSpell.words": [
+    "aphitter",
+    "semistandard",
+    "standardx",
+    "Parens"
+  ]
+}

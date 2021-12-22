@@ -1,36 +1,23 @@
-const helpers = require('../_helpers')
-const db = require('../models')
-const { Followship } = db
+const followshipService = require('../services/followshipService')
 
-const followshipController = {
+module.exports = {
   addFollow: async (req, res) => {
-    try {
-      const followerId = Number(helpers.getUser(req).id)
-      const followingId = Number(req.body.id)
-
-      if (followerId === followingId) {
-        req.flash('error_messages', '不可跟隨自己')
+    followshipService.addFollow(req, res, data => {
+      if (data.status === 'success') {
+        return res.redirect('back')
+      }
+      if (data.status === 'error') {
+        req.flash('errorMessage', data.message)
         return res.redirect(200, 'back')
       }
-
-      await Followship.findOrCreate({ where: { followerId, followingId } })
-      return res.redirect('back')
-    } catch (err) {
-      console.error(err)
-    }
+    })
   },
 
   removeFollow: async (req, res) => {
-    try {
-      const followerId = Number(helpers.getUser(req).id)
-      const followingId = Number(req.params.userId)
-
-      await Followship.destroy({ where: { followerId, followingId } })
-      return res.redirect('back')
-    } catch (err) {
-      console.error(err)
-    }
+    followshipService.removeFollow(req, res, data => {
+      if (data.status === 'success') {
+        return res.redirect('back')
+      }
+    })
   }
 }
-
-module.exports = followshipController

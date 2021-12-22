@@ -3,7 +3,7 @@ const helpers = require('../_helpers')
 const db = require('../models')
 const { User, Reply } = db
 
-const replyController = {
+module.exports = {
   getReplies: async (req, res) => {
     try {
       const TweetId = Number(req.params.tweetId)
@@ -25,7 +25,7 @@ const replyController = {
   addReply: async (req, res) => {
     try {
       if (req.body.comment === '') {
-        req.flash('error_messages', '內容不可空白')
+        req.flash('errorMessage', '內容不可空白')
         return res.redirect('back')
       }
 
@@ -40,5 +40,3 @@ const replyController = {
     }
   }
 }
-
-module.exports = replyController

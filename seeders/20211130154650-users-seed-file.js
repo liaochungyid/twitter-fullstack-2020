@@ -1,4 +1,3 @@
-'use strict'
 const bcrypt = require('bcryptjs')
 const faker = require('faker')
 
@@ -40,6 +39,9 @@ module.exports = {
           new Date().setDate(new Date().getDate() - 240 + index)
         ),
         updatedAt: new Date(
+          new Date().setDate(new Date().getDate() - 240 + index)
+        ),
+        activeTime: new Date(
           new Date().setDate(new Date().getDate() - 240 + index)
         )
       })),

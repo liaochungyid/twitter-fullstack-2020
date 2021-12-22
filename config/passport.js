@@ -1,6 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
+
 const db = require('../models')
 const { User } = db
 
@@ -20,11 +21,11 @@ passport.use(
           (user.role === 'admin' && !req.url.includes('admin')) ||
           (user.role === 'user' && req.url.includes('admin'))
         ) {
-          return done(null, false, req.flash('error_messages', '帳號不存在！'))
+          return done(null, false, req.flash('errorMessage', '帳號不存在！'))
         }
 
         if (!bcrypt.compareSync(password, user.password)) {
-          return done(null, false, req.flash('error_messages', '密碼錯誤'))
+          return done(null, false, req.flash('errorMessage', '密碼錯誤'))
         }
 
         return done(null, user)
@@ -38,6 +39,7 @@ passport.use(
 passport.serializeUser((user, done) => {
   return done(null, user.id)
 })
+
 passport.deserializeUser(async (id, done) => {
   try {
     const user = await User.findByPk(id, {
@@ -49,5 +51,32 @@ passport.deserializeUser(async (id, done) => {
     console.error(err)
   }
 })
+
+// JWT
+const passportJWT = require('passport-jwt')
+const JwtStrategy = passportJWT.Strategy
+const ExtractJwt = passportJWT.ExtractJwt
+
+passport.use(
+  new JwtStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: process.env.JWT_SECRET
+    },
+    async (jwtPayload, done) => {
+      try {
+        const user = await User.findByPk(jwtPayload.id)
+
+        if (!user) {
+          return done(null, false)
+        }
+
+        return done(null, user)
+      } catch (err) {
+        console.error(err)
+      }
+    }
+  )
+)
 
 module.exports = passport

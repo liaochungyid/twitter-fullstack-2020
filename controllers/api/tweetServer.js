@@ -3,7 +3,7 @@ const db = require('../../models')
 const { User, Tweet } = db
 const moment = require('moment')
 
-const tweetController = {
+module.exports = {
   getTweet: async (req, res) => {
     try {
       const tweet = await Tweet.findByPk(req.params.tweetId, {
@@ -29,5 +29,3 @@ const tweetController = {
     }
   }
 }
-
-module.exports = tweetController

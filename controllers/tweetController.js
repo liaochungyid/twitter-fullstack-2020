@@ -2,10 +2,12 @@ const helpers = require('../_helpers')
 const db = require('../models')
 const { sequelize } = db
 const { User, Tweet, Reply, Like } = db
-const tweetTime = require('../config/tweetTime')
+const tweetTime = require('../utils/tweetTime')
 const userController = require('./userController')
 
-const tweetController = {
+const tweetService = require('../services/tweetService')
+
+module.exports = {
   getTweets: async (req, res) => {
     try {
       const userId = helpers.getUser(req).id
@@ -35,7 +37,11 @@ const tweetController = {
           ]
         ],
         include: [
-          { model: User, attributes: ['id', 'name', 'account', 'avatar'], require: false }
+          {
+            model: User,
+            attributes: ['id', 'name', 'account', 'avatar'],
+            require: false
+          }
         ],
         order: [['createdAt', 'DESC']],
         raw: true,
@@ -62,32 +68,20 @@ const tweetController = {
     }
   },
 
-  addLike: async (req, res) => {
-    try {
-      await Like.findOrCreate({
-        where: {
-          UserId: helpers.getUser(req).id,
-          TweetId: Number(req.params.tweetId)
-        }
-      })
-      return res.redirect('back')
-    } catch (err) {
-      console.error(err)
-    }
+  addLike: (req, res) => {
+    tweetService.addLike(req, res, data => {
+      if (data.status === 'success') {
+        return res.redirect('back')
+      }
+    })
   },
 
-  removeLike: async (req, res) => {
-    try {
-      await Like.destroy({
-        where: {
-          UserId: helpers.getUser(req).id,
-          TweetId: req.params.tweetId
-        }
-      })
-      return res.redirect('back')
-    } catch (err) {
-      console.error(err)
-    }
+  removeLike: (req, res) => {
+    tweetService.removeLike(req, res, data => {
+      if (data.status === 'success') {
+        return res.redirect('back')
+      }
+    })
   },
 
   getTweet: async (req, res) => {
@@ -113,7 +107,7 @@ const tweetController = {
 
       return res.render('user', {
         tweet: tweet.toJSON(),
-        replies: replies.map((reply) => reply.toJSON()),
+        replies: replies.map(reply => reply.toJSON()),
         isLiked,
         partial: 'tweet',
         pops
@@ -123,5 +117,3 @@ const tweetController = {
     }
   }
 }
-
-module.exports = tweetController

@@ -1,5 +1,5 @@
 {
-  "name": "Aphitter",
+  "name": "aphitter",
   "version": "1.0.0",
   "description": "AlphaCamp Twitter",
   "main": "app.js",
@@ -25,24 +25,33 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
     "faker": "^4.1.0",
+    "http": "0.0.1-security",
     "imgur-node-api": "^0.1.0",
+    "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
-    "mocha": "^6.0.2",
     "moment": "^2.29.1",
     "multer": "^1.4.4",
     "mysql2": "^1.6.4",
     "nodemon": "^2.0.15",
     "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "pg": "^8.7.1",
     "sequelize": "^4.42.0",
     "sequelize-cli": "^5.5.0",
     "sinon": "^7.2.3",
-    "sinon-chai": "^3.3.0"
+    "sinon-chai": "^3.3.0",
+    "socket.io": "^4.4.0"
   },
   "devDependencies": {
+    "expect": "^27.4.2",
+    "mocha": "^6.2.3",
+    "semistandard": "^16.0.1",
     "sequelize-test-helpers": "^1.0.7",
-    "supertest": "^3.3.0"
+    "standard": "^16.0.4",
+    "standardx": "^7.0.0",
+    "supertest": "^3.3.0",
+    "ts-standard": "^11.0.0"
   },
   "standard": {
     "ignore": [

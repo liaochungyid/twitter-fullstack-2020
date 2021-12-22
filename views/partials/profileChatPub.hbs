@@ -1,0 +1,71 @@
+<div class="chatroom">
+  <div class="onlineUser">
+    <div class="title">
+      上線使用者 (<span class="onlineUserCount" id="onlineUserCount">0</span>)
+    </div>
+    <div class="users" id="onlineUser">
+
+      {{!-- 顯示上線者 --}}
+      {{!-- <div class="usercard">
+        <img src="../../public/images/sample.gif">
+        <div class="userfile">
+          <div class="who">
+            <div class="nameplace">
+              <span class="name">NAME</span>
+              <span class="at-name">@account</span>
+            </div>
+            <div class="lastcall">
+            </div>
+          </div>
+        </div>
+      </div> --}}
+
+    </div>
+  </div>
+
+  <div class="onlineChatroom">
+    <div class="screen"><a href="#" class="join btn-fill">+ 加入聊天室 +</a></div>
+    <div class="title">
+      公開聊天室
+    </div>
+
+    <div class="stream-message">
+
+      {{!-- 上線提示 --}}
+      {{!-- <div class="noti-message">
+        <span class="content">Dan Lin上線</span>
+      </div> --}}
+
+      {{!-- 自己的訊息 --}}
+      {{!-- <div class="self-message">
+        <span class="content">這是我自己留言</span>
+        <span class="time">下午6:01</span>
+      </div> --}}
+
+      {{!-- 別人的訊息 --}}
+      {{!-- <div class="other-message">
+        <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png">
+        <div class="content">
+          <span class="content">這是路人甲留言</span>
+          <span class="time">下午6:01</span>
+        </div>
+      </div> --}}
+
+      {{!-- 離線提示 --}}
+      {{!-- <div class="noti-message">
+        <span class="content">Dan Lin 離線</span>
+      </div> --}}
+
+    </div>
+
+    {{!-- 輸入欄位 --}}
+    <form class="onlineSendbox">
+      <textarea name="message" rows="1" placeholder="輸入訊息..." autofocus required maxlength="500"
+        id="textareaAutogrow"></textarea>
+      <button type="button"><i class="send" id="send" data-loginuserid="{{loginUser.id}}"></i></button>
+    </form>
+
+  </div>
+</div>
+
+<script defer src="/javascripts/publicSocket.js"></script>

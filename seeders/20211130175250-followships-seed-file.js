@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     // random pair of user id, then filter out same id pair

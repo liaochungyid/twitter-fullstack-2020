@@ -12,17 +12,24 @@ const modalPostFormTextarea = document.querySelector(
   '#modal-post-form-textarea'
 )
 const inputs = document.querySelectorAll('input,textarea')
+const allButton = document.querySelectorAll('a, button')
 
-// // 全畫面監聽器
+const chatTextarea = document.querySelector('#textareaAutogrow')
+
+const notis = document.querySelector('#notis')
+
+// // 全畫面監聽器 (1.關閉modal(all) 2.開啟回覆modal 3.back-arrow返回首頁 4.刪除modal(admin only) 5.小鈴鐺訂閱btn-noti)
 body.addEventListener('click', async (event) => {
   const target = event.target
 
+  // 1.關閉modal(all)
   if (target.classList.contains('close') || target.classList.contains('mask')) {
     // 點擊X icon關閉，另可點擊modal對話框以外地方關閉
     Array.from(modal).forEach((el) => {
       el.classList = 'modal d-none'
     })
   } else if (target.classList.contains('commenting')) {
+    // 2.開啟回覆modal
     // 如果按下個別"回覆"icon，開啟 replying modal
     // axios here to get tweet info
     let tweetId = target.dataset.tweetid
@@ -31,11 +38,11 @@ body.addEventListener('click', async (event) => {
     }
 
     const response = await axios.get(
-      `${window.location.origin}/api/tweets/${tweetId}`
+      `${location.origin}/api/tweets/${tweetId}`
     )
     const { tweet, loginUser } = response.data
 
-    const modalHtml = `
+    modalReply.innerHTML = `
     <div class="mask">
       <div class="dialog">
         <div class="dialog-header">
@@ -82,10 +89,10 @@ body.addEventListener('click', async (event) => {
       </div>
     </div>
     `
-    modalReply.innerHTML = modalHtml
 
     modalReply.classList.remove('d-none')
 
+    // 取得modal表單，驗證資料
     const modalReplyForm = document.querySelector('#modal-reply-form')
     const modalReplyFormTextarea = document.querySelector(
       '#modal-reply-form-textarea'
@@ -93,8 +100,10 @@ body.addEventListener('click', async (event) => {
 
     validityEmpty(modalReplyForm, modalReplyFormTextarea)
   } else if (target.classList.contains('back-arror')) {
-    history.back()
+    // 3.back-arrow返回首頁
+    location.replace('/tweets')
   } else if (target.classList.contains('confirm-del')) {
+    // 4.刪除modal(admin only)
     const tweetId = target.dataset.tweetid
 
     modalConfirm.innerHTML = `
@@ -118,18 +127,48 @@ body.addEventListener('click', async (event) => {
     `
 
     modalConfirm.classList.remove('d-none')
+
+  } else if (target.classList.contains('btn-noti')) {
+    // 5.小鈴鐺訂閱btn-noti  data-userId="{{user.id}}"
+    let userId = target.dataset.userid
+    let results
+
+    if (target.classList.contains('active')) {
+      results = await axios.delete(`${location.origin}/api/notify/${userId}`)
+    } else {
+      results = await axios.post(`${location.origin}/api/notify/${userId}`)
+    }
+
+    if (results.data.status === 'success') {
+      target.classList.toggle('active')
+    }
   }
 })
 
+// 避免連續重複按下按鈕
+allButton.forEach(btn => {
+  btn.addEventListener('click', function onAnyButtonClick(event) {
+    setTimeout(() => {
+      event.target.disabled = true
+    }, 0);
+    setTimeout(() => {
+      event.target.disabled = false
+    }, 1800);
+  })
+})
+
 if (tweetsPostForm) {
+  // 首頁推文表單，驗證資料
   validityEmpty(tweetsPostForm, tweetsPostFormTextarea)
 }
 
 if (modalPostForm) {
+  // 左欄推文modal，驗證資料
   validityEmpty(modalPostForm, modalPostFormTextarea)
 }
 
 if (inputs) {
+  // 任一Input tag，驗證資料
   inputs.forEach((el) => {
     el.addEventListener('focus', function onInputFocus(event) {
       el.parentElement.classList.add('focus')
@@ -143,6 +182,78 @@ if (inputs) {
   })
 }
 
+if (chatTextarea) {
+  // 聊天室，驗證與欄高度調整
+  chatTextarea.addEventListener('keyup', function onTextareaKeyup(event) {
+    const target = event.target
+    const keycode = event.keyCode
+
+    let clientheight = target.clientHeight
+
+    if (event.keyCode === 13 && !event.shiftKey) {
+      // enter 送出表單，shift+enter不送出(換行)
+      document.querySelector("#send").click()
+      target.style.height = '30px'
+      clientheight = 30
+      target.value = ''
+    } else if ([8, 46].includes(keycode)) {
+      // backspace或del按鍵，重測行高
+      target.style.height = '30px'
+      clientheight = 30
+    }
+
+    let adjustedheight = target.scrollHeight
+
+    if (adjustedheight > clientheight) {
+      // 卷軸高度 大於 現在高度，設定表單高度為卷軸高度
+      target.style.height = adjustedheight + 'px';
+    }
+  })
+}
+
+if (notis) {
+  // 通知頁面，取得歷史通知
+  const response = async function func() {
+    return await axios.get(
+      `${location.origin}/api/news`
+    )
+  }()
+
+  response.forEach(item => {
+    if (item.type === '未讀的追蹤者推文') {
+      notis.innHTML += `
+      <a href="/tweets/${item.TweetId}" class="noti">
+        <div class="noti-title">
+          <img class="thumbnail" src="${item.User.avatar}" alt="${item.User.name} avatar">
+
+            <div class="noti-msg">
+              ${item.User.name} 有新的推文通知
+            </div>
+        </div>
+
+        <div class="content">
+          ${item.Tweet.description}
+        </div>
+      </a>
+      `
+    } else if (item.type === '未讀的被讚事件') {
+      notis.innHTML += `
+    <a href="/tweets/${item.TweetId}" class="noti">
+    <div class="noti-title">
+      <img class="thumbnail" src="${item.User.avatar}" alt="${item.User.name} avatar">
+
+      <div class="noti-msg">
+        ${item.User.name} 喜歡妳的貼文
+      </div>
+    </div>
+  </a>
+   `
+    }
+
+  })
+}
+
+// -------------以下為復用function-------------
 function isEmpty(nodeElement) {
   // 無文字回傳true，文字長度大於0，回傳false
   return !nodeElement.value.replace(/\s/g, '').length
@@ -206,4 +317,37 @@ function onInputKeyup(event) {
     // 避免非英文數字輸入account
     target.value = target.value.replace(/[\W]/g, '')
   }
+}
+
+// 滾動聊天畫面至最下方
+function scrollDownToBottom() {
+  if (streamMsgDiv.lastElementChild) {
+    streamMsgDiv.lastElementChild.scrollIntoView()
+  }
+}
+
+// string 仿 Array.splice 功能
+function stringSplice(str, start, delCount, newSubStr) {
+  return str.slice(0, start) + newSubStr + str.slice(start + delCount)
+}
+
+// \n換行符號替換<br>
+function slashNtoBr(str, delStr = '\n', newStr = '<br>') {
+  let result = str
+
+  while (result.indexOf(delStr) !== -1) {
+    // 替換單一 delStr
+    result = stringSplice(result, result.indexOf(delStr), delStr.length, newStr)
+  }
+
+  while (result.indexOf(newStr + newStr) !== -1) {
+    // 替換 連續 newStr
+    result = stringSplice(result, result.indexOf(newStr + newStr), newStr.length * 2, newStr)
+  }
+
+  if (result.indexOf(newStr) === 0) {
+    result = result.slice(newStr.length)
+  }
+
+  return result
 }

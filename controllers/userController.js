@@ -1,331 +1,160 @@
 const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
-const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+const utility = require('../utils/utility')
+
+const tweetService = require('../services/tweetService')
+const userService = require('../services/userService')
 
 const db = require('../models')
-const { sequelize } = db
 const { Op } = db.Sequelize
-const { User, Tweet, Reply, Like, Followship } = db
+const { User } = db
 
-const userController = {
-  getUserProfile: async (req, res) => {
+module.exports = {
+  // PAGES
+  indexPage: async (req, res) => {
     try {
-      const userId = Number(req.params.userId)
-      const user = await User.findByPk(userId, {
-        attributes: [
-          'id',
-          'name',
-          'avatar',
-          'introduction',
-          'account',
-          'cover',
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = User.id)'
-            ),
-            'tweetCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Replies WHERE Replies.UserId = User.id)'
-            ),
-            'replyCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Likes WHERE Likes.UserId = User.id)'
-            ),
-            'likeCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Followships WHERE Followships.followerId = User.id)'
-            ),
-            'followingCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)'
-            ),
-            'followerCount'
-          ],
-          [
-            sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id AND Followships.followerId = ${helpers.getUser(req).id
-              } LIMIT 1)`
-            ),
-            'isFollowed'
-          ]
-        ],
-        raw: true
+      if (helpers.getUser(req).role === 'admin') {
+        req.flash('errorMessage', '你無法瀏覽此頁面')
+        return res.redirect('/admin/tweets')
+      }
+
+      const [tweets, pops] = await Promise.all([
+        tweetService.getTweets(req, res),
+        userService.getPopular(req, res)
+      ])
+
+      return res.render('user', {
+        tweets,
+        pops,
+        partial: 'tweets'
       })
-      return user
     } catch (err) {
       console.error(err)
     }
   },
 
-  getUserTweets: async (req, res) => {
+  tweetsPage: async (req, res) => {
     try {
-      const userId = Number(req.params.userId)
-      const tweets = await Tweet.findAll({
-        where: { UserId: userId },
-        attributes: [
-          'id',
-          'description',
-          'createdAt',
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
-            ),
-            'replyCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
-            ),
-            'likeCount'
-          ],
-          [
-            sequelize.literal(
-              `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${helpers.getUser(req).id
-              } LIMIT 1)`
-            ),
-            'isLiked'
-          ]
-        ],
-        order: [['createdAt', 'DESC']],
-        raw: true
+      const [user, tweets, pops, isNotify] = await Promise.all([
+        userService.getUserProfile(req, res),
+        userService.getUserTweets(req, res),
+        userService.getPopular(req, res),
+        userService.getUserIsNotify(req, res)
+      ])
+
+      return res.render('user', {
+        user,
+        tweets,
+        pops,
+        isNotify,
+        partial: 'profileTweets'
       })
-      return tweets
     } catch (err) {
       console.error(err)
     }
   },
 
-  getUserReplies: async (req, res) => {
+  repliesPage: async (req, res) => {
     try {
-      const userId = Number(req.params.userId)
-      let replies = await Reply.findAll({
-        where: { UserId: userId },
-        attributes: ['id', 'comment', 'createdAt'],
-        include: [
-          {
-            model: Tweet,
-            attributes: ['id'],
-            include: [{ model: User, attributes: ['id', 'account'] }]
-          }
-        ],
-        order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
+      const [user, replies, pops, isNotify] = await Promise.all([
+        userService.getUserProfile(req, res),
+        userService.getUserReplies(req, res),
+        userService.getPopular(req, res),
+        userService.getUserIsNotify(req, res)
+      ])
+      return res.render('user', {
+        user,
+        replies,
+        pops,
+        isNotify,
+        partial: 'profileReplies'
       })
-
-      replies = replies.map((reply) => ({
-        id: reply.id,
-        comment: reply.comment,
-        createdAt: reply.createdAt,
-        toAccount: reply.Tweet.User.account,
-        toId: reply.Tweet.User.id
-      }))
-
-      return replies
     } catch (err) {
       console.error(err)
     }
   },
 
-  getUserLikes: async (req, res) => {
+  likesPage: async (req, res) => {
     try {
-      const userId = Number(req.params.userId)
-      const likes = await Like.findAll({
-        where: { UserId: userId },
-        attributes: ['createdAt'],
-        include: [
-          {
-            model: Tweet,
-            attributes: [
-              'id',
-              'description',
-              'createdAt',
-              [
-                sequelize.literal(
-                  '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
-                ),
-                'replyCount'
-              ],
-              [
-                sequelize.literal(
-                  '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
-                ),
-                'likeCount'
-              ],
-              [
-                sequelize.literal(
-                  `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${helpers.getUser(req).id
-                  } LIMIT 1)`
-                ),
-                'isLiked'
-              ]
-            ],
-            require: false
-          }
-        ],
-        raw: true,
-        nest: true
+      const [user, tweets, pops, isNotify] = await Promise.all([
+        userService.getUserProfile(req, res),
+        userService.getUserLikes(req, res),
+        userService.getPopular(req, res),
+        userService.getUserIsNotify(req, res)
+      ])
+      return res.render('user', {
+        user,
+        tweets,
+        pops,
+        isNotify,
+        partial: 'profileLikes'
       })
-      const tweets = likes
-        .map((like) => ({
-          id: like.Tweet.id,
-          description: like.Tweet.description,
-          replyCount: like.Tweet.replyCount,
-          likeCount: like.Tweet.likeCount,
-          isLiked: like.Tweet.isLiked,
-          likeCreatedAt: like.createdAt
-        }))
-        .sort((a, b) => b.likeCreatedAt - a.likeCreatedAt)
-      return tweets
     } catch (err) {
       console.error(err)
     }
   },
 
-  getUserFollowers: async (req, res) => {
+  followersPage: async (req, res) => {
     try {
-      const userId = Number(req.params.userId)
-      const followship = await User.findByPk(userId, {
-        attributes: [],
-        include: [
-          {
-            model: User,
-            as: 'Followers',
-            attributes: [
-              'id',
-              'name',
-              'avatar',
-              'introduction',
-              'account',
-              [
-                sequelize.literal(
-                  `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = Followers.id AND Followships.followerId = ${helpers.getUser(req).id
-                  } LIMIT 1)`
-                ),
-                'isFollowed'
-              ]
-            ],
-            require: false
-          }
-        ]
+      const [user, followers, pops] = await Promise.all([
+        userService.getUserProfile(req, res),
+        userService.getUserFollowers(req, res),
+        userService.getPopular(req, res)
+      ])
+      return res.render('user', {
+        user,
+        followers,
+        pops,
+        partial: 'profileFollower'
       })
-      let followers = followship.toJSON().Followers
-
-      followers = followers.map((follower) => ({
-        id: follower.id,
-        name: follower.name,
-        avatar: follower.avatar,
-        introduction: follower.introduction,
-        account: follower.account,
-        followshipCreatedAt: follower.Followship.createdAt,
-        isFollowed: follower.isFollowed
-      }))
-
-      followers = followers.sort(
-        (a, b) => b.followshipCreatedAt - a.followshipCreatedAt
-      )
-
-      return followers
     } catch (err) {
       console.error(err)
     }
   },
 
-  getUserFollowings: async (req, res) => {
+  followingsPage: async (req, res) => {
     try {
-      const UserId = Number(req.params.userId)
-      let followings = await User.findAll({
-        where: { id: UserId },
-        attributes: [],
-        include: [
-          {
-            model: User,
-            as: 'Followings',
-            attributes: ['id', 'name', 'avatar', 'introduction', 'account'],
-            require: false
-          }
-        ]
+      const [user, followings, pops] = await Promise.all([
+        userService.getUserProfile(req, res),
+        userService.getUserFollowings(req, res),
+        userService.getPopular(req, res)
+      ])
+      return res.render('user', {
+        user,
+        followings,
+        pops,
+        partial: 'profileFollowing'
       })
-
-      let followingsList = await Followship.findAll({
-        where: { followerId: helpers.getUser(req).id }
-      })
-      followingsList = followingsList.map((data) => data.dataValues.followingId)
-
-      followings = followings[0].dataValues.Followings.map((following) => ({
-        id: following.id,
-        name: following.name,
-        avatar: following.avatar,
-        introduction: following.introduction,
-        account: following.account,
-        followshipCreatedAt: following.Followship.createdAt,
-        isFollowed: followingsList.includes(
-          Number(following.Followship.followingId)
-        )
-      }))
-
-      followings = followings.sort(
-        (a, b) => b.followshipCreatedAt - a.followshipCreatedAt
-      )
-
-      return followings
     } catch (err) {
       console.error(err)
     }
   },
 
-  getPopular: async (req, res) => {
+  settingsPage: async (req, res) => {
     try {
-      let pops = await User.findAll({
-        attributes: [
-          'id',
-          'email',
-          'name',
-          'avatar',
-          'account',
-          'role',
-          'createdAt',
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)'
-            ),
-            'followerCount'
-          ]
-        ]
+      if (helpers.getUser(req).id !== Number(req.params.userId)) {
+        req.flash('errorMessage', '你無法瀏覽此頁面')
+        return res.redirect('/tweets')
+      }
+
+      return res.render('user', {
+        partial: 'profileSettings'
       })
-
-      let followings = await Followship.findAll({
-        where: { followerId: helpers.getUser(req).id }
-      })
-      followings = followings.map(
-        (following) => following.dataValues.followingId
-      )
-
-      pops = pops.filter((pop) => pop.dataValues.role !== 'admin')
-      pops = pops.filter((pop) => pop.dataValues.id !== helpers.getUser(req).id)
-      pops = pops
-        .map((pop) => ({
-          ...pop.dataValues,
-          isFollowing: followings.includes(pop.dataValues.id)
-        }))
-        .sort((a, b) => b.followerCount - a.followerCount)
-        .slice(0, 10)
-
-      return pops // 返回前10 populars array
     } catch (err) {
       console.error(err)
     }
   },
 
+  signUpPage: async (req, res) => {
+    return res.render('signup')
+  },
+
+  signInPage: (req, res) => {
+    const isBackend = req.url.includes('admin')
+    return res.render('signin', { isBackend })
+  },
+
+  // ACTIONS
   signUp: async (req, res) => {
     try {
       const { account, name, email, password, checkPassword } = req.body
@@ -369,7 +198,7 @@ const userController = {
         password: bcrypt.hashSync(password, bcrypt.genSaltSync(10))
       })
 
-      req.flash('success_messages', '成功註冊帳號！')
+      req.flash('successMessage', '成功註冊帳號！')
       return res.redirect('/signin')
     } catch (err) {
       console.error(err)
@@ -377,7 +206,7 @@ const userController = {
   },
 
   signIn: (req, res) => {
-    req.flash('success_messages', '成功登入！')
+    req.flash('successMessage', '成功登入！')
 
     if (helpers.getUser(req).role === 'admin') {
       return res.redirect('/admin/tweets')
@@ -386,7 +215,7 @@ const userController = {
   },
 
   signOut: (req, res) => {
-    req.flash('success_messages', '成功登出！')
+    req.flash('successMessage', '成功登出！')
 
     if (helpers.getUser(req).role === 'admin') {
       req.logout()
@@ -400,7 +229,7 @@ const userController = {
     try {
       const userId = Number(req.params.userId)
       if (helpers.getUser(req).id !== userId) {
-        req.flash('error_messages', '你無權查看此頁面')
+        req.flash('errorMessage', '你無權查看此頁面')
         return res.redirect('back')
       }
 
@@ -468,7 +297,7 @@ const userController = {
         })
       }
 
-      req.flash('success_messages', '成功編輯帳號！')
+      req.flash('successMessage', '成功編輯帳號！')
       return res.redirect('back')
     } catch (err) {
       console.error(err)
@@ -479,7 +308,7 @@ const userController = {
     try {
       const userId = Number(req.params.userId)
       if (helpers.getUser(req).id !== userId) {
-        req.flash('error_messages', '無權更動此頁面資料')
+        req.flash('errorMessage', '無權更動此頁面資料')
         return res.redirect('back')
       }
 
@@ -488,11 +317,11 @@ const userController = {
         'https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg'
 
       if (!name.length) {
-        req.flash('error_messages', '名稱長度不能為零')
+        req.flash('errorMessage', '名稱長度不能為零')
         return res.redirect('back')
       }
       if (name.length > 50) {
-        req.flash('error_messages', '名稱長度不能超過50字')
+        req.flash('errorMessage', '名稱長度不能超過50字')
         return res.redirect('back')
       }
 
@@ -503,24 +332,18 @@ const userController = {
 
       
       if (avatarPath) {
-        imgur.setClientID(IMGUR_CLIENT_ID)
-        await imgur.upload(avatarPath, (err, img) => {
-          if (err) return console.error(err)
-          user.update({
-            avatar: avatarPath ? img.data.link : user.avatar
-          }).then(user =>  console.log(user))
+        const avatarLink = await utility.uploadToImgur(avatarPath)
+        await user.update({
+          avatar: avatarLink
         })
       }
       
       
 
       if (coverPath) {
-        imgur.setClientID(IMGUR_CLIENT_ID)
-        await imgur.upload(coverPath, (err, img) => {
-          if (err) return console.error(err)
-          user.update({
-            cover: coverPath ? img.data.link : user.cover
-          })
+        const coverLink = await utility.uploadToImgur(coverPath)
+        await user.update({
+          cover: coverLink
         })
       } else {
         // 若按叉叉後沒有上傳圖片才會進到這，更新預設圖的 svg 連結進資料庫
@@ -536,12 +359,10 @@ const userController = {
         introduction
       })
 
-      req.flash('success_messages', '成功更新個人資料！')
+      req.flash('successMessage', '成功更新個人資料！')
       return res.redirect('back')
     } catch (err) {
       console.error(err)
     }
   }
 }
-
-module.exports = userController

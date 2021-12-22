@@ -1,143 +1,23 @@
-const helpers = require('../_helpers')
 const userController = require('./userController')
-const tweetController = require('./tweetController')
 
-const pageController = {
-  getSignUp: (req, res) => {
-    return res.render('signup')
-  },
-
-  getSignIn: (req, res) => {
-    const isBackend = req.url.includes('admin')
-    return res.render('signin', { isBackend })
-  },
-
-  getIndex: async (req, res) => {
+module.exports = {
+  getNotis: async (req, res) => {
     try {
-      if (helpers.getUser(req).role === 'admin') {
-        req.flash('error_messages', '你無法瀏覽此頁面')
-        return res.redirect('/admin/tweets')
-      }
-
-      const [tweets, pops] = await Promise.all([
-        tweetController.getTweets(req, res),
-        userController.getPopular(req, res)
-      ])
-
+      const [pops] = await Promise.all([userController.getPopular(req, res)])
       return res.render('user', {
-        tweets,
         pops,
-        partial: 'tweets'
+        partial: 'profileNotis'
       })
     } catch (err) {
       console.error(err)
     }
   },
 
-  getSettings: async (req, res) => {
-    try {
-      if (helpers.getUser(req).id !== Number(req.params.userId)) {
-        req.flash('error_messages', '你無法瀏覽此頁面')
-        return res.redirect('/tweets')
-      }
-
-      return res.render('user', {
-        partial: 'profileSettings'
-      })
-    } catch (err) {
-      console.error(err)
-    }
+  getChatPublic: (req, res) => {
+    return res.render('user', { partial: 'profileChatPub' })
   },
 
-  getUserTweets: async (req, res) => {
-    try {
-      const [user, tweets, pops] = await Promise.all([
-        userController.getUserProfile(req, res),
-        userController.getUserTweets(req, res),
-        userController.getPopular(req, res)
-      ])
-      return res.render('user', {
-        user,
-        tweets,
-        pops,
-        partial: 'profileTweets'
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
-  getUserReplies: async (req, res) => {
-    try {
-      const [user, replies, pops] = await Promise.all([
-        userController.getUserProfile(req, res),
-        userController.getUserReplies(req, res),
-        userController.getPopular(req, res)
-      ])
-      return res.render('user', {
-        user,
-        replies,
-        pops,
-        partial: 'profileReplies'
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
-  getUserLikes: async (req, res) => {
-    try {
-      const [user, tweets, pops] = await Promise.all([
-        userController.getUserProfile(req, res),
-        userController.getUserLikes(req, res),
-        userController.getPopular(req, res)
-      ])
-      return res.render('user', {
-        user,
-        tweets,
-        pops,
-        partial: 'profileLikes'
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
-  getUserFollowers: async (req, res) => {
-    try {
-      const [user, followers, pops] = await Promise.all([
-        userController.getUserProfile(req, res),
-        userController.getUserFollowers(req, res),
-        userController.getPopular(req, res)
-      ])
-      return res.render('user', {
-        user,
-        followers,
-        pops,
-        partial: 'profileFollower'
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
-  getUserFollowings: async (req, res) => {
-    try {
-      const [user, followings, pops] = await Promise.all([
-        userController.getUserProfile(req, res),
-        userController.getUserFollowings(req, res),
-        userController.getPopular(req, res)
-      ])
-      return res.render('user', {
-        user,
-        followings,
-        pops,
-        partial: 'profileFollowing'
-      })
-    } catch (err) {
-      console.error(err)
-    }
+  getChatPrivates: (req, res) => {
+    return res.render('user', { partial: 'profileChatPris' })
   }
 }
-
-module.exports = pageController
