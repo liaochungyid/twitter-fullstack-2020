@@ -75,12 +75,12 @@ router.delete('/admin/tweets/:tweetId', adminController.deleteTweet)
 router.post(
   '/notify/:userId',
   authenticated,
-  notificationController.createNotify
+  notificationController.createNotification
 )
 router.delete(
   '/notify/:userId',
   authenticated,
-  notificationController.deleteNotify
+  notificationController.deleteNotification
 )
 
 module.exports = router
