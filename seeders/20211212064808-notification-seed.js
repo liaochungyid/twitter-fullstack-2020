@@ -14,7 +14,7 @@ module.exports = {
     }
 
     await queryInterface.bulkInsert(
-      'Notifies',
+      'Notifications',
       pairs.map((pair, index) => ({
         id: index * 10 + 1,
         observerId: pair[0],
@@ -31,6 +31,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Notifies', null, {})
+    await queryInterface.bulkDelete('Notifications', null, {})
   }
 }

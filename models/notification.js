@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
-  const notify = sequelize.define(
-    'Notify',
+  const Notification = sequelize.define(
+    'Notification',
     {
       observerId: DataTypes.INTEGER,
       observedId: DataTypes.INTEGER
     },
     {}
   )
-  notify.associate = function (models) {}
-  return notify
+  Notification.associate = function (models) {}
+  return Notification
 }
