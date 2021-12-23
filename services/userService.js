@@ -2,7 +2,7 @@ const helpers = require('../_helpers')
 
 const db = require('../models')
 const { sequelize } = db
-const { User, Tweet, Reply, Like, Followship, Notify } = db
+const { User, Tweet, Reply, Like, Followship, Notification } = db
 
 const query = require('../repositories/query')
 
@@ -266,7 +266,7 @@ module.exports = {
   getUserIsNotified: async (req, res) => {
     try {
       const userId = helpers.getUser(req).id
-      const isNotified = await Notify.count({
+      const isNotified = await Notification.count({
         where: {
           observerId: userId,
           observedId: req.params.userId

@@ -1,6 +1,6 @@
 const helpers = require('../../_helpers')
 const db = require('../../models')
-const { User, Tweet, Notify, Like } = db
+const { User, Tweet, Notification, Like } = db
 const chatTime = require('../../utils/tweetTime')
 
 module.exports = {
@@ -11,14 +11,16 @@ module.exports = {
       let activeTime = await User.findAll({ where: { id: userId } })
       activeTime = activeTime[0].activeTime // 取得登入者上次活動時間 datetime
 
-      let notifies = await Notify.findAll({ where: { observerId: userId } })
+      let notifies = await Notification.findAll({
+        where: { observerId: userId }
+      })
       notifies = notifies.map(notify => ({
         ...notify.dataValues
       }))
       subscribes = notifies.map(sub => sub.observedId) // 取得訂閱名單 array
 
       // 修改關聯性後再加入 未讀的被追蹤事件
-      // let subscribers = await Notify.findAll({
+      // let subscribers = await Notification.findAll({
       //   where: {observedId: userId},
       // })
       // subscribers = subscribers.map(suber => ({

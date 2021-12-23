@@ -1,6 +1,6 @@
 const db = require('../models')
 const { Op } = require('sequelize')
-const { User, Message, PrivateMessage, Notify, Tweet, Like } = db
+const { User, Chat, Message, Notification, Tweet, Like } = db
 const chatTime = require('../utils/tweetTime')
 const moment = require('moment')
 
@@ -14,7 +14,7 @@ const socketService = {
         })
       ).activeTime
 
-      const hasUnread = await Message.count({
+      const hasUnread = await Chat.count({
         where: {
           createdAt: { [Op.gt]: activeTime }
         }
@@ -27,7 +27,7 @@ const socketService = {
   },
   getPrivateNoti: async userId => {
     try {
-      const privateMessage = await PrivateMessage.count({
+      const privateMessage = await Message.count({
         where: {
           receiverId: userId,
           unread: true
@@ -48,7 +48,7 @@ const socketService = {
         })
       ).activeTime
 
-      const notifies = await Notify.count({
+      const notifies = await Notification.count({
         where: {
           observerId: userId,
           createdAt: { [Op.gt]: activeTime }
@@ -75,7 +75,7 @@ const socketService = {
       if (userId) {
         console.log('not implement yet!')
       } else {
-        let msg = await Message.findAll({
+        let msg = await Chat.findAll({
           raw: true,
           nest: true,
           attributes: ['text', 'createdAt'],
@@ -121,7 +121,7 @@ const socketService = {
   },
   createMessage: async data => {
     try {
-      let msg = (await Message.create(data)).dataValues
+      const msg = (await Chat.create(data)).dataValues
       msg.createdAt = chatTime.toTimeOrDatetime(msg.createdAt)
 
       return msg

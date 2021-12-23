@@ -1,13 +1,13 @@
 const helpers = require('../../_helpers')
 const db = require('../../models')
-const { Notify } = db
+const { Notification } = db
 
 module.exports = {
   createNotify: async (req, res) => {
     try {
       const loginUser = helpers.getUser(req).id
 
-      await Notify.create({
+      await Notification.create({
         observerId: loginUser,
         observedId: req.params.userId
       })
@@ -23,7 +23,7 @@ module.exports = {
     try {
       const loginUser = helpers.getUser(req).id
 
-      await Notify.destroy({
+      await Notification.destroy({
         where: {
           observerId: loginUser,
           observedId: req.params.userId
