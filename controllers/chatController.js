@@ -1,5 +1,5 @@
 module.exports = {
-  getChatPublic: (req, res) => {
+  chatroomPage: (req, res) => {
     return res.render('user', { partial: 'profileChatPub' })
   }
 }

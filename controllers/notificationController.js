@@ -1,7 +1,9 @@
+const userService = require('../services/userService')
+
 module.exports = {
-  getNotis: async (req, res) => {
+  notificationsPage: async (req, res) => {
     try {
-      const [pops] = await Promise.all([userController.getPopular(req, res)])
+      const [pops] = await Promise.all([userService.getPopular(req, res)])
       return res.render('user', {
         pops,
         partial: 'profileNotis'

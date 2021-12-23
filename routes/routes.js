@@ -31,9 +31,9 @@ router.get('/users/:userId/likes', authenticated, userController.likesPage) // o
 router.get('/users/:userId/followers', authenticated, userController.followersPage) // ok!!
 router.get('/users/:userId/followings', authenticated, userController.followingsPage) // ok!!
 router.get('/users/:userId/settings', authenticated, userController.settingsPage) // ok!!
-router.get('/users/:userId/profileChatPub', authenticated, chatController.getChatPublic)
-router.get('/users/:userId/profileChatPris', authenticated, messageController.getChatPrivates)
-router.get('/users/:userId/profileNotis', authenticated, notificationController.getNotis)
+router.get('/users/:userId/profileChatPub', authenticated, chatController.chatroomPage)
+router.get('/users/:userId/profileChatPris', authenticated, messageController.messagesPage)
+router.get('/users/:userId/profileNotis', authenticated, notificationController.notificationsPage)
 // 重新命名路由
 router.get('/users/:userId/notifications')
 router.get('/users/:userId/chatroom')
