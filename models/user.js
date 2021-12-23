@@ -2,6 +2,7 @@ module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
+      account: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       name: DataTypes.STRING,
@@ -11,15 +12,14 @@ module.exports = (sequelize, DataTypes) => {
           'https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png'
       },
       introduction: DataTypes.TEXT,
-      role: {
-        type: DataTypes.STRING,
-        defaultValue: 'user'
-      },
-      account: DataTypes.STRING,
       cover: {
         type: DataTypes.STRING,
         defaultValue:
           'https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg'
+      },
+      role: {
+        type: DataTypes.STRING,
+        defaultValue: 'user'
       },
       activeTime: { type: DataTypes.DATE, defaultValue: new Date() }
     },

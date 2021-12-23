@@ -4,57 +4,31 @@ const db = require('../models')
 const { sequelize } = db
 const { User, Tweet, Reply, Like, Followship, Notify } = db
 
+const query = require('../repositories/query')
+
 module.exports = {
   getUserProfile: async (req, res) => {
     try {
       const userId = Number(req.params.userId)
       const user = await User.findByPk(userId, {
-        attributes: [
-          'id',
-          'name',
-          'avatar',
-          'introduction',
-          'account',
-          'cover',
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Tweets WHERE Tweets.UserId = User.id)'
-            ),
-            'tweetCount'
+        attributes: {
+          include: [
+            [query.getUserTweetCount(), 'tweetCount'],
+            [query.getUserReplyCount(), 'replyCount'],
+            [query.getUserLikeCount(), 'likeCount'],
+            [query.getUserFollowingCount(), 'followingCount'],
+            [query.getUserFollowerCount(), 'followerCount'],
+            [query.getUserIsFollowed(helpers.getUser(req).id), 'isFollowed']
           ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Replies WHERE Replies.UserId = User.id)'
-            ),
-            'replyCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Likes WHERE Likes.UserId = User.id)'
-            ),
-            'likeCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Followships WHERE Followships.followerId = User.id)'
-            ),
-            'followingCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)'
-            ),
-            'followerCount'
-          ],
-          [
-            sequelize.literal(
-              `(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id AND Followships.followerId = ${
-                helpers.getUser(req).id
-              } LIMIT 1)`
-            ),
-            'isFollowed'
+          exclude: [
+            'email',
+            'password',
+            'role',
+            'activeTime',
+            'createdAt',
+            'updatedAt'
           ]
-        ],
+        },
         raw: true
       })
       return user
@@ -68,31 +42,13 @@ module.exports = {
       const userId = Number(req.params.userId)
       const tweets = await Tweet.findAll({
         where: { UserId: userId },
-        attributes: [
-          'id',
-          'description',
-          'createdAt',
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
-            ),
-            'replyCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
-            ),
-            'likeCount'
-          ],
-          [
-            sequelize.literal(
-              `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${
-                helpers.getUser(req).id
-              } LIMIT 1)`
-            ),
-            'isLiked'
+        attributes: {
+          include: [
+            [query.getTweetReplyCount(), 'replyCount'],
+            [query.getTweetLikeCount(), 'likeCount'],
+            [query.getTweetIsLiked(helpers.getUser(req).id), 'isLiked']
           ]
-        ],
+        },
         order: [['createdAt', 'DESC']],
         raw: true
       })
@@ -147,26 +103,9 @@ module.exports = {
               'id',
               'description',
               'createdAt',
-              [
-                sequelize.literal(
-                  '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
-                ),
-                'replyCount'
-              ],
-              [
-                sequelize.literal(
-                  '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
-                ),
-                'likeCount'
-              ],
-              [
-                sequelize.literal(
-                  `(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${
-                    helpers.getUser(req).id
-                  } LIMIT 1)`
-                ),
-                'isLiked'
-              ]
+              [query.getTweetReplyCount(), 'replyCount'],
+              [query.getTweetLikeCount(), 'likeCount'],
+              [query.getTweetIsLiked(helpers.getUser(req).id), 'isLiked']
             ],
             require: false
           }
