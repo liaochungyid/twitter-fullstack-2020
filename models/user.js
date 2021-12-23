@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         defaultValue: 'user'
       },
-      activeTime: { type: DataTypes.DATE, defaultValue: new Date() }
+      activeTime: {
+        type: DataTypes.DATE,
+        defaultValue: new Date()
+      }
     },
     {}
   )

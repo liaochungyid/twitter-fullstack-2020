@@ -27,14 +27,14 @@ module.exports = {
       'Users',
       userSeed.map((user, index) => ({
         id: index * 10 + 1,
+        account: user.account,
         email: user.email,
         password: password,
         name: user.name,
         avatar: `https://randomuser.me/api/portraits/men/${index}.jpg`,
         introduction: faker.lorem.sentences().substring(0, 160),
-        role: user.name === 'Admin' ? 'admin' : 'user',
-        account: user.account,
         cover: coverSeed[index],
+        role: user.name === 'Admin' ? 'admin' : 'user',
         createdAt: new Date(
           new Date().setDate(new Date().getDate() - 240 + index)
         ),
