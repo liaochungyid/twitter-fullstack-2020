@@ -1,25 +1,24 @@
 const socketService = require('./socketService')
 
-module.exports = (io) => {
-  const notiOnlineUser = []
-  const publicOnlineUser = []
-  const privateOnlineUser = []
+module.exports = io => {
+  const notiOnlineUsers = []
+  const publicOnlineUsers = []
+  const privateOnlineUsers = []
 
-  io.on('connection', (socket) => {
+  io.on('connection', socket => {
     // userId for this connection
     let userId
 
     // ------------- noti -------------
     socket.on('connectLogin', userloginId => {
-      // 登入，加入清單 notiOnlineUser，建立room
-      notiOnlineUser.push(userloginId)
+      // 登入，加入清單 notiOnlineUsers，建立room
+      notiOnlineUsers.push(userloginId)
       userId = userloginId
       socket.join(userId)
 
-      // 離線，移除登入清單 notiOnlineUser
-      socket.on('disconnect', (reason) => {
-        notiOnlineUser
-          .splice(notiOnlineUser.indexOf(userId), 1)
+      // 離線，移除登入清單 notiOnlineUsers
+      socket.on('disconnect', reason => {
+        notiOnlineUsers.splice(notiOnlineUsers.indexOf(userId), 1)
       })
 
       // 送出歷史通知 (Public, Private, Noti)
@@ -27,41 +26,43 @@ module.exports = (io) => {
         socketService.getPublicNoti(userId),
         socketService.getPrivateNoti(userId),
         socketService.getNotiNoti(userId)
-      ]).then((results) => {
+      ]).then(results => {
         io.to(userId).emit('getPreviousNoti', {
           getPublicNoti: results[0],
           getPrivateNoti: results[1],
           getNotiNoti: results[2]
         })
       })
-
     })
 
     // ------------- public -------------
 
-    socket.on('connectPublicUser', async (loginUserId) => {
+    socket.on('connectPublicUser', async loginUserId => {
       // 上線加入清單
-      publicOnlineUser.push(loginUserId)
+      publicOnlineUsers.push(loginUserId)
       const user = await socketService.getUserInfo(loginUserId)
 
       // 送出public歷史訊息
       io.emit('getPreviousMessages', await socketService.getPreviousMsg())
 
       // 送出public已在線使用者
-      io.emit('getConnectedPublicUser', await socketService.getPreviousUser(publicOnlineUser))
+      io.emit(
+        'getConnectedPublicUser',
+        await socketService.getPreviousUser(publicOnlineUsers)
+      )
 
       // 廣播自己上線
       io.emit('getPublicMsg', { notifyType: 'signin', user })
 
       // 離線移除清單，廣播
-      socket.on('disconnect', (reason) => {
-        publicOnlineUser.splice(publicOnlineUser.indexOf(loginUserId), 1)
+      socket.on('disconnect', reason => {
+        publicOnlineUsers.splice(publicOnlineUsers.indexOf(loginUserId), 1)
 
         io.emit('getPublicMsg', { notifyType: 'signout', user })
       })
 
       // 接收public訊息，儲存，廣播
-      socket.on('createPublicMsg', async (data) => {
+      socket.on('createPublicMsg', async data => {
         let [msg, user] = await Promise.all([
           socketService.createMessage(data),
           socketService.getUserInfo(data.UserId)
@@ -69,8 +70,6 @@ module.exports = (io) => {
 
         io.emit('getPublicMsg', { notifyType: 'message', msg, user })
       })
-
-
     })
     // updateOnlineUser()
     // console.log(socket)
@@ -94,13 +93,7 @@ module.exports = (io) => {
     //   updateOnlineUser()
     // })
 
-
     // ------------- pirvate -------------
-
-
-
-
-
   })
 
   // ------------- functions -------------
@@ -121,10 +114,8 @@ module.exports = (io) => {
     io.to(userIdList).emit('getPublicNoti', true)
   }
 
-  // function updatePublicOnlineUser() {
+  // function updatepublicOnlineUsers() {
   //   io.emit('onlineUser', onlineUser, { onlineCount: onlineUser.length })
   //   console.log(onlineUser)
   // }
-
-
 }
