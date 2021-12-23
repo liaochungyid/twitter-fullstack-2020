@@ -45,7 +45,8 @@ router.get('/chatusers/:userId', authenticated, userController.getUsers) // find
 router.get('/tweets/:tweetId', authenticated, tweetController.getTweet) // reply modal api
 router.post('/followships', followshipController.addFollow)
 router.delete('/followships/:userId', followshipController.removeFollow)
-router.get('/pops', popController.getPops)
+router.get('/page/:offset', tweetController.getTweets) // 按鈕點擊"更多推文" API
+router.get('/pops/:offset', popController.getPops) // 按鈕點擊"更多熱門使用者" API
 
 // admin 動作
 router.get('/admin', (req, res) => res.redirect('/admin/tweets'))

@@ -31,6 +31,11 @@ module.exports = {
     }
   },
 
+  getTweets: async (req, res) => {
+    const tweets = await tweetService.getTweets(req, res)
+    return res.json(tweets)
+  },
+
   addLike: (req, res) => {
     tweetService.addLike(req, res, data => {
       return res.json(data)
