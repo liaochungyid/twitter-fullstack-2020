@@ -1,4 +1,3 @@
-'use strict';
 const faker = require('faker')
 
 module.exports = {
@@ -6,13 +5,11 @@ module.exports = {
     // random serial user id
     const userList = []
     for (let i = 0; i < 50; i++) {
-      userList.push(
-        Math.floor(Math.random() * 5) * 10 + 11
-      )
+      userList.push(Math.floor(Math.random() * 5) * 10 + 11)
     }
 
     await queryInterface.bulkInsert(
-      'Messages',
+      'chats',
       userList.map((UserId, index) => ({
         id: index * 10 + 1,
         text: faker.lorem.sentences().substring(0, 140),
@@ -29,6 +26,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('Messages', null, {})
+    await queryInterface.bulkDelete('chats', null, {})
   }
-};
+}
