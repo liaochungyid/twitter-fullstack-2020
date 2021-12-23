@@ -13,7 +13,6 @@ const notificationController = require('../controllers/notificationController')
 const replyController = require('../controllers/replyController')
 const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
-const pageController = require('../controllers/pageController')
 
 // 首頁
 router.get('/', authenticated, userController.indexPage) // ok!!

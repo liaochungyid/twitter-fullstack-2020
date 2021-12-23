@@ -44,24 +44,24 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Like)
     User.hasMany(models.Message)
     User.belongsToMany(User, {
-      through: models.PrivateMessage,
+      through: models.Message,
       foreignKey: 'senderId',
       as: 'Senders'
     })
     User.belongsToMany(User, {
-      through: models.PrivateMessage,
+      through: models.Message,
       foreignKey: 'receiverId',
       as: 'Receivers'
     })
     User.belongsToMany(User, {
-      through: models.Notify,
+      through: models.Notification,
       foreignKey: 'observedId',
-      as: 'observers'
+      as: 'Observers'
     })
     User.belongsToMany(User, {
-      through: models.Notify,
+      through: models.Notification,
       foreignKey: 'observerId',
-      as: 'observeds'
+      as: 'Observeds'
     })
   }
   return User
