@@ -2,6 +2,7 @@ const helpers = require('../_helpers')
 
 const db = require('../models')
 const { sequelize } = db
+const { Op } = db.Sequelize
 const { User, Tweet, Reply, Like, Followship, Notification } = db
 
 const query = require('../repositories/query')
@@ -224,7 +225,13 @@ module.exports = {
 
   getPopular: async (req, res) => {
     try {
+      const myId = String(helpers.getUser(req).id)
+
       let pops = await User.findAll({
+        where: {
+          id: { [Op.not]: myId },
+          role: { [Op.not]: 'admin' },
+        },
         attributes: [
           'id',
           'email',
@@ -239,23 +246,23 @@ module.exports = {
             ),
             'followerCount'
           ]
-        ]
+        ],
+        order: [[ sequelize.literal('followerCount'), 'DESC']],
+        limit: 10
       })
 
       let followings = await Followship.findAll({
         where: { followerId: helpers.getUser(req).id }
       })
-      followings = followings.map(following => following.dataValues.followingId)
+      followings = followings.map(
+        (following) => following.dataValues.followingId
+      )
 
-      pops = pops.filter(pop => pop.dataValues.role !== 'admin')
-      pops = pops.filter(pop => pop.dataValues.id !== helpers.getUser(req).id)
       pops = pops
-        .map(pop => ({
+        .map((pop) => ({
           ...pop.dataValues,
           isFollowing: followings.includes(pop.dataValues.id)
         }))
-        .sort((a, b) => b.followerCount - a.followerCount)
-        .slice(0, 10)
 
       return pops // 返回前10 populars array
     } catch (err) {
