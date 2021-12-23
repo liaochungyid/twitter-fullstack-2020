@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const PrivateMessage = sequelize.define(
-    'PrivateMessage',
+  const Message = sequelize.define(
+    'Message',
     {
       senderId: DataTypes.INTEGER,
       receiverId: DataTypes.INTEGER,
@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   )
-  PrivateMessage.associate = function (models) {
+  Message.associate = function (models) {
     // associations can be defined here
   }
-  return PrivateMessage
+  return Message
 }
