@@ -5,26 +5,27 @@ const chatTime = require('../utils/tweetTime')
 const moment = require('moment')
 
 const socketService = {
-  getPublicNoti: async (userId) => {
+  getPublicNoti: async userId => {
     try {
-      const activeTime = (await User.findByPk(userId, {
-        raw: true,
-        attributes: ['activeTime']
-      })).activeTime
+      const activeTime = (
+        await User.findByPk(userId, {
+          raw: true,
+          attributes: ['activeTime']
+        })
+      ).activeTime
 
       const hasUnread = await Message.count({
         where: {
-          'createdAt': { [Op.gt]: activeTime }
+          createdAt: { [Op.gt]: activeTime }
         }
       })
 
       return hasUnread === 0
-
     } catch (err) {
       console.log(err)
     }
   },
-  getPrivateNoti: async (userId) => {
+  getPrivateNoti: async userId => {
     try {
       const privateMessage = await PrivateMessage.count({
         where: {
@@ -34,33 +35,32 @@ const socketService = {
       })
 
       return privateMessage
-
     } catch (err) {
       console.log(err)
     }
-
   },
-  getNotiNoti: async (userId) => {
+  getNotiNoti: async userId => {
     try {
-      const activeTime = (await User.findByPk(userId, {
-        raw: true,
-        attributes: ['activeTime']
-      })).activeTime
+      const activeTime = (
+        await User.findByPk(userId, {
+          raw: true,
+          attributes: ['activeTime']
+        })
+      ).activeTime
 
       const notifies = await Notify.count({
         where: {
           observerId: userId,
-          'createdAt': { [Op.gt]: activeTime }
-        },
+          createdAt: { [Op.gt]: activeTime }
+        }
       })
 
       return notifies
-
     } catch (err) {
       console.log(err)
     }
   },
-  getUserInfo: async (userId) => {
+  getUserInfo: async userId => {
     try {
       return await User.findByPk(userId, {
         raw: true,
@@ -82,18 +82,19 @@ const socketService = {
           order: [['createdAt', 'DESC']],
           limit,
           offset,
-          include: [{
-            model: User,
-            attributes: ['id', 'name', 'account', 'avatar'],
-            require: false
-          }]
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'name', 'account', 'avatar'],
+              require: false
+            }
+          ]
         })
 
         msg = await msg.map(m => {
-          return Object.assign(
-            m,
-            { createdAt: chatTime.timeOrDatetime(m.createdAt) }
-          )
+          return Object.assign(m, {
+            createdAt: chatTime.toTimeOrDatetime(m.createdAt)
+          })
         })
 
         return msg.reverse()
@@ -102,7 +103,7 @@ const socketService = {
       console.log(err)
     }
   },
-  getPreviousUser: async (userIdList) => {
+  getPreviousUser: async userIdList => {
     try {
       const userList = await Promise.all(
         userIdList.map(uid => {
@@ -118,10 +119,10 @@ const socketService = {
       console.log(err)
     }
   },
-  createMessage: async (data) => {
+  createMessage: async data => {
     try {
       let msg = (await Message.create(data)).dataValues
-      msg.createdAt = chatTime.timeOrDatetime(msg.createdAt)
+      msg.createdAt = chatTime.toTimeOrDatetime(msg.createdAt)
 
       return msg
     } catch (err) {

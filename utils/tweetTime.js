@@ -7,8 +7,8 @@ module.exports = {
     return datetime.toLocaleDateString('zh-TW')
   },
 
-  timeOrDatetime: datetime => {
-    const now = new Date(Date.now()).toLocaleDateString('zh-TW')
+  toTimeOrDatetime: datetime => {
+    const now = new Date().toLocaleDateString('zh-TW')
     const input = datetime.toLocaleDateString('zh-TW')
     if (now !== input) {
       return input + ' ' + datetime.toLocaleTimeString()

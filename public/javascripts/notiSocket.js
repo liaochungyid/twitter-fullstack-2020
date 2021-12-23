@@ -2,7 +2,7 @@ const socket = io()
 
 const notiNoti = document.querySelector('#noti-noti')
 const publicNoti = document.querySelector('#pub-chat-noti')
-const privatetNoti = document.querySelector('#pri-chat-noti')
+const privateNoti = document.querySelector('#pri-chat-noti')
 
 const userloginId = notiNoti.dataset.userlogin
 
@@ -11,26 +11,23 @@ if (notiNoti) {
     socket.emit('connectLogin', userloginId)
   })
 
-  socket.on('getPreviousNoti', (data) => {
+  socket.on('getPreviousNoti', data => {
     notiDisplayDot(publicNoti, data.getPublicNoti)
     notiDisplayCount(notiNoti, data.getNotiNoti)
-    notiDisplayCount(privatetNoti, data.getPrivateNoti)
+    notiDisplayCount(privateNoti, data.getPrivateNoti)
   })
 
-  socket.on('getPublicNoti', (data) => {
+  socket.on('getPublicNoti', data => {
     notiDisplayDot(publicNoti, data)
   })
 
-  socket.on('getPrivateNoti', (data) => {
-    notiDisplayCount(privatetNoti,
-      privatetNoti.firstElementChild.innerText + 1)
+  socket.on('getPrivateNoti', data => {
+    notiDisplayCount(privateNoti, privateNoti.firstElementChild.innerText + 1)
   })
 
-  socket.on('getNotiNoti', (data) => {
-    notiDisplayCount(notiNoti,
-      notiNoti.firstElementChild.innerText + 1)
+  socket.on('getNotiNoti', data => {
+    notiDisplayCount(notiNoti, notiNoti.firstElementChild.innerText + 1)
   })
-
 }
 
 // 顯示或移除 綠點提示
