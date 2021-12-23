@@ -2,7 +2,7 @@ const faker = require('faker')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('PrivateMessages', [
+    return queryInterface.bulkInsert('Messages', [
       {
         id: 11,
         senderId: 11,
@@ -142,6 +142,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.bulkDelete('PrivateMessages', null, {})
+    await queryInterface.bulkDelete('Messages', null, {})
   }
 }

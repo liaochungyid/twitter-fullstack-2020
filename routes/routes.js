@@ -6,11 +6,13 @@ const multer = require('multer')
 const upload = multer({ dest: 'temp/' })
 
 const adminController = require('../controllers/adminController')
+const chatController = require('../controllers/chatController')
 const followshipController = require('../controllers/followshipController')
+const messageController = require('../controllers/messageController')
+const notificationController = require('../controllers/notificationController')
 const replyController = require('../controllers/replyController')
 const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
-const pageController = require('../controllers/pageController')
 
 // 首頁
 router.get('/', authenticated, userController.indexPage) // ok!!
@@ -29,9 +31,9 @@ router.get('/users/:userId/likes', authenticated, userController.likesPage) // o
 router.get('/users/:userId/followers', authenticated, userController.followersPage) // ok!!
 router.get('/users/:userId/followings', authenticated, userController.followingsPage) // ok!!
 router.get('/users/:userId/settings', authenticated, userController.settingsPage) // ok!!
-router.get('/users/:userId/profileNotis', authenticated, pageController.getNotis)
-router.get('/users/:userId/profileChatPub', authenticated, pageController.getChatPublic)
-router.get('/users/:userId/profileChatPris', authenticated, pageController.getChatPrivates)
+router.get('/users/:userId/profileChatPub', authenticated, chatController.chatroomPage)
+router.get('/users/:userId/profileChatPris', authenticated, messageController.messagesPage)
+router.get('/users/:userId/profileNotis', authenticated, notificationController.notificationsPage)
 // 重新命名路由
 router.get('/users/:userId/notifications')
 router.get('/users/:userId/chatroom')

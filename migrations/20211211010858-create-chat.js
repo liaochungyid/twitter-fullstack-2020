@@ -1,23 +1,17 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('PrivateMessages', {
+    return queryInterface.createTable('Chats', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      senderId: {
-        type: Sequelize.INTEGER
-      },
-      receiverId: {
-        type: Sequelize.INTEGER
-      },
       text: {
         type: Sequelize.TEXT
       },
-      unread: {
-        type: Sequelize.BOOLEAN
+      UserId: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -30,6 +24,6 @@ module.exports = {
     })
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('PrivateMessages')
+    return queryInterface.dropTable('Chats')
   }
 }

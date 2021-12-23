@@ -35,18 +35,18 @@ module.exports = {
 
   tweetsPage: async (req, res) => {
     try {
-      const [user, tweets, pops, isNotify] = await Promise.all([
+      const [user, tweets, pops, isNotified] = await Promise.all([
         userService.getUserProfile(req, res),
         userService.getUserTweets(req, res),
         userService.getPopular(req, res),
-        userService.getUserIsNotify(req, res)
+        userService.getUserIsNotified(req, res)
       ])
 
       return res.render('user', {
         user,
         tweets,
         pops,
-        isNotify,
+        isNotified,
         partial: 'profileTweets'
       })
     } catch (err) {
@@ -56,17 +56,17 @@ module.exports = {
 
   repliesPage: async (req, res) => {
     try {
-      const [user, replies, pops, isNotify] = await Promise.all([
+      const [user, replies, pops, isNotified] = await Promise.all([
         userService.getUserProfile(req, res),
         userService.getUserReplies(req, res),
         userService.getPopular(req, res),
-        userService.getUserIsNotify(req, res)
+        userService.getUserIsNotified(req, res)
       ])
       return res.render('user', {
         user,
         replies,
         pops,
-        isNotify,
+        isNotified,
         partial: 'profileReplies'
       })
     } catch (err) {
@@ -76,17 +76,17 @@ module.exports = {
 
   likesPage: async (req, res) => {
     try {
-      const [user, tweets, pops, isNotify] = await Promise.all([
+      const [user, tweets, pops, isNotified] = await Promise.all([
         userService.getUserProfile(req, res),
         userService.getUserLikes(req, res),
         userService.getPopular(req, res),
-        userService.getUserIsNotify(req, res)
+        userService.getUserIsNotified(req, res)
       ])
       return res.render('user', {
         user,
         tweets,
         pops,
-        isNotify,
+        isNotified,
         partial: 'profileLikes'
       })
     } catch (err) {

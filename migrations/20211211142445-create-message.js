@@ -7,11 +7,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+      senderId: {
+        type: Sequelize.INTEGER
+      },
+      receiverId: {
+        type: Sequelize.INTEGER
+      },
       text: {
         type: Sequelize.TEXT
       },
-      UserId: {
-        type: Sequelize.INTEGER
+      unread: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,

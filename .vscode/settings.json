@@ -8,8 +8,9 @@
   "prettier.arrowParens": "avoid",
   "cSpell.words": [
     "aphitter",
+    "Observeds",
+    "Parens",
     "semistandard",
-    "standardx",
-    "Parens"
+    "standardx"
   ]
 }

@@ -1,6 +1,6 @@
 const helpers = require('../../_helpers')
 const db = require('../../models')
-const { User, Tweet, Notify, Like } = db
+const { User, Like, Tweet, Notification } = db
 const chatTime = require('../../utils/tweetTime')
 
 module.exports = {
@@ -11,14 +11,16 @@ module.exports = {
       let activeTime = await User.findAll({ where: { id: userId } })
       activeTime = activeTime[0].activeTime // 取得登入者上次活動時間 datetime
 
-      let notifies = await Notify.findAll({ where: { observerId: userId } })
+      let notifies = await Notification.findAll({
+        where: { observerId: userId }
+      })
       notifies = notifies.map(notify => ({
         ...notify.dataValues
       }))
       subscribes = notifies.map(sub => sub.observedId) // 取得訂閱名單 array
 
       // 修改關聯性後再加入 未讀的被追蹤事件
-      // let subscribers = await Notify.findAll({
+      // let subscribers = await Notification.findAll({
       //   where: {observedId: userId},
       // })
       // subscribers = subscribers.map(suber => ({
@@ -59,6 +61,40 @@ module.exports = {
       return res.json(news)
     } catch (err) {
       console.error(err)
+    }
+  },
+
+  createNotification: async (req, res) => {
+    try {
+      const loginUser = helpers.getUser(req).id
+
+      await Notification.create({
+        observerId: loginUser,
+        observedId: req.params.userId
+      })
+
+      return res.json({ status: 'success', message: '已加入關注' })
+    } catch (err) {
+      console.error(err)
+      return res.json({ status: 'error', message: '加入關注失敗' })
+    }
+  },
+
+  deleteNotification: async (req, res) => {
+    try {
+      const loginUser = helpers.getUser(req).id
+
+      await Notification.destroy({
+        where: {
+          observerId: loginUser,
+          observedId: req.params.userId
+        }
+      })
+
+      return res.json({ status: 'success', message: '已移除關注' })
+    } catch (err) {
+      console.error(err)
+      return res.json({ status: 'error', message: '取消關注失敗' })
     }
   }
 }
