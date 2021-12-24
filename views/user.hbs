@@ -26,27 +26,27 @@
             {{/ifCond}}
 
             {{#ifCond partial "profileNotis"}}
-            <a class="active" href='/users/{{loginUser.id}}/profileNotis'><i class='noti active' id="noti-noti"
-                data-userlogin="{{loginUser.id}}"></i>通知</a>
+            <a class="active" href='/users/{{loginUser.id}}/profileNotis'><i class='noti active' id="notiNoti"
+                data-login-user="{{loginUser.id}}"></i>通知</a>
             {{else}}
-            <a class="" href='/users/{{loginUser.id}}/profileNotis'><i class='noti' id="noti-noti"
-                data-userlogin="{{loginUser.id}}"></i>通知</a>
+            <a class="" href='/users/{{loginUser.id}}/profileNotis'><i class='noti' id="notiNoti"
+                data-login-user="{{loginUser.id}}"></i>通知</a>
             {{/ifCond}}
 
             {{#ifCond partial "profileChatPub"}}
             <a class="active" href='/users/{{loginUser.id}}/profileChatPub'><i class='message active'
-                id="pub-chat-noti"></i>公開聊天室</a>
+                id="pubChatNoti"></i>公開聊天室</a>
             {{else}}
             <a class="" href='/users/{{loginUser.id}}/profileChatPub'><i class='message'
-                id="pub-chat-noti"></i>公開聊天室</a>
+                id="pubChatNoti"></i>公開聊天室</a>
             {{/ifCond}}
 
             {{#ifCond partial "profileChatPris"}}
             <a class="active" href='/users/{{loginUser.id}}/profileChatPris'><i class='message active'
-                id="pri-chat-noti"></i>私人訊息</a>
+                id="priChatNoti"></i>私人訊息</a>
             {{else}}
             <a class="" href='/users/{{loginUser.id}}/profileChatPris'><i class='message'
-                id="pri-chat-noti"></i>私人訊息</a>
+                id="priChatNoti"></i>私人訊息</a>
             {{/ifCond}}
 
             {{#ifCond loginUser.id user.id}}
@@ -63,7 +63,7 @@
 
 
             <button type="button" class="btn-fill"
-              onclick="document.querySelector('#modal-post').classList.remove('d-none');">推文</button>
+              onclick="document.querySelector('#modalPost').classList.remove('d-none');">推文</button>
           </div>
 
           <div class="footer">
@@ -118,7 +118,7 @@
       </div>
 
       {{!-- posting modal --}}
-      <div class="modal d-none" id="modal-post">
+      <div class="modal d-none" id="modalPost">
         <div class="mask">
           <div class="dialog">
             <div class="dialog-header">
@@ -128,10 +128,10 @@
               <a>
                 <img class="thumbnail" src="{{loginUser.avatar}}" alt="{{loginUser.name}} avatar">
               </a>
-              <form action="/tweets" method="post" novalidate id="modal-post-form">
+              <form action="/tweets" method="post" novalidate id="modalPostForm">
                 <input type="hidden" name="userId" value="{{loginUser.id}}">
                 <textarea name="description" maxlength="140" cols="48" rows="6" placeholder="有什麼新鮮事？" required
-                  id="modal-post-form-textarea"></textarea>
+                  id="modalPostFormTextarea"></textarea>
                 <div class="foot">
                   <span class="d-none">內容不可空白</span>
                   <button type="summit" class="btn-fill">推文</button>
@@ -143,13 +143,13 @@
       </div>
 
       {{!-- replying modal --}}
-      <div class="modal d-none" id="modal-reply">
+      <div class="modal d-none" id="modalReply">
         {{!-- layout.js --}}
       </div>
 
       {{!-- editing modal --}}
       {{#if loginUser.id}}
-      <div class="modal d-none" id="modal-edit">
+      <div class="modal d-none" id="modalEdit">
         <div class="mask">
           <div class="dialog">
             <div class="dialog-header">
@@ -159,23 +159,23 @@
 
             <form method="POST" action="/users/{{loginUser.id}}/update?_method=PUT" enctype="multipart/form-data">
               <div class="edit-cover">
-                <img src="{{loginUser.cover}}" alt="" id="modal-edit-cover">
+                <img src="{{loginUser.cover}}" alt="" id="modalEditCover">
                 <input type="file" class="d-none" id="cover" name="cover"
-                  onchange="document.querySelector('#modal-edit-cover').src=window.URL.createObjectURL(this.files[0]);">
+                  onchange="document.querySelector('#modalEditCover').src=window.URL.createObjectURL(this.files[0]);">
                 <a>
                   <input type="button" class="camera" onclick="document.querySelector('#cover').click();">
                 </a>
                 <a>
                   <input type="hidden" id="coverDefault" name="coverDefault" value="{{loginUser.cover}}">
                   <input type="button" class="X-white"
-                    onclick="document.querySelector('#modal-edit-cover').src='https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg';document.querySelector('#coverDefault').value='';">
+                    onclick="document.querySelector('#modalEditCover').src='https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg';document.querySelector('#coverDefault').value='';">
                 </a>
               </div>
 
               <div class="edit-avatar">
-                <img src="{{loginUser.avatar}}" alt="{{loginUser.name}} avatar" id="modal-edit-avatar">
+                <img src="{{loginUser.avatar}}" alt="{{loginUser.name}} avatar" id="modalEditAvatar">
                 <input type="file" class="d-none" id="avatar" name="avatar" value="{{loginUser.avatar}}"
-                  onchange="document.querySelector('#modal-edit-avatar').src=window.URL.createObjectURL(this.files[0]);">
+                  onchange="document.querySelector('#modalEditAvatar').src=window.URL.createObjectURL(this.files[0]);">
                 <a>
                   <input type="button" class="camera" onclick="document.querySelector('#avatar').click();">
                 </a>
@@ -189,10 +189,10 @@
                 </div>
                 <div class="edit-form">
                   <input type="text" name="name" class="edit-name" maxlength="50" required
-                    onkeyup=";document.querySelector('#name-counter').textContent=`${this.value.length}/50`;"
+                    onkeyup=";document.querySelector('#nameCounter').textContent=`${this.value.length}/50`;"
                     value="{{loginUser.name}}">
                 </div>
-                <div class="counter" id="name-counter">{{#if
+                <div class="counter" id="nameCounter">{{#if
                   loginUser.name}}{{loginUser.name.length}}{{else}}0{{/if}}/50
                 </div>
               </div>
@@ -205,9 +205,9 @@
                 </div>
                 <div class="edit-form">
                   <textarea name="introduction" class="edit-introduction" maxlength="160"
-                    onkeyup="document.querySelector('#introduction-counter').textContent=`${this.value.length}/160`;">{{loginUser.introduction}}</textarea>
+                    onkeyup="document.querySelector('#introductionCounter').textContent=`${this.value.length}/160`;">{{loginUser.introduction}}</textarea>
                 </div>
-                <div class="counter" id="introduction-counter">{{#if
+                <div class="counter" id="introductionCounter">{{#if
                   loginUser.introduction}}{{loginUser.introduction.length}}{{else}}0{{/if}}/160</div>
               </div>
 
@@ -221,7 +221,7 @@
       {{/if}}
 
       {{#ifCond partial "profileChatPris"}}
-      <div class="modal d-none" id="modal-findChatUser">
+      <div class="modal d-none" id="modalFindChatUser">
         <div class="mask">
           <div class="dialog findchat">
           </div>

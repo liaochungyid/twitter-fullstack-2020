@@ -4,7 +4,7 @@
       <span class="text">訊息</span>
       <a><i class="newMsg" id="findNewPriChat"></i></a>
     </div>
-    <div class="users" id="onlineUser">
+    <div class="users" id="onlineUsers">
 
 
       {{!-- 這裡使用each 刷每個訊息 --}}
@@ -36,10 +36,10 @@
 
       {{!-- 對應的私人對話使用者 --}}
       <div class="who">
-        <span class="name" id="who-name"></span>
-        <span class="at-name" id="who-at-name"></span>
+        <span class="name" id="whoName"></span>
+        <span class="at-name" id="whoAtName"></span>
       </div>
-      {{!-- end for futrue --}}
+      {{!-- end for future --}}
 
     </div>
 
@@ -73,7 +73,7 @@
     <div class="onlineSendbox">
       <textarea name="message" rows="1" placeholder="輸入訊息" autofocus required maxlength="500"
         id="textareaAutogrow"></textarea>
-      <button type="submit"><i class="send" id="send" data-loginuserid="{{loginUser.id}}"></i></button>
+      <button type="submit"><i class="send" id="send" data-login-user-id="{{loginUser.id}}"></i></button>
     </div>
 
   </div>

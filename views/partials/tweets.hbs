@@ -3,9 +3,9 @@
   <a href="/users/{{loginUser.id}}/tweets">
     <img class="thumbnail" src="{{loginUser.avatar}}" alt="{{loginUser.name}} avatar">
   </a>
-  <form action="/tweets" method="post" id="tweets-post-form" novalidate>
+  <form action="/tweets" method="post" id="tweetsPostForm" novalidate>
     <input type="hidden" name="userId" value="{{loginUser.id}}">
-    <textarea name="description" maxlength="140" cols="48" rows="2" placeholder="有什麼新鮮事？" id="tweets-post-form-textarea"
+    <textarea name="description" maxlength="140" cols="48" rows="2" placeholder="有什麼新鮮事？" id="tweetsPostFormTextarea"
       required></textarea>
     <div class="foot">
       <span class="d-none">內容不可空白</span><button type="submit" class="btn-fill">推文</button>
@@ -29,7 +29,7 @@
         {{this.description}}
       </a>
       <div class="action">
-        <button type="button" class="commenting" data-userid="{{loginUser.id}}" data-tweetid="{{this.id}}">
+        <button type="button" class="commenting" data-user-id="{{loginUser.id}}" data-tweet-id="{{this.id}}">
           <i class='comment commenting'></i>
           {{this.replyCount}}
         </button>

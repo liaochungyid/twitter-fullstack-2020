@@ -3,7 +3,7 @@
     <div class="title">
       上線使用者 (<span class="onlineUserCount" id="onlineUserCount">0</span>)
     </div>
-    <div class="users" id="onlineUser">
+    <div class="users" id="onlineUsers">
 
       {{!-- 顯示上線者 --}}
       {{!-- <div class="usercard">
@@ -62,7 +62,7 @@
     <form class="onlineSendbox">
       <textarea name="message" rows="1" placeholder="輸入訊息..." autofocus required maxlength="500"
         id="textareaAutogrow"></textarea>
-      <button type="button"><i class="send" id="send" data-loginuserid="{{loginUser.id}}"></i></button>
+      <button type="button"><i class="send" id="send" data-login-user-id="{{loginUser.id}}"></i></button>
     </form>
 
   </div>

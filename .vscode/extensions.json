@@ -1,6 +1,9 @@
 {
   "recommendations": [
     "esbenp.prettier-vscode",
-    "streetsidesoftware.code-spell-checker"
+    "streetsidesoftware.code-spell-checker",
+    "vscode-icons-team.vscode-icons",
+    "ritwickdey.liveserver",
+    "coenraads.bracket-pair-colorizer",
   ]
 }

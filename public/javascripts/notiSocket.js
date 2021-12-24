@@ -1,10 +1,10 @@
 const socket = io()
 
-const notiNoti = document.querySelector('#noti-noti')
-const publicNoti = document.querySelector('#pub-chat-noti')
-const privateNoti = document.querySelector('#pri-chat-noti')
+const notiNoti = document.querySelector('#notiNoti')
+const publicNoti = document.querySelector('#pubChatNoti')
+const privateNoti = document.querySelector('#priChatNoti')
 
-const userloginId = notiNoti.dataset.userlogin
+const userloginId = notiNoti.dataset.loginUser
 
 if (notiNoti) {
   socket.on('connect', () => {
