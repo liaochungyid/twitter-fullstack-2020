@@ -1,10 +1,12 @@
 const tweets = document.querySelector('.tweets')
 const main = document.querySelector('.main')
 
-let offset = 0
+const userId = document.querySelector('input[name="userId"]').value
+
+let TweetsOffset = 0
 
 // 一進入頁面及索取資料 (offset = 0)
-getTweets(offset, tweets)
+getTweets(TweetsOffset, tweets)
 
 main.addEventListener('scroll', async (event) => {
   const target = event.target
@@ -15,8 +17,8 @@ main.addEventListener('scroll', async (event) => {
 
   if (scrollTop > scrollHeight - 2 * clientHeight ) {
     // 當剩餘一頁就到底部時，請求新資料
-    offset += 1
-    await getTweets(offset, tweets)
+    TweetsOffset += 1
+    await getTweets(TweetsOffset, tweets)
   }
 })
 
@@ -33,7 +35,9 @@ function getTweets(offset, node) {
 }
 
 function renderTweets(tweets, node) {
+  // 已無資料時
   if (!tweets.length) { return null }
+
   tweets.forEach(element => {
     let div = document.createElement('div')
     div.classList.add('tweet')
@@ -52,7 +56,7 @@ function renderTweets(tweets, node) {
             ${element.description}
           </a>
           <div class="action">
-            <button type="button" class="commenting" data-user-id="{{loginUser.id}}" data-tweet-id="${element.id}">
+            <button type="button" class="commenting" data-user-id="${userId}" data-tweet-id="${element.id}">
               <i class='comment commenting'></i>
               ${element.replyCount}
             </button>
