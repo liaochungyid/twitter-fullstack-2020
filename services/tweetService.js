@@ -7,6 +7,7 @@ const { User, Tweet, Like } = db
 module.exports = {
   getTweets: async (req, res) => {
     try {
+      const offsetCounter = req.params.offset * 25
       const userId = helpers.getUser(req).id
       const tweets = await Tweet.findAll({
         attributes: [
@@ -42,7 +43,9 @@ module.exports = {
         ],
         order: [['createdAt', 'DESC']],
         raw: true,
-        nest: true
+        nest: true,
+        limit: 25,
+        offset: offsetCounter || 0
       })
       return tweets
     } catch (err) {

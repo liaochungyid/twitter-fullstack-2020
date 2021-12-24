@@ -329,12 +329,15 @@ module.exports = {
       const coverPath = files.cover ? files.cover[0].path : false
       const user = await User.findByPk(userId)
 
+      
       if (avatarPath) {
         const avatarLink = await utility.uploadToImgur(avatarPath)
         await user.update({
           avatar: avatarLink
         })
       }
+      
+      
 
       if (coverPath) {
         const coverLink = await utility.uploadToImgur(coverPath)
