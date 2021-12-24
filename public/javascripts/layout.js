@@ -1,15 +1,15 @@
 const body = document.querySelector('body')
 const modal = document.querySelectorAll('.modal')
-const modalReply = document.querySelector('#modal-reply')
-const modalConfirm = document.querySelector('#modal-confirm-del')
+const modalReply = document.querySelector('#modalReply')
+const modalConfirm = document.querySelector('#modalConfirmDelete')
 
-const tweetsPostForm = document.querySelector('#tweets-post-form')
+const tweetsPostForm = document.querySelector('#tweetsPostForm')
 const tweetsPostFormTextarea = document.querySelector(
-  '#tweets-post-form-textarea'
+  '#tweetsPostFormTextarea'
 )
-const modalPostForm = document.querySelector('#modal-post-form')
+const modalPostForm = document.querySelector('#modalPostForm')
 const modalPostFormTextarea = document.querySelector(
-  '#modal-post-form-textarea'
+  '#modalPostFormTextarea'
 )
 const inputs = document.querySelectorAll('input,textarea')
 const allButton = document.querySelectorAll('a, button')
@@ -32,9 +32,9 @@ body.addEventListener('click', async (event) => {
     // 2.開啟回覆modal
     // 如果按下個別"回覆"icon，開啟 replying modal
     // axios here to get tweet info
-    let tweetId = target.dataset.tweetid
+    let tweetId = target.dataset.tweetId
     if (!tweetId) {
-      tweetId = target.parentElement.dataset.tweetid
+      tweetId = target.parentElement.dataset.tweetId
     }
 
     const response = await axios.get(
@@ -75,10 +75,10 @@ body.addEventListener('click', async (event) => {
           <a>
             <img class="thumbnail" src="${loginUser.avatar}" alt="">
           </a>
-          <form action="/tweets/${tweet.id}/replies" method="post" id="modal-reply-form" novalidate>
+          <form action="/tweets/${tweet.id}/replies" method="post" id="modalReplyForm" novalidate>
             <input type="hidden" name="userId" value="${loginUser.id}">
             <textarea name="comment" maxlength="140" cols="48" rows="2" placeholder="推你的回覆"
-              id="modal-reply-form-textarea" required></textarea>
+              id="modalReplyFormTextarea" required></textarea>
             <div class="foot">
               <span class="d-none">內容不可空白</span>
               <button type="summit" class="btn-fill">回覆</button>
@@ -93,9 +93,9 @@ body.addEventListener('click', async (event) => {
     modalReply.classList.remove('d-none')
 
     // 取得modal表單，驗證資料
-    const modalReplyForm = document.querySelector('#modal-reply-form')
+    const modalReplyForm = document.querySelector('#modalReplyForm')
     const modalReplyFormTextarea = document.querySelector(
-      '#modal-reply-form-textarea'
+      '#modalReplyFormTextarea'
     )
 
     validityEmpty(modalReplyForm, modalReplyFormTextarea)
@@ -104,7 +104,7 @@ body.addEventListener('click', async (event) => {
     location.replace('/tweets')
   } else if (target.classList.contains('confirm-del')) {
     // 4.刪除modal(admin only)
-    const tweetId = target.dataset.tweetid
+    const tweetId = target.dataset.tweetId
 
     modalConfirm.innerHTML = `
     <div class="mask">
@@ -129,8 +129,8 @@ body.addEventListener('click', async (event) => {
     modalConfirm.classList.remove('d-none')
 
   } else if (target.classList.contains('btn-noti')) {
-    // 5.小鈴鐺訂閱btn-noti  data-userId="{{user.id}}"
-    let userId = target.dataset.userid
+    // 5.小鈴鐺訂閱btn-noti  data-user-id="{{user.id}}"
+    let userId = target.dataset.userId
     let results
 
     if (target.classList.contains('active')) {

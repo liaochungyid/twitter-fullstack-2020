@@ -14,7 +14,7 @@
       onclick="document.querySelector('#modal-edit').classList.remove('d-none');">編輯個人資料</button>
     {{else}}
     <a><i class='btn-message'></i></a>
-    <a><i class='btn-noti {{#if isNotified}}active{{/if}}' data-userId="{{user.id}}"></i></a>
+    <a><i class='btn-noti {{#if isNotified}}active{{/if}}' data-user-id="{{user.id}}"></i></a>
     {{#if this.user.isFollowed}}
     <form action="/followships/{{this.user.id}}?_method=DELETE" method="POST">
       <button type="submit" class="btn-fill sm">正在跟隨</button>
@@ -59,7 +59,7 @@
         {{this.description}}
       </a>
       <div class="action">
-        <button type="button" class="commenting" data-tweetid="{{this.id}}">
+        <button type="button" class="commenting" data-tweet-id="{{this.id}}">
           <i class='comment commenting'></i>
           {{this.replyCount}}
         </button>

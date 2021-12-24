@@ -1,6 +1,11 @@
 {
   "recommendations": [
     "esbenp.prettier-vscode",
-    "streetsidesoftware.code-spell-checker"
+    "streetsidesoftware.code-spell-checker",
+    "vscode-icons-team.vscode-icons",
+    "ritwickdey.liveserver",
+    "ms-ceintl.vscode-language-pack-zh-hant",
+    "coenraads.bracket-pair-colorizer",
+    "formulahendry.auto-rename-tag"
   ]
 }
