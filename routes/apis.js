@@ -66,7 +66,7 @@ router.post(
 )
 // router.get('/admin/signout', userController.signOut)
 
-router.get('/news', authenticated, notificationController.getNew) // 訂閱物件通知的 api
+router.get('/news/:userId', notificationController.getNew) // 訂閱物件通知的 api
 
 router.post('/followships', followshipController.addFollow)
 router.delete('/followships/:userId', followshipController.removeFollow)

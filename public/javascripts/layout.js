@@ -16,8 +16,6 @@ const allButton = document.querySelectorAll('a, button')
 
 const chatTextarea = document.querySelector('#textareaAutogrow')
 
-const notis = document.querySelector('#notis')
-
 // // 全畫面監聽器 (1.關閉modal(all) 2.開啟回覆modal 3.back-arrow返回首頁 4.刪除modal(admin only) 5.小鈴鐺訂閱btn-noti)
 body.addEventListener('click', async (event) => {
   const target = event.target
@@ -208,48 +206,6 @@ if (chatTextarea) {
       // 卷軸高度 大於 現在高度，設定表單高度為卷軸高度
       target.style.height = adjustedheight + 'px';
     }
-  })
-}
-
-if (notis) {
-  // 通知頁面，取得歷史通知
-  const response = async function func() {
-    return await axios.get(
-      `${location.origin}/api/news`
-    )
-  }()
-
-  response.forEach(item => {
-    if (item.type === '未讀的追蹤者推文') {
-      notis.innHTML += `
-      <a href="/tweets/${item.TweetId}" class="noti">
-        <div class="noti-title">
-          <img class="thumbnail" src="${item.User.avatar}" alt="${item.User.name} avatar">
-
-            <div class="noti-msg">
-              ${item.User.name} 有新的推文通知
-            </div>
-        </div>
-
-        <div class="content">
-          ${item.Tweet.description}
-        </div>
-      </a>
-      `
-    } else if (item.type === '未讀的被讚事件') {
-      notis.innHTML += `
-    <a href="/tweets/${item.TweetId}" class="noti">
-    <div class="noti-title">
-      <img class="thumbnail" src="${item.User.avatar}" alt="${item.User.name} avatar">
-
-      <div class="noti-msg">
-        ${item.User.name} 喜歡妳的貼文
-      </div>
-    </div>
-  </a>
-   `
-    }
-
   })
 }
 

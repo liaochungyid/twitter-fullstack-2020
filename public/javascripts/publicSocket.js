@@ -57,8 +57,8 @@ join.addEventListener('click', function onScreenClick(event) {
     scrollDownToBottom()
   })
 
-  // 2.d 執行一次，接收已上線使用者
-  socket.once('getConnectedPublicUser', (data) => {
+  // 2.d 接收已上線使用者
+  socket.on('getConnectedPublicUser', (data) => {
     let html = ''
 
     data.forEach(user => {
