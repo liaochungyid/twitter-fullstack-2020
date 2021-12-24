@@ -14,44 +14,44 @@
 </div>
 <hr>
 <div class="tweets">
-  {{#each tweets}}
-  <div class="tweet">
-    <a href="/users/{{this.User.id}}/tweets">
-      <img class="thumbnail" src="{{this.User.avatar}}" alt="{{this.User.name}} avatar">
+
+  {{!-- <div class="tweet">
+    <a href="/users/this.User.id/tweets">
+      <img class="thumbnail" src="this.User.avatar" alt="this.User.name avatar">
     </a>
     <div class="postcontent">
-      <a class="postuser" href="/users/{{this.User.id}}/tweets">
-        <span class="name ellipsis">{{this.User.name}}</span>
-        <span class="at-name ellipsis">@{{this.User.account}}</span>
-        <span class="timer ellipsis">{{moment this.createdAt}}</span>
+      <a class="postuser" href="/users/this.User.id/tweets">
+        <span class="name ellipsis">this.User.name</span>
+        <span class="at-name ellipsis">@this.User.account</span>
+        <span class="timer ellipsis">this.createdAt</span>
       </a>
-      <a href="/tweets/{{this.id}}" class="content">
-        {{this.description}}
+      <a href="/tweets/this.id" class="content">
+        description
       </a>
       <div class="action">
-        <button type="button" class="commenting" data-user-id="{{loginUser.id}}" data-tweet-id="{{this.id}}">
+        <button type="button" class="commenting" data-user-id="loginUser.id" data-tweet-id="this.id">
           <i class='comment commenting'></i>
-          {{this.replyCount}}
+          replyCount
         </button>
 
-        {{#if this.isLiked}}
-        <form action="/tweets/{{this.id}}/unlike" method="post">
+
+        <form action="/tweets/this.id/unlike" method="post">
           <button type="submit" class="liking">
             <i class='like active'></i>
-            {{this.likeCount}}
+            likeCount
           </button>
         </form>
-        {{else}}
-        <form action="/tweets/{{this.id}}/like" method="post">
+        
+        <form action="/tweets/this.id/like" method="post">
           <button type="submit" class="liking">
             <i class='like'></i>
-            {{this.likeCount}}
+            likeCount
           </button>
         </form>
-        {{/if}}
 
       </div>
     </div>
-  </div>
-  {{/each}}
+  </div> --}}
+  
+  <script defer src="/javascripts/tweets.js"></script>
 </div>
