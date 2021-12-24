@@ -42,7 +42,7 @@ const authenticatedAdmin = (req, res, next) => {
 router.get('/users/:userId', authenticated, userController.getEditModal)
 router.post('/users/:userId', authenticated, userController.updateUser)
 router.get('/chatusers/:userId', authenticated, userController.getUsers) // find chat api
-router.get('/tweets/:tweetId', authenticated, tweetController.getTweet) // reply modal api
+router.get('/tweets/:tweetId', tweetController.getTweet) // reply modal api
 router.post('/followships', followshipController.addFollow)
 router.delete('/followships/:userId', followshipController.removeFollow)
 router.get('/page/:offset', tweetController.getTweets) // 按鈕點擊"更多推文" API

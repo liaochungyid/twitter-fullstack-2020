@@ -18,14 +18,7 @@ module.exports = {
         return res.redirect('/admin/tweets')
       }
 
-      const [tweets, pops] = await Promise.all([
-        tweetService.getTweets(req, res),
-        userService.getPopular(req, res)
-      ])
-
       return res.render('user', {
-        tweets,
-        pops,
         partial: 'tweets'
       })
     } catch (err) {
@@ -35,17 +28,15 @@ module.exports = {
 
   tweetsPage: async (req, res) => {
     try {
-      const [user, tweets, pops, isNotified] = await Promise.all([
+      const [user, tweets, isNotified] = await Promise.all([
         userService.getUserProfile(req, res),
         userService.getUserTweets(req, res),
-        userService.getPopular(req, res),
         userService.getUserIsNotified(req, res)
       ])
 
       return res.render('user', {
         user,
         tweets,
-        pops,
         isNotified,
         partial: 'profileTweets'
       })
@@ -56,16 +47,14 @@ module.exports = {
 
   repliesPage: async (req, res) => {
     try {
-      const [user, replies, pops, isNotified] = await Promise.all([
+      const [user, replies, isNotified] = await Promise.all([
         userService.getUserProfile(req, res),
         userService.getUserReplies(req, res),
-        userService.getPopular(req, res),
         userService.getUserIsNotified(req, res)
       ])
       return res.render('user', {
         user,
         replies,
-        pops,
         isNotified,
         partial: 'profileReplies'
       })
@@ -76,16 +65,14 @@ module.exports = {
 
   likesPage: async (req, res) => {
     try {
-      const [user, tweets, pops, isNotified] = await Promise.all([
+      const [user, tweets, isNotified] = await Promise.all([
         userService.getUserProfile(req, res),
         userService.getUserLikes(req, res),
-        userService.getPopular(req, res),
         userService.getUserIsNotified(req, res)
       ])
       return res.render('user', {
         user,
         tweets,
-        pops,
         isNotified,
         partial: 'profileLikes'
       })
@@ -96,15 +83,13 @@ module.exports = {
 
   followersPage: async (req, res) => {
     try {
-      const [user, followers, pops] = await Promise.all([
+      const [user, followers] = await Promise.all([
         userService.getUserProfile(req, res),
-        userService.getUserFollowers(req, res),
-        userService.getPopular(req, res)
+        userService.getUserFollowers(req, res)
       ])
       return res.render('user', {
         user,
         followers,
-        pops,
         partial: 'profileFollower'
       })
     } catch (err) {
@@ -114,15 +99,13 @@ module.exports = {
 
   followingsPage: async (req, res) => {
     try {
-      const [user, followings, pops] = await Promise.all([
+      const [user, followings] = await Promise.all([
         userService.getUserProfile(req, res),
-        userService.getUserFollowings(req, res),
-        userService.getPopular(req, res)
+        userService.getUserFollowings(req, res)
       ])
       return res.render('user', {
         user,
         followings,
-        pops,
         partial: 'profileFollowing'
       })
     } catch (err) {

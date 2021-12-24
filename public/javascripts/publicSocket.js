@@ -4,7 +4,7 @@ const loginUserId = send.dataset.loginUserId
 const join = document.querySelector('.join')
 const streamMsgDiv = document.querySelector('.stream-message')
 
-const onlineUser = document.querySelector('#onlineUser')
+const onlineUsers = document.querySelector('#onlineUsers')
 const onlineUserCount = document.querySelector('#onlineUserCount')
 
 join.addEventListener('click', function onScreenClick(event) {
@@ -79,7 +79,7 @@ join.addEventListener('click', function onScreenClick(event) {
       `
     })
 
-    onlineUser.innerHTML = html
+    onlineUsers.innerHTML = html
     onlineUserCount.innerText = data.length
   })
 

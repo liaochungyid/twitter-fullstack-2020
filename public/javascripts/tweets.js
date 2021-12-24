@@ -43,7 +43,7 @@ function renderTweets(tweets, node) {
     div.classList.add('tweet')
 
     div.innerHTML = `
-        <a href="/users/${element.User.id}}/tweets">
+        <a href="/users/${element.User.id}/tweets">
           <img class="thumbnail" src="${element.User.avatar}" alt="${element.User.name} avatar">
         </a>
         <div class="postcontent">
