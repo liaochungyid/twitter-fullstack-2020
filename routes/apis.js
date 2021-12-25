@@ -5,6 +5,7 @@ const passport = require('../config/passport')
 
 const adminController = require('../controllers/api/adminController')
 const followshipController = require('../controllers/api/followshipController')
+const likeController = require('../controllers/api/likeController')
 const notificationController = require('../controllers/api/notificationController')
 // const replyController = require('../controllers/api/replyController')
 const tweetController = require('../controllers/api/tweetController')
@@ -33,8 +34,8 @@ const authenticatedAdmin = (req, res, next) => {
 // tweet 動作
 // router.post('/tweets', tweetController.addTweet)
 // router.get('/tweets/:tweetId', tweetController.getTweet)
-// router.post('/tweets/:tweetId/like', tweetController.addLike)
-// router.post('/tweets/:tweetId/unlike', tweetController.removeLike)
+router.post('/tweets/:tweetId/like', likeController.addLike)
+router.post('/tweets/:tweetId/unlike', likeController.removeLike)
 // router.get('/tweets/:tweetId/replies', replyController.getReplies)
 // router.post('/tweets/:tweetId/replies', replyController.addReply)
 
