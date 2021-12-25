@@ -3,9 +3,6 @@ const db = require('../models')
 const { sequelize } = db
 const { User, Tweet, Reply, Like } = db
 const tweetTime = require('../utils/tweetTime')
-const userController = require('./userController')
-
-const tweetService = require('../services/tweetService')
 
 module.exports = {
   getTweets: async (req, res) => {
@@ -66,22 +63,6 @@ module.exports = {
     } catch (err) {
       console.error(err)
     }
-  },
-
-  addLike: (req, res) => {
-    tweetService.addLike(req, res, data => {
-      if (data.status === 'success') {
-        return res.redirect('back')
-      }
-    })
-  },
-
-  removeLike: (req, res) => {
-    tweetService.removeLike(req, res, data => {
-      if (data.status === 'success') {
-        return res.redirect('back')
-      }
-    })
   },
 
   getTweet: async (req, res) => {

@@ -8,6 +8,7 @@ const upload = multer({ dest: 'temp/' })
 const adminController = require('../controllers/adminController')
 const chatController = require('../controllers/chatController')
 const followshipController = require('../controllers/followshipController')
+const likeController = require('../controllers/likeController')
 const messageController = require('../controllers/messageController')
 const notificationController = require('../controllers/notificationController')
 const replyController = require('../controllers/replyController')
@@ -20,8 +21,8 @@ router.get('/tweets', authenticated, userController.indexPage) // ok!!
 // tweet 動作
 router.post('/tweets', authenticated, tweetController.addTweet)
 router.get('/tweets/:tweetId', authenticated, tweetController.getTweet)
-router.post('/tweets/:tweetId/like', authenticated, tweetController.addLike)
-router.post('/tweets/:tweetId/unlike', authenticated, tweetController.removeLike)
+router.post('/tweets/:tweetId/like', authenticated, likeController.addLike)
+router.post('/tweets/:tweetId/unlike', authenticated, likeController.removeLike)
 router.get('/tweets/:tweetId/replies', authenticated, replyController.getReplies)
 router.post('/tweets/:tweetId/replies', authenticated, replyController.addReply)
 // user 頁面
