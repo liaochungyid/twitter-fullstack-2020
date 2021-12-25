@@ -15,16 +15,15 @@ more.addEventListener('click', async (event) => {
   await getPops(PopsOffset, popular)
 })
 
-function getPops (offset, node) {
-  new Promise((resolve, reject) => {
-    window.axios.get(`${window.location.origin}/api/pops/${offset}`)
-      .then(response => {
-        if (response.status !== 200) {
-          reject(new Error('unable to get pops'))
-        }
-        resolve(renderPops(response.data, node))
-      })
-  })
+async function getPops (offset, node) {
+  try {
+    const response = await window.axios.get(
+      `${window.location.origin}/api/pops/${offset}`
+    )
+    return renderPops(response.data, node)
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 function renderPops (pops, node) {
