@@ -72,7 +72,7 @@
       <img class="thumbnail" src="{{this.User.avatar}}" alt="{{this.User.name}} avatar">
     </a>
     <div class="comment">
-      <a class="commentuser" href="/users/{{this.User.id}}/tweets">
+      <a class="comment-user" href="/users/{{this.User.id}}/tweets">
         <span class="name ellipsis">{{this.User.name}}</span>
         <span class="at-name ellipsis">@{{this.User.account}}</span>
         <span class="timer ellipsis">{{moment this.createdAt}}</span>
@@ -80,7 +80,7 @@
       <a class="reply-to" href="/users/{{../tweet.User.id}}/tweets">回覆
         <span class="at-name">@{{../tweet.User.account}}</span>
       </a>
-      <div class="commentcomment">
+      <div class="comment-comment">
         {{this.comment}}
       </div>
 

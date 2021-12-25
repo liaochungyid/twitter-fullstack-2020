@@ -231,7 +231,7 @@ module.exports = {
       let pops = await User.findAll({
         where: {
           id: { [Op.not]: myId },
-          role: { [Op.not]: 'admin' },
+          role: { [Op.not]: 'admin' }
         },
         attributes: [
           'id',
@@ -245,7 +245,7 @@ module.exports = {
             'followerCount'
           ]
         ],
-        order: [[ sequelize.literal('followerCount'), 'DESC']],
+        order: [[sequelize.literal('followerCount'), 'DESC']],
         limit: 5,
         offset: offsetCounter || 0
       })
@@ -263,7 +263,7 @@ module.exports = {
           isFollowing: followings.includes(pop.dataValues.id)
         }))
 
-      return pops // 返回前10 populars array
+      return pops // 返回前10 popular array
     } catch (err) {
       console.error(err)
     }

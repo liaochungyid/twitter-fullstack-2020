@@ -33,8 +33,8 @@ join.addEventListener('click', function onScreenClick (event) {
   socket.emit('connectPublicUser', loginUserId)
 
   // 2.c 執行一次，歷史訊息
-  socket.once('getPreviousMessages', (data) => {
-    data.forEach((msg) => {
+  socket.once('getPreviousMessages', data => {
+    data.forEach(msg => {
       if (Number(loginUserId) === Number(msg.User.id)) {
         streamMsgDiv.innerHTML += `
       <div class="self-message">
@@ -58,20 +58,20 @@ join.addEventListener('click', function onScreenClick (event) {
   })
 
   // 2.d 接收已上線使用者
-  socket.on('getConnectedPublicUser', (data) => {
+  socket.on('getConnectedPublicUser', data => {
     let html = ''
 
     data.forEach(user => {
       html += `
-      <div class="usercard">
+      <div class="user-card">
         <img src="${user.avatar}">
-        <div class="userfile">
+        <div class="user-file">
           <div class="who">
-            <div class="nameplace">
+            <div class="name-place">
               <span class="name">${user.name}</span>
               <span class="at-name">@${user.account}</span>
             </div>
-            <div class="lastcall">
+            <div class="last-call">
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@ join.addEventListener('click', function onScreenClick (event) {
   })
 
   // 2.d 接收及時資訊
-  socket.on('getPublicMsg', (data) => {
+  socket.on('getPublicMsg', data => {
     try {
       const div = document.createElement('div')
 

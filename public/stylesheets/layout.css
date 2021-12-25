@@ -153,7 +153,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 235px 30px 600px 30px 350px 1fr;
   grid-template-rows: 100%;
-  grid-template-areas: 'l leftside i main j rightside k';
+  grid-template-areas: 'l left-side i main j right-side k';
   width: 100%;
   height: 100%;
 }
@@ -161,7 +161,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 235px 30px 980px 1fr;
   grid-template-rows: 100%;
-  grid-template-areas: 'i leftside j main k';
+  grid-template-areas: 'i left-side j main k';
   width: 100%;
   height: 100%;
 }
@@ -179,14 +179,14 @@ body {
   display: grid;
   grid-template-columns: 1fr 235px 40px minmax(642px, 1062px);
   grid-template-rows: 100%;
-  grid-template-areas: 'i leftside j main ';
+  grid-template-areas: 'i left-side j main ';
   width: 100%;
   height: 100%;
 }
 
-.leftside,
+.left-side,
 .main,
-.rightside,
+.right-side,
 .sign-main,
 .admin-main > :nth-child(2) {
   overflow: scroll;
@@ -195,40 +195,40 @@ body {
 }
 
 /* user-template left side */
-.leftside {
+.left-side {
   display: flex;
   flex-flow: column nowrap;
-  grid-area: leftside;
+  grid-area: left-side;
   justify-content: space-between;
 }
 
-.leftside > .navigation > i {
+.left-side > .navigation > i {
   margin-left: 10px;
   margin-top: 14px;
   margin-bottom: 45px;
 }
 
-.leftside > .navigation > a:nth-child(n) {
+.left-side > .navigation > a:nth-child(n) {
   margin-left: 10px;
 }
 
-.leftside > .navigation > a:nth-child(n) > i {
+.left-side > .navigation > a:nth-child(n) > i {
   margin-right: 20px;
 }
 
-.leftside > .navigation > a:nth-child(2),
-.leftside > .navigation > a:nth-child(3),
-.leftside > .navigation > a:nth-child(4),
-.leftside > .navigation > a:nth-child(5),
-.leftside > .navigation > a:nth-child(6) {
+.left-side > .navigation > a:nth-child(2),
+.left-side > .navigation > a:nth-child(3),
+.left-side > .navigation > a:nth-child(4),
+.left-side > .navigation > a:nth-child(5),
+.left-side > .navigation > a:nth-child(6) {
   margin-bottom: 35px;
 }
 
-.leftside > .navigation > a:nth-child(7) {
+.left-side > .navigation > a:nth-child(7) {
   margin-bottom: 25px;
 }
 
-.leftside > .navigation > a,
+.left-side > .navigation > a,
 .footer > a {
   color: #1c1c1c;
   font-size: 18px;
@@ -240,20 +240,20 @@ body {
   align-items: center;
 }
 
-.leftside > .navigation > a.active {
+.left-side > .navigation > a.active {
   color: #f60;
 }
 
-.leftside > .navigation > button.btn-fill {
+.left-side > .navigation > button.btn-fill {
   width: 210px;
   height: 38px;
 }
 
-.leftside > .footer > a {
+.left-side > .footer > a {
   margin-bottom: 17px;
 }
 
-.leftside > .footer > a > i {
+.left-side > .footer > a > i {
   margin-left: 10px;
   margin-right: 20px;
 }
@@ -625,34 +625,34 @@ body {
   margin-top: 3px;
 }
 
-.main > .followship > .follower > .followerinfo {
+.main > .followship > .follower > .follower-info {
   display: flex;
   flex-flow: column nowrap;
   align-items: flex-start;
 }
 
-.main > .followship > .follower > .followerinfo > .followeruser {
+.main > .followship > .follower > .follower-info > .follower-user {
   display: flex;
   flex-flow: column nowrap;
 }
 
-.main > .followship > .follower > .followerinfo > .followeruser > span {
+.main > .followship > .follower > .follower-info > .follower-user > span {
   font-size: 15px;
   line-height: 15px;
   margin-bottom: 5px;
 }
 
-.main > .followship > .follower > .followerinfo > .followeruser > .name {
+.main > .followship > .follower > .follower-info > .follower-user > .name {
   color: #1c1c1c;
   font-weight: 700;
 }
 
-.main > .followship > .follower > .followerinfo > .followeruser > .at-name {
+.main > .followship > .follower > .follower-info > .follower-user > .at-name {
   color: #657786;
   font-weight: 500;
 }
 
-.main > .followship > .follower > .followerinfo > .followerintro {
+.main > .followship > .follower > .follower-info > .follower-intro {
   color: #1c1c1c;
   font-size: 15px;
   font-weight: 500;
@@ -794,24 +794,24 @@ body {
   justify-content: center;
 }
 
-.main > .replies > .reply > .comment > .commentuser > span {
+.main > .replies > .reply > .comment > .comment-user > span {
   max-width: 170px;
   font-size: 15px;
   line-height: 22px;
 }
 
-.main > .replies > .reply > .comment > .commentuser > .name {
+.main > .replies > .reply > .comment > .comment-user > .name {
   color: #1c1c1c;
   font-weight: 700;
 }
 
-.main > .replies > .reply > .comment > .commentuser > .at-name,
-.main > .replies > .reply > .comment > .commentuser > .timer {
+.main > .replies > .reply > .comment > .comment-user > .at-name,
+.main > .replies > .reply > .comment > .comment-user > .timer {
   color: #657786;
   font-weight: 500;
 }
 
-.main > .replies > .reply > .comment > .commentuser > .timer::before {
+.main > .replies > .reply > .comment > .comment-user > .timer::before {
   content: '•';
   margin-left: 3px;
   margin-right: 3px;
@@ -828,7 +828,7 @@ body {
   color: #f60;
 }
 
-.main > .replies > .reply > .comment > .commentcomment {
+.main > .replies > .reply > .comment > .comment-comment {
   color: #1c1c1c;
   font-size: 15px;
   font-weight: 400;
@@ -888,18 +888,18 @@ body {
 }
 
 /* user-template right side */
-.rightside {
-  grid-area: rightside;
+.right-side {
+  grid-area: right-side;
 }
 
-.rightside > .more-btn > .more {
+.right-side > .more-btn > .more {
   display: block;
   margin: auto;
   width: 50%;
   height: 35px;
 }
 
-.rightside > .popular {
+.right-side > .popular {
   width: 100%;
   border-radius: 14px;
   background-color: #f5f8fa;
@@ -910,7 +910,7 @@ body {
   margin-bottom: 15px;
 }
 
-.rightside > .popular > span {
+.right-side > .popular > span {
   display: block;
   height: 45px;
   width: 100%;
@@ -921,7 +921,7 @@ body {
   padding-left: 15px;
 }
 
-.rightside > .popular > .wrap {
+.right-side > .popular > .wrap {
   width: 100%;
   height: 70px;
   display: flex;
@@ -930,14 +930,14 @@ body {
   border-top: 1px solid #e6ecf0;
 }
 
-.rightside > .popular > .wrap > a,
-.rightside > .popular > .wrap > form {
+.right-side > .popular > .wrap > a,
+.right-side > .popular > .wrap > form {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
 }
 
-.rightside > .popular > .wrap > a > span {
+.right-side > .popular > .wrap > a > span {
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -947,18 +947,18 @@ body {
   width: 155px;
 }
 
-.rightside > .popular > .wrap > a > span .name {
+.right-side > .popular > .wrap > a > span .name {
   width: 100%;
   color: #1c1c1c;
   margin-bottom: 3px;
 }
 
-.rightside > .popular > .wrap > a > span .at-name {
+.right-side > .popular > .wrap > a > span .at-name {
   width: 100%;
   color: #657786;
 }
 
-.rightside > .popular > .wrap > form > .btn-fill {
+.right-side > .popular > .wrap > form > .btn-fill {
   display: inline-block;
   width: 90px;
   height: 35px;
@@ -967,7 +967,7 @@ body {
   margin: auto 15px;
 }
 
-.rightside > .popular > .wrap > form > .btn-outline {
+.right-side > .popular > .wrap > form > .btn-outline {
   display: inline-block;
   width: 60px;
   height: 35px;
@@ -1011,7 +1011,7 @@ body {
   padding: 10px;
 }
 
-.modal > .mask > .dialog.findchat {
+.modal > .mask > .dialog.find-chat {
   height: 60%;
   overflow: scroll;
   overflow-x: hidden;
@@ -1505,7 +1505,7 @@ body {
   margin-bottom: 20px;
 }
 
-/* admin-template leftside */
+/* admin-template left-side */
 .admin-template > .admin-main {
   display: flex;
   flex-flow: column nowrap;
@@ -1594,19 +1594,19 @@ body {
   align-items: flex-start;
 }
 
-.admin-template > .admin-main > .users > .usercard {
+.admin-template > .admin-main > .users > .user-card {
   width: 245px;
   height: 314px;
   margin: 15px 0 0 15px;
 }
 
-.admin-template > .admin-main > .users > .usercard > .imgs {
+.admin-template > .admin-main > .users > .user-card > .imgs {
   width: 100%;
   height: 140px;
   position: relative;
 }
 
-.admin-template > .admin-main > .users > .usercard > .imgs > .thumbnail-card {
+.admin-template > .admin-main > .users > .user-card > .imgs > .thumbnail-card {
   background-color: #c4c4c4;
   border: 4px solid #fff;
   position: absolute;
@@ -1618,7 +1618,7 @@ body {
   box-sizing: border-box;
 }
 
-.admin-template > .admin-main > .users > .usercard > .imgs > .img-card {
+.admin-template > .admin-main > .users > .user-card > .imgs > .img-card {
   background-color: #c4c4c4;
   width: 100%;
   height: 100%;
@@ -1627,7 +1627,7 @@ body {
   border-top-right-radius: 10px;
 }
 
-.admin-template > .admin-main > .users > .usercard > .texts {
+.admin-template > .admin-main > .users > .user-card > .texts {
   color: #1c1c1c;
   font-size: 15px;
   font-weight: 500;
@@ -1643,18 +1643,24 @@ body {
   align-items: center;
 }
 
-.admin-template > .admin-main > .users > .usercard > .texts > .name {
+.admin-template > .admin-main > .users > .user-card > .texts > .name {
   font-weight: 900;
   margin-bottom: 2px;
 }
 
-.admin-template > .admin-main > .users > .usercard > .texts > .account {
+.admin-template > .admin-main > .users > .user-card > .texts > .account {
   color: #657786;
   margin-bottom: 15px;
 }
 
-.admin-template > .admin-main > .users > .usercard > .texts > .counting,
-.admin-template > .admin-main > .users > .usercard > .texts > .counting > span {
+.admin-template > .admin-main > .users > .user-card > .texts > .counting,
+.admin-template
+  > .admin-main
+  > .users
+  > .user-card
+  > .texts
+  > .counting
+  > span {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -1664,7 +1670,7 @@ body {
 .admin-template
   > .admin-main
   > .users
-  > .usercard
+  > .user-card
   > .texts
   > .counting
   > span
@@ -1673,7 +1679,7 @@ body {
   margin-right: 5px;
 }
 
-.admin-template > .admin-main > .users > .usercard > .texts > .followship {
+.admin-template > .admin-main > .users > .user-card > .texts > .followship {
   color: #000;
   margin-top: 15px;
   font-size: 14px;
@@ -1684,7 +1690,7 @@ body {
 .admin-template
   > .admin-main
   > .users
-  > .usercard
+  > .user-card
   > .texts
   > .followship
   > span
@@ -1692,19 +1698,19 @@ body {
   color: #657786;
 }
 
-/* modal for findchat */
-#modal-findChatUser .usercard {
+/* modal for find-chat */
+#modal-findChatUser .user-card {
   display: inline-block;
   width: 186px;
   height: 220px;
   margin: 10px 0 0 8px;
 }
 
-#modal-findChatUser .usercard > .imgs {
+#modal-findChatUser .user-card > .imgs {
   position: relative;
 }
 
-#modal-findChatUser .usercard > .imgs > .thumbnail-card {
+#modal-findChatUser .user-card > .imgs > .thumbnail-card {
   background-color: #c4c4c4;
   border: 4px solid #fff;
   position: absolute;
@@ -1715,7 +1721,7 @@ body {
   height: 100px;
 }
 
-#modal-findChatUser .usercard > .imgs > .img-card {
+#modal-findChatUser .user-card > .imgs > .img-card {
   background-color: #c4c4c4;
   width: 186px;
   height: 124px;
@@ -1724,7 +1730,7 @@ body {
   border-top-right-radius: 10px;
 }
 
-#modal-findChatUser .usercard > .texts {
+#modal-findChatUser .user-card > .texts {
   color: #1c1c1c;
   font-size: 15px;
   font-weight: 500;
@@ -1740,12 +1746,12 @@ body {
   align-items: center;
 }
 
-#modal-findChatUser .usercard > .texts > .name {
+#modal-findChatUser .user-card > .texts > .name {
   font-weight: 900;
   margin-bottom: 2px;
 }
 
-#modal-findChatUser .usercard > .texts > .account {
+#modal-findChatUser .user-card > .texts > .account {
   color: #657786;
   margin-bottom: 15px;
 }
@@ -1882,14 +1888,14 @@ div.invalid::after {
   flex-flow: column nowrap;
 }
 
-.onlineUser > .twoitem {
+.onlineUser > .two-item {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   padding-right: 10px;
 }
 
-.onlineUser > .twoitem a {
+.onlineUser > .two-item a {
   display: flex;
   align-items: center;
 }
@@ -1909,7 +1915,7 @@ div.invalid::after {
   overflow-y: auto;
 }
 
-.onlineUser > .users > .usercard {
+.onlineUser > .users > .user-card {
   width: 90%;
   height: 60px;
   margin: 10px;
@@ -1920,14 +1926,14 @@ div.invalid::after {
   border-bottom: 1px solid #e6ecf0;
 }
 
-.onlineUser > .users > .usercard > img {
+.onlineUser > .users > .user-card > img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   border: 0;
 }
 
-.onlineUser > .users > .usercard > .userfile {
+.onlineUser > .users > .user-card > .user-file {
   display: flex;
   flex-flow: column nowrap;
   justify-content: start;
@@ -1936,14 +1942,14 @@ div.invalid::after {
   padding-left: 10px;
 }
 
-.onlineUser > .users > .usercard > .userfile > .who {
+.onlineUser > .users > .user-card > .user-file > .who {
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
 }
 
-.onlineUser > .users > .usercard > .userfile > .who > .nameplace {
+.onlineUser > .users > .user-card > .user-file > .who > .name-place {
   width: 100%;
   display: flex;
   flex-flow: row nowrap;
@@ -1953,13 +1959,13 @@ div.invalid::after {
   line-height: 22px;
 }
 
-.onlineUser > .users > .usercard > .userfile > .who > .lastcall {
+.onlineUser > .users > .user-card > .user-file > .who > .last-call {
   font-size: 15px;
   line-height: 22px;
   word-break: keep-all;
 }
 
-.onlineUser > .users > .usercard > .userfile > .who > .nameplace > .name,
+.onlineUser > .users > .user-card > .user-file > .who > .name-place > .name,
 .onlineChatroom > .title > .who > .name {
   color: #1c1c1c;
   font-weight: 700;
@@ -1968,8 +1974,8 @@ div.invalid::after {
   word-break: keep-all;
 }
 
-.onlineUser > .users > .usercard > .userfile > .who > .nameplace > .at-name,
-.onlineUser > .users > .usercard > .userfile > .who > .lastcall {
+.onlineUser > .users > .user-card > .user-file > .who > .name-place > .at-name,
+.onlineUser > .users > .user-card > .user-file > .who > .last-call {
   color: #657786;
   font-weight: 500;
   flex: 1 0 0;
@@ -1982,11 +1988,11 @@ div.invalid::after {
   word-break: keep-all;
 }
 
-.onlineUser > .users > .usercard > .userfile > .whoMessage {
+.onlineUser > .users > .user-card > .user-file > .whoMessage {
   width: 100%;
 }
 
-.onlineUser > .users > .usercard > .userfile > .whoMessage > .message {
+.onlineUser > .users > .user-card > .user-file > .whoMessage > .message {
   width: 100%;
   color: #1c1c1c;
   font-weight: 400;
@@ -2095,7 +2101,7 @@ div.invalid::after {
   color: #657786;
 }
 
-.onlineChatroom > .onlineSendbox {
+.onlineChatroom > .online-sendbox {
   width: 100%;
   padding: 10px;
   display: flex;
@@ -2104,7 +2110,7 @@ div.invalid::after {
   border-top: 1px solid #e6ecf0;
 }
 
-.onlineChatroom > .onlineSendbox textarea {
+.onlineChatroom > .online-sendbox textarea {
   flex: 1 0 0;
   border: none;
   border-radius: 15px;

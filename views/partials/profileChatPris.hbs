@@ -1,6 +1,6 @@
 <div class="chatroom">
   <div class="onlineUser">
-    <div class="title twoitem">
+    <div class="title two-item">
       <span class="text">訊息</span>
       <a><i class="newMsg" id="findNewPriChat"></i></a>
     </div>
@@ -8,15 +8,15 @@
 
 
       {{!-- 這裡使用each 刷每個訊息 --}}
-      {{!-- <div class="usercard">
+      {{!-- <div class="user-card">
         <img src="https://abs.twimg.com/sticky/default_profile_images/default_profile_400x400.png">
-        <div class="userfile">
+        <div class="user-file">
           <div class="who">
-            <div class="nameplace">
+            <div class="name-place">
               <span class="name">Apple</span>
               <span class="at-name">@Apple</span>
             </div>
-            <div class="lastcall">
+            <div class="last-call">
               5秒前
             </div>
           </div>
@@ -70,7 +70,7 @@
     </div>
 
     {{!-- 輸入欄位 --}}
-    <div class="onlineSendbox">
+    <div class="online-sendbox">
       <textarea name="message" rows="1" placeholder="輸入訊息" autofocus required maxlength="500"
         id="textareaAutoGrow"></textarea>
       <button type="submit"><i class="send" id="send" data-login-user-id="{{loginUser.id}}"></i></button>

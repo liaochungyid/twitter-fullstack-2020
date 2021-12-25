@@ -10,10 +10,10 @@ module.exports = io => {
     let userId
 
     // ------------- noti -------------
-    socket.on('connectLogin', userloginId => {
+    socket.on('connectLogin', loginUserId => {
       // 登入，加入清單 notiOnlineUsers，建立room
-      notiOnlineUsers.push(userloginId)
-      userId = userloginId
+      notiOnlineUsers.push(loginUserId)
+      userId = loginUserId
       socket.join(userId)
 
       // 離線，移除登入清單 notiOnlineUsers
@@ -55,20 +55,20 @@ module.exports = io => {
       io.emit('getPublicMsg', { notifyType: 'signin', user })
 
       // 離線移除清單，廣播
-      socket.on('disconnect', async (reason) => {
+      socket.on('disconnect', async reason => {
         publicOnlineUsers.splice(publicOnlineUsers.indexOf(loginUserId), 1)
 
         io.emit('getPublicMsg', { notifyType: 'signout', user })
 
         io.emit(
-        'getConnectedPublicUser',
-        await socketService.getPreviousUser(publicOnlineUsers)
-      )
+          'getConnectedPublicUser',
+          await socketService.getPreviousUser(publicOnlineUsers)
+        )
       })
 
       // 接收public訊息，儲存，廣播
       socket.on('createPublicMsg', async data => {
-        let [msg, user] = await Promise.all([
+        const [msg, user] = await Promise.all([
           socketService.createMessage(data),
           socketService.getUserInfo(data.UserId)
         ])
@@ -98,7 +98,7 @@ module.exports = io => {
     //   updateOnlineUser()
     // })
 
-    // ------------- pirvate -------------
+    // ------------- private -------------
   })
 
   // ------------- functions -------------
@@ -119,7 +119,7 @@ module.exports = io => {
     io.to(userIdList).emit('getPublicNoti', true)
   }
 
-  // function updatepublicOnlineUsers() {
+  // function updatePublicOnlineUsers() {
   //   io.emit('onlineUser', onlineUser, { onlineCount: onlineUser.length })
   //   console.log(onlineUser)
   // }

@@ -59,7 +59,7 @@ function renderTweets (tweets, node) {
             ${element.description}
           </a>
           <div class="action">
-            <button type="button" class="commenting" data-user-id="${userId}" data-tweet-id="${ element.id }">
+            <button type="button" class="commenting" data-user-id="${userId}" data-tweet-id="${element.id}">
               <i class="comment commenting"></i>
               <span class="comment-count">${element.replyCount}</span>
             </button>
