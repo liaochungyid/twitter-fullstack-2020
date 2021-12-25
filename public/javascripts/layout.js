@@ -4,26 +4,22 @@ const modalReply = document.querySelector('#modalReply')
 const modalConfirm = document.querySelector('#modalConfirmDelete')
 
 const tweetsPostForm = document.querySelector('#tweetsPostForm')
-const tweetsPostFormTextarea = document.querySelector(
-  '#tweetsPostFormTextarea'
-)
+const tweetsPostFormTextarea = document.querySelector('#tweetsPostFormTextarea')
 const modalPostForm = document.querySelector('#modalPostForm')
-const modalPostFormTextarea = document.querySelector(
-  '#modalPostFormTextarea'
-)
+const modalPostFormTextarea = document.querySelector('#modalPostFormTextarea')
 const inputs = document.querySelectorAll('input,textarea')
 const allButton = document.querySelectorAll('a, button')
 
 const chatTextarea = document.querySelector('#textareaAutogrow')
 
 // // 全畫面監聽器 (1.關閉modal(all) 2.開啟回覆modal 3.back-arrow返回首頁 4.刪除modal(admin only) 5.小鈴鐺訂閱btn-noti)
-body.addEventListener('click', async (event) => {
+body.addEventListener('click', async event => {
   const target = event.target
 
   // 1.關閉modal(all)
   if (target.classList.contains('close') || target.classList.contains('mask')) {
     // 點擊X icon關閉，另可點擊modal對話框以外地方關閉
-    Array.from(modal).forEach((el) => {
+    Array.from(modal).forEach(el => {
       el.classList = 'modal d-none'
     })
   } else if (target.classList.contains('commenting')) {
@@ -35,9 +31,7 @@ body.addEventListener('click', async (event) => {
       tweetId = target.parentElement.dataset.tweetId
     }
 
-    const response = await axios.get(
-      `${location.origin}/api/tweets/${tweetId}`
-    )
+    const response = await window.axios.get(`${window.location.origin}/api/tweets/${tweetId}`)
     const { tweet, loginUser } = response.data
 
     modalReply.innerHTML = `
@@ -99,7 +93,7 @@ body.addEventListener('click', async (event) => {
     validityEmpty(modalReplyForm, modalReplyFormTextarea)
   } else if (target.classList.contains('back-arror')) {
     // 3.back-arrow返回首頁
-    location.replace('/tweets')
+    window.location.replace('/tweets')
   } else if (target.classList.contains('confirm-del')) {
     // 4.刪除modal(admin only)
     const tweetId = target.dataset.tweetId
@@ -125,16 +119,15 @@ body.addEventListener('click', async (event) => {
     `
 
     modalConfirm.classList.remove('d-none')
-
   } else if (target.classList.contains('btn-noti')) {
     // 5.小鈴鐺訂閱btn-noti  data-user-id="{{user.id}}"
-    let userId = target.dataset.userId
+    const userId = target.dataset.userId
     let results
 
     if (target.classList.contains('active')) {
-      results = await axios.delete(`${location.origin}/api/notify/${userId}`)
+      results = await window.axios.delete(`${window.location.origin}/api/notify/${userId}`)
     } else {
-      results = await axios.post(`${location.origin}/api/notify/${userId}`)
+      results = await window.axios.post(`${window.location.origin}/api/notify/${userId}`)
     }
 
     if (results.data.status === 'success') {
@@ -145,13 +138,13 @@ body.addEventListener('click', async (event) => {
 
 // 避免連續重複按下按鈕
 allButton.forEach(btn => {
-  btn.addEventListener('click', function onAnyButtonClick(event) {
+  btn.addEventListener('click', function onAnyButtonClick (event) {
     setTimeout(() => {
       event.target.disabled = true
-    }, 0);
+    }, 0)
     setTimeout(() => {
       event.target.disabled = false
-    }, 1800);
+    }, 1800)
   })
 })
 
@@ -167,11 +160,11 @@ if (modalPostForm) {
 
 if (inputs) {
   // 任一Input tag，驗證資料
-  inputs.forEach((el) => {
-    el.addEventListener('focus', function onInputFocus(event) {
+  inputs.forEach(el => {
+    el.addEventListener('focus', function onInputFocus (event) {
       el.parentElement.classList.add('focus')
     })
-    el.addEventListener('blur', function onInputBlur(event) {
+    el.addEventListener('blur', function onInputBlur (event) {
       el.parentElement.classList.remove('focus')
     })
     el.addEventListener('invalid', onInputInvalid)
@@ -182,7 +175,7 @@ if (inputs) {
 
 if (chatTextarea) {
   // 聊天室，驗證與欄高度調整
-  chatTextarea.addEventListener('keyup', function onTextareaKeyup(event) {
+  chatTextarea.addEventListener('keyup', function onTextareaKeyup (event) {
     const target = event.target
     const keycode = event.keyCode
 
@@ -190,7 +183,7 @@ if (chatTextarea) {
 
     if (event.keyCode === 13 && !event.shiftKey) {
       // enter 送出表單，shift+enter不送出(換行)
-      document.querySelector("#send").click()
+      document.querySelector('#send').click()
       target.style.height = '30px'
       clientheight = 30
       target.value = ''
@@ -200,24 +193,24 @@ if (chatTextarea) {
       clientheight = 30
     }
 
-    let adjustedheight = target.scrollHeight
+    const adjustedheight = target.scrollHeight
 
     if (adjustedheight > clientheight) {
       // 卷軸高度 大於 現在高度，設定表單高度為卷軸高度
-      target.style.height = adjustedheight + 'px';
+      target.style.height = adjustedheight + 'px'
     }
   })
 }
 
 // -------------以下為復用function-------------
-function isEmpty(nodeElement) {
+function isEmpty (nodeElement) {
   // 無文字回傳true，文字長度大於0，回傳false
   return !nodeElement.value.replace(/\s/g, '').length
 }
 
-function validityEmpty(form, inputarea) {
+function validityEmpty (form, inputarea) {
   // 驗證inputarea是否為空白
-  form.addEventListener('submit', function onFormSubmitted(event) {
+  form.addEventListener('submit', function onFormSubmitted (event) {
     if (!form.checkValidity() || isEmpty(inputarea)) {
       // 停止type=submit預設動作
       event.stopPropagation()
@@ -227,7 +220,7 @@ function validityEmpty(form, inputarea) {
     }
   })
 
-  inputarea.addEventListener('keyup', function onFormKeyup(event) {
+  inputarea.addEventListener('keyup', function onFormKeyup (event) {
     if (!isEmpty(inputarea)) {
       //  使用者開始輸入，隱藏alert message (加上d-none class)
       form.lastElementChild.firstElementChild.classList = 'd-none'
@@ -235,7 +228,7 @@ function validityEmpty(form, inputarea) {
   })
 }
 
-function onInputInvalid(event) {
+function onInputInvalid (event) {
   // submit 驗證客製功能
   const target = event.target
 
@@ -264,7 +257,7 @@ function onInputInvalid(event) {
   target.parentElement.classList.add('invalid')
 }
 
-function onInputKeyup(event) {
+function onInputKeyup (event) {
   // 使用者開始輸入，取消invalid樣式
   const target = event.target
   target.parentElement.classList.remove('invalid')
@@ -276,19 +269,19 @@ function onInputKeyup(event) {
 }
 
 // 滾動聊天畫面至最下方
-function scrollDownToBottom() {
+function scrollDownToBottom () {
   if (streamMsgDiv.lastElementChild) {
     streamMsgDiv.lastElementChild.scrollIntoView()
   }
 }
 
 // string 仿 Array.splice 功能
-function stringSplice(str, start, delCount, newSubStr) {
+function stringSplice (str, start, delCount, newSubStr) {
   return str.slice(0, start) + newSubStr + str.slice(start + delCount)
 }
 
 // \n換行符號替換<br>
-function slashNtoBr(str, delStr = '\n', newStr = '<br>') {
+function slashNtoBr (str, delStr = '\n', newStr = '<br>') {
   let result = str
 
   while (result.indexOf(delStr) !== -1) {
@@ -298,7 +291,12 @@ function slashNtoBr(str, delStr = '\n', newStr = '<br>') {
 
   while (result.indexOf(newStr + newStr) !== -1) {
     // 替換 連續 newStr
-    result = stringSplice(result, result.indexOf(newStr + newStr), newStr.length * 2, newStr)
+    result = stringSplice(
+      result,
+      result.indexOf(newStr + newStr),
+      newStr.length * 2,
+      newStr
+    )
   }
 
   if (result.indexOf(newStr) === 0) {
