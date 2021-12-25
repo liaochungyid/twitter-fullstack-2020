@@ -15,7 +15,6 @@ const chatTextarea = document.querySelector('#textareaAutoGrow')
 // // 全畫面監聽器 (1.關閉modal(all) 2.開啟回覆modal 3.back-arrow返回首頁 4.刪除modal(admin only) 5.小鈴鐺訂閱btn-noti)
 body.addEventListener('click', async event => {
   const target = event.target
-  console.log(target)
 
   // 1.關閉modal(all)
   if (target.classList.contains('close') || target.classList.contains('mask')) {
@@ -140,15 +139,31 @@ body.addEventListener('click', async event => {
     if (results.data.status === 'success') {
       target.classList.toggle('active')
     }
-  } else if (target.classList.contains('liking')) {
-    const tweetId = target.dataset.tweetId
-    const response = await window.axios.post(
-      `${window.location.origin}/api/tweets/${tweetId}/like`,
-      {
-        tweetId: target.dataset.tweetId
-      }
-    )
-    console.log(response)
+  } else if (target.classList.contains('like')) {
+    const { tweetId } = target.dataset
+    let response
+    let likeCount = Number(target.nextElementSibling.innerHTML)
+
+    if (target.classList.contains('active')) {
+      response = await window.axios.delete(
+        `${window.location.origin}/api/tweets/${tweetId}/likes`,
+        { tweetId }
+      )
+      likeCount -= 1
+    } else {
+      response = await window.axios.post(
+        `${window.location.origin}/api/tweets/${tweetId}/likes`,
+        { tweetId }
+      )
+      likeCount += 1
+    }
+
+    if (response.data.status !== 'success') {
+      return null
+    }
+
+    target.nextElementSibling.innerHTML = likeCount
+    target.classList.toggle('active')
   }
 })
 

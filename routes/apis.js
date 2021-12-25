@@ -34,8 +34,8 @@ const authenticatedAdmin = (req, res, next) => {
 // tweet 動作
 // router.post('/tweets', tweetController.addTweet)
 // router.get('/tweets/:tweetId', tweetController.getTweet)
-router.post('/tweets/:tweetId/like', likeController.addLike)
-router.post('/tweets/:tweetId/unlike', likeController.removeLike)
+router.post('/tweets/:tweetId/likes', likeController.addLike)
+router.delete('/tweets/:tweetId/likes', likeController.removeLike)
 // router.get('/tweets/:tweetId/replies', replyController.getReplies)
 // router.post('/tweets/:tweetId/replies', replyController.addReply)
 

@@ -59,12 +59,12 @@ function renderTweets (tweets, node) {
           <div class="action">
             <button type="button" class="commenting" data-user-id="${userId}" data-tweet-id="${element.id}">
               <i class='comment commenting'></i>
-              ${element.replyCount}
+              <span class="comment-count">${element.replyCount}</span>
             </button>
 
-            <button type="button" class="liking" data-user-id="${userId}" data-tweet-id="${element.id}">
-              <i class='like ${element.isLiked ? 'active' : ''}'></i>
-              ${element.likeCount}
+            <button type="button" class="liking">
+              <i class="like ${element.isLiked ? 'active' : ''}" data-tweet-id="${element.id}" data-user-id="${userId}"></i>
+              <sapn class="like-count">${element.likeCount}</span>
             </button>
           </div>
         </div>
