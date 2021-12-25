@@ -7,7 +7,7 @@ const streamMsgDiv = document.querySelector('.stream-message')
 const onlineUsers = document.querySelector('#onlineUsers')
 const onlineUserCount = document.querySelector('#onlineUserCount')
 
-join.addEventListener('click', function onScreenClick(event) {
+join.addEventListener('click', function onScreenClick (event) {
   // 點擊加入聊天室
   // 1. 移除screen
   event.preventDefault()
@@ -15,7 +15,7 @@ join.addEventListener('click', function onScreenClick(event) {
 
   // 2. 加入socket function
   // 2.a 發出訊息
-  send.addEventListener('click', function onSendClick(event) {
+  send.addEventListener('click', function onSendClick (event) {
     event.preventDefault()
 
     const target = event.target.parentElement.previousElementSibling
@@ -86,7 +86,7 @@ join.addEventListener('click', function onScreenClick(event) {
   // 2.d 接收及時資訊
   socket.on('getPublicMsg', (data) => {
     try {
-      let div = document.createElement('div')
+      const div = document.createElement('div')
 
       switch (data.notifyType) {
         case 'signin':
@@ -95,14 +95,14 @@ join.addEventListener('click', function onScreenClick(event) {
           div.innerHTML = `<span class="content">${data.user.name} 上線</span>`
           streamMsgDiv.append(div)
           scrollDownToBottom()
-          break;
+          break
         case 'signout':
           // 2.d.2 接收離線通知
           div.classList.add('noti-message')
           div.innerHTML = `<span class="content">${data.user.name} 下線</span>`
           streamMsgDiv.append(div)
           scrollDownToBottom()
-          break;
+          break
         case 'message':
           // 2.d.3 接收訊息
           if (Number(loginUserId) === Number(data.user.id)) {

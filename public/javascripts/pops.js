@@ -4,20 +4,20 @@ const more = document.querySelector('.more')
 let PopsOffset = 0
 
 // 一進入頁面及索取資料 (offset = 0)
-let span = document.createElement('span')
+const span = document.createElement('span')
 span.innerText = 'Popular'
 popular.append(span)
 getPops(PopsOffset, popular)
 
 // 按下more，取的資料append底部
 more.addEventListener('click', async (event) => {
-    PopsOffset += 1
-    await getPops(PopsOffset, popular)
+  PopsOffset += 1
+  await getPops(PopsOffset, popular)
 })
 
-function getPops(offset, node) {
-  new Promise((resolve,reject) => {
-    axios.get(`${location.origin}/api/pops/${offset}`)
+function getPops (offset, node) {
+  new Promise((resolve, reject) => {
+    window.axios.get(`${window.location.origin}/api/pops/${offset}`)
       .then(response => {
         if (response.status !== 200) {
           reject(new Error('unable to get pops'))
@@ -27,10 +27,10 @@ function getPops(offset, node) {
   })
 }
 
-function renderPops(pops, node) {
+function renderPops (pops, node) {
   if (pops.length) {
     pops.forEach((element) => {
-      let div = document.createElement('div')
+      const div = document.createElement('div')
       div.classList.add('wrap')
 
       div.innerHTML = `
@@ -57,4 +57,3 @@ function renderPops(pops, node) {
     more.attributes.disabled = 'disabled'
   }
 }
-

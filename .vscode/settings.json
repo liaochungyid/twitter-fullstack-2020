@@ -8,6 +8,8 @@
   "prettier.arrowParens": "avoid",
   "cSpell.words": [
     "aphitter",
+    "maxlength",
+    "novalidate",
     "Observeds",
     "Parens",
     "semistandard",

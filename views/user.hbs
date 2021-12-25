@@ -37,16 +37,14 @@
             <a class="active" href='/users/{{loginUser.id}}/profileChatPub'><i class='message active'
                 id="pubChatNoti"></i>公開聊天室</a>
             {{else}}
-            <a class="" href='/users/{{loginUser.id}}/profileChatPub'><i class='message'
-                id="pubChatNoti"></i>公開聊天室</a>
+            <a class="" href='/users/{{loginUser.id}}/profileChatPub'><i class='message' id="pubChatNoti"></i>公開聊天室</a>
             {{/ifCond}}
 
             {{#ifCond partial "profileChatPris"}}
             <a class="active" href='/users/{{loginUser.id}}/profileChatPris'><i class='message active'
                 id="priChatNoti"></i>私人訊息</a>
             {{else}}
-            <a class="" href='/users/{{loginUser.id}}/profileChatPris'><i class='message'
-                id="priChatNoti"></i>私人訊息</a>
+            <a class="" href='/users/{{loginUser.id}}/profileChatPris'><i class='message' id="priChatNoti"></i>私人訊息</a>
             {{/ifCond}}
 
             {{#ifCond loginUser.id user.id}}
@@ -87,23 +85,22 @@
             {{!-- <span>Popular</span>
 
             <div class="wrap">
-              <a href="/users/this.id/tweets"><img class="thumbnail" src="this.avatar"
-                  alt="this.name avatar">
+              <a href="/users/this.id/tweets"><img class="thumbnail" src="this.avatar" alt="this.name avatar">
                 <span>
                   <span class="name">this.name</span>
                   <span class="at-name ellipsis">@this.account</span>
                 </span>
               </a>
-              
+
               <form action="/followships/this.id?_method=DELETE" method="POST">
                 <button type="submit" class="btn-fill sm">正在跟隨</button>
               </form>
-              
+
               <form action="/followships" method="POST">
                 <input type="hidden" name="id" value="this.id">
                 <button type="submit" class="btn-outline sm">跟隨</button>
               </form>
-      
+
             </div> --}}
 
           </div>
@@ -126,7 +123,7 @@
             <div class="dialog-header">
               <a class='close'><i class='X-orange close'></i></a>
             </div>
-            <div class="postarea">
+            <div class="post-area">
               <a>
                 <img class="thumbnail" src="{{loginUser.avatar}}" alt="{{loginUser.name}} avatar">
               </a>

@@ -1,5 +1,5 @@
 <div class="header">首頁</div>
-<div class="postarea">
+<div class="post-area">
   <a href="/users/{{loginUser.id}}/tweets">
     <img class="thumbnail" src="{{loginUser.avatar}}" alt="{{loginUser.name}} avatar">
   </a>
@@ -19,8 +19,8 @@
     <a href="/users/this.User.id/tweets">
       <img class="thumbnail" src="this.User.avatar" alt="this.User.name avatar">
     </a>
-    <div class="postcontent">
-      <a class="postuser" href="/users/this.User.id/tweets">
+    <div class="post-content">
+      <a class="post-user" href="/users/this.User.id/tweets">
         <span class="name ellipsis">this.User.name</span>
         <span class="at-name ellipsis">@this.User.account</span>
         <span class="timer ellipsis">this.createdAt</span>
@@ -41,7 +41,7 @@
             likeCount
           </button>
         </form>
-        
+
         <form action="/tweets/this.id/like" method="post">
           <button type="submit" class="liking">
             <i class='like'></i>
@@ -52,6 +52,6 @@
       </div>
     </div>
   </div> --}}
-  
+
   <script defer src="/javascripts/tweets.js"></script>
 </div>

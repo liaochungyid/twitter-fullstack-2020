@@ -1,5 +1,5 @@
-<div class="back-arror-header">
-  <a><i class='back-arror'></i></a>
+<div class="back-arrow-header">
+  <a><i class='back-arrow'></i></a>
   <div class="header-text">
     <span class="tweet">推文</span>
   </div>
@@ -7,7 +7,7 @@
 
 <div class="tweet">
 
-  <a class="tweetuser" href="/users/{{tweet.User.id}}/tweets">
+  <a class="tweet-user" href="/users/{{tweet.User.id}}/tweets">
     <span>
       <img class="thumbnail" src="{{tweet.User.avatar}}" alt="{{tweet.User.name}} avatar">
     </span>
@@ -17,7 +17,7 @@
     </span>
   </a>
 
-  <div class="tweetcontent">
+  <div class="tweet-content">
 
     <div class="content">
       {{tweet.description}}
@@ -77,7 +77,7 @@
         <span class="at-name ellipsis">@{{this.User.account}}</span>
         <span class="timer ellipsis">{{moment this.createdAt}}</span>
       </a>
-      <a class="replyto" href="/users/{{../tweet.User.id}}/tweets">回覆
+      <a class="reply-to" href="/users/{{../tweet.User.id}}/tweets">回覆
         <span class="at-name">@{{../tweet.User.account}}</span>
       </a>
       <div class="commentcomment">

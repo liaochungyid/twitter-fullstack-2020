@@ -74,7 +74,6 @@
 //         // 關閉modal
 //         modalFindChatUser.classList.add('d-none')
 
-
 //         socket.once('getPriPreMsg', (data) => {
 //           if (data.priMsg) {
 //             streamMsgDiv.innerHTML = ''

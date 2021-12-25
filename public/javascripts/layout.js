@@ -10,7 +10,7 @@ const modalPostFormTextarea = document.querySelector('#modalPostFormTextarea')
 const inputs = document.querySelectorAll('input,textarea')
 const allButton = document.querySelectorAll('a, button')
 
-const chatTextarea = document.querySelector('#textareaAutogrow')
+const chatTextarea = document.querySelector('#textareaAutoGrow')
 
 // // 全畫面監聽器 (1.關閉modal(all) 2.開啟回覆modal 3.back-arrow返回首頁 4.刪除modal(admin only) 5.小鈴鐺訂閱btn-noti)
 body.addEventListener('click', async event => {
@@ -31,7 +31,9 @@ body.addEventListener('click', async event => {
       tweetId = target.parentElement.dataset.tweetId
     }
 
-    const response = await window.axios.get(`${window.location.origin}/api/tweets/${tweetId}`)
+    const response = await window.axios.get(
+      `${window.location.origin}/api/tweets/${tweetId}`
+    )
     const { tweet, loginUser } = response.data
 
     modalReply.innerHTML = `
@@ -40,22 +42,22 @@ body.addEventListener('click', async event => {
         <div class="dialog-header">
           <a class="close"><i class='X-orange close'></i></a>
         </div>
-        <div class="replyarea">
+        <div class="reply-area">
 
           <div class="tweet">
             <a>
               <img class="thumbnail" src="${tweet.User.avatar}" alt="">
             </a>
-            <div class="tweetcontent">
-              <a class="tweetuser">
+            <div class="tweet-content">
+              <a class="tweet-user">
                 <span class="name ellipsis">${tweet.User.name}</span>
                 <span class="at-name ellipsis">${tweet.User.account}</span>
                 <span class="timer ellipsis">${tweet.createdAt}</span>
               </a>
-              <span class="tweetdescription">
+              <span class="tweet-description">
               ${tweet.description}
               </span>
-              <span class="replyto">回覆給
+              <span class="reply-to">回覆給
                 <span class="at-name">@${tweet.User.account}</span>
               </span>
             </div>
@@ -63,7 +65,7 @@ body.addEventListener('click', async event => {
           </div>
         </div>
 
-        <div class="postarea">
+        <div class="post-area">
           <a>
             <img class="thumbnail" src="${loginUser.avatar}" alt="">
           </a>
@@ -91,7 +93,7 @@ body.addEventListener('click', async event => {
     )
 
     validityEmpty(modalReplyForm, modalReplyFormTextarea)
-  } else if (target.classList.contains('back-arror')) {
+  } else if (target.classList.contains('back-arrow')) {
     // 3.back-arrow返回首頁
     window.location.replace('/tweets')
   } else if (target.classList.contains('confirm-del')) {
@@ -125,9 +127,13 @@ body.addEventListener('click', async event => {
     let results
 
     if (target.classList.contains('active')) {
-      results = await window.axios.delete(`${window.location.origin}/api/notify/${userId}`)
+      results = await window.axios.delete(
+        `${window.location.origin}/api/notify/${userId}`
+      )
     } else {
-      results = await window.axios.post(`${window.location.origin}/api/notify/${userId}`)
+      results = await window.axios.post(
+        `${window.location.origin}/api/notify/${userId}`
+      )
     }
 
     if (results.data.status === 'success') {
@@ -179,25 +185,25 @@ if (chatTextarea) {
     const target = event.target
     const keycode = event.keyCode
 
-    let clientheight = target.clientHeight
+    let clientHeight = target.clientHeight
 
     if (event.keyCode === 13 && !event.shiftKey) {
       // enter 送出表單，shift+enter不送出(換行)
       document.querySelector('#send').click()
       target.style.height = '30px'
-      clientheight = 30
+      clientHeight = 30
       target.value = ''
     } else if ([8, 46].includes(keycode)) {
       // backspace或del按鍵，重測行高
       target.style.height = '30px'
-      clientheight = 30
+      clientHeight = 30
     }
 
-    const adjustedheight = target.scrollHeight
+    const adjustedHeight = target.scrollHeight
 
-    if (adjustedheight > clientheight) {
+    if (adjustedHeight > clientHeight) {
       // 卷軸高度 大於 現在高度，設定表單高度為卷軸高度
-      target.style.height = adjustedheight + 'px'
+      target.style.height = adjustedHeight + 'px'
     }
   })
 }
@@ -208,10 +214,10 @@ function isEmpty (nodeElement) {
   return !nodeElement.value.replace(/\s/g, '').length
 }
 
-function validityEmpty (form, inputarea) {
-  // 驗證inputarea是否為空白
+function validityEmpty (form, inputArea) {
+  // 驗證inputArea是否為空白
   form.addEventListener('submit', function onFormSubmitted (event) {
-    if (!form.checkValidity() || isEmpty(inputarea)) {
+    if (!form.checkValidity() || isEmpty(inputArea)) {
       // 停止type=submit預設動作
       event.stopPropagation()
       event.preventDefault()
@@ -220,8 +226,8 @@ function validityEmpty (form, inputarea) {
     }
   })
 
-  inputarea.addEventListener('keyup', function onFormKeyup (event) {
-    if (!isEmpty(inputarea)) {
+  inputArea.addEventListener('keyup', function onFormKeyup (event) {
+    if (!isEmpty(inputArea)) {
       //  使用者開始輸入，隱藏alert message (加上d-none class)
       form.lastElementChild.firstElementChild.classList = 'd-none'
     }

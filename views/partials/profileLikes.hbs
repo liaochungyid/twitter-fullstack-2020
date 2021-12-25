@@ -1,5 +1,5 @@
-<div class="back-arror-header">
-  <a><i class='back-arror'></i></a>
+<div class="back-arrow-header">
+  <a><i class='back-arrow'></i></a>
   <div class="header-text">
     <span class="name">{{user.name}}</span>
     <span class="post-count">{{user.likeCount}} 喜歡</span>
@@ -49,8 +49,8 @@
     <a href="/users/{{../user.id}}/tweets">
       <img class="thumbnail" src="{{../user.avatar}}" alt="{{../user.name}} avatar">
     </a>
-    <div class="postcontent">
-      <a class="postuser" href="/users/{{../user.id}}/tweets">
+    <div class="post-content">
+      <a class="post-user" href="/users/{{../user.id}}/tweets">
         <span class="name ellipsis">{{../user.name}}</span>
         <span class="at-name ellipsis">@{{../user.account}}</span>
         <span class="timer ellipsis">{{moment this.likeCreatedAt}}</span>
