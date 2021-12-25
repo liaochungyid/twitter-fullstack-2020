@@ -140,30 +140,7 @@ body.addEventListener('click', async event => {
       target.classList.toggle('active')
     }
   } else if (target.classList.contains('like')) {
-    const { tweetId } = target.dataset
-    let response
-    let likeCount = Number(target.nextElementSibling.innerHTML)
-
-    if (target.classList.contains('active')) {
-      response = await window.axios.delete(
-        `${window.location.origin}/api/tweets/${tweetId}/likes`,
-        { tweetId }
-      )
-      likeCount -= 1
-    } else {
-      response = await window.axios.post(
-        `${window.location.origin}/api/tweets/${tweetId}/likes`,
-        { tweetId }
-      )
-      likeCount += 1
-    }
-
-    if (response.data.status !== 'success') {
-      return null
-    }
-
-    target.nextElementSibling.innerHTML = likeCount
-    target.classList.toggle('active')
+    toggleLikeButton(target)
   }
 })
 
@@ -335,4 +312,31 @@ function slashNtoBr (str, delStr = '\n', newStr = '<br>') {
   }
 
   return result
+}
+
+async function toggleLikeButton (target) {
+  const { tweetId } = target.dataset
+  let response
+  let likeCount = Number(target.nextElementSibling.innerHTML)
+
+  if (target.classList.contains('active')) {
+    response = await window.axios.delete(
+      `${window.location.origin}/api/tweets/${tweetId}/likes`,
+      { tweetId }
+    )
+    likeCount -= 1
+  } else {
+    response = await window.axios.post(
+      `${window.location.origin}/api/tweets/${tweetId}/likes`,
+      { tweetId }
+    )
+    likeCount += 1
+  }
+
+  if (response.data.status !== 'success') {
+    return null
+  }
+
+  target.nextElementSibling.innerHTML = likeCount
+  target.classList.toggle('active')
 }

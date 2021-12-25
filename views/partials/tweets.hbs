@@ -30,24 +30,20 @@
       </a>
       <div class="action">
         <button type="button" class="commenting" data-user-id="loginUser.id" data-tweet-id="this.id">
-          <i class='comment commenting'></i>
+          <i class="comment commenting"></i>
           replyCount
         </button>
 
 
-        <form action="/tweets/this.id/unlike" method="post">
-          <button type="submit" class="liking">
-            <i class='like active'></i>
-            likeCount
-          </button>
-        </form>
+        <button type="submit" class="liking">
+          <i class="like active" data-tweet-id="{{this.id}}"></i>
+          <span class="likeCount">{{this.likeCount}}</span>
+        </button>
 
-        <form action="/tweets/this.id/like" method="post">
-          <button type="submit" class="liking">
-            <i class='like'></i>
-            likeCount
-          </button>
-        </form>
+        <button type="submit" class="liking">
+          <i class="like" data-tweet-id="{{this.id}}"></i>
+          <span class="likeCount">{{this.likeCount}}</span>
+        </button>
 
       </div>
     </div>

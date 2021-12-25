@@ -45,7 +45,9 @@ function renderTweets (tweets, node) {
 
     div.innerHTML = `
         <a href="/users/${element.User.id}/tweets">
-          <img class="thumbnail" src="${element.User.avatar}" alt="${element.User.name} avatar">
+          <img class="thumbnail" src="${element.User.avatar}" alt="${
+      element.User.name
+    } avatar">
         </a>
         <div class="post-content">
           <a class="post-user" href="/users/${element.User.id}/tweets">
@@ -57,13 +59,13 @@ function renderTweets (tweets, node) {
             ${element.description}
           </a>
           <div class="action">
-            <button type="button" class="commenting" data-user-id="${userId}" data-tweet-id="${element.id}">
-              <i class='comment commenting'></i>
+            <button type="button" class="commenting" data-user-id="${userId}" data-tweet-id="${ element.id }">
+              <i class="comment commenting"></i>
               <span class="comment-count">${element.replyCount}</span>
             </button>
 
             <button type="button" class="liking">
-              <i class="like ${element.isLiked ? 'active' : ''}" data-tweet-id="${element.id}" data-user-id="${userId}"></i>
+              <i class="like ${element.isLiked ? 'active' : ''}" data-tweet-id="${element.id}"></i>
               <sapn class="like-count">${element.likeCount}</span>
             </button>
           </div>

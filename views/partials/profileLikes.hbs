@@ -60,23 +60,19 @@
       </a>
       <div class="action">
         <button type="button" class="commenting" data-tweet-id="{{this.id}}">
-          <i class='comment commenting'></i>
+          <i class="comment commenting"></i>
           {{this.replyCount}}
         </button>
         {{#if this.isLiked}}
-        <form action="/tweets/{{this.id}}/unlike" method="POST">
-          <button type="submit" class="liking">
-            <i class='like active'></i>
-            {{this.likeCount}}
-          </button>
-        </form>
+        <button type="button" class="liking">
+          <i class="like active" data-tweet-id="{{this.id}}"></i>
+          <span class="likeCount">{{this.likeCount}}</span>
+        </button>
         {{else}}
-        <form action="/tweets/{{this.id}}/like" method="POST">
-          <button type="submit" class="liking">
-            <i class='like'></i>
-            {{this.likeCount}}
-          </button>
-        </form>
+        <button type="button" class="liking">
+          <i class="like" data-tweet-id="{{this.id}}"></i>
+          <span class="likeCount">{{this.likeCount}}</span>
+        </button>
         {{/if}}
       </div>
     </div>
