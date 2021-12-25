@@ -22,15 +22,15 @@ main.addEventListener('scroll', async event => {
   }
 })
 
-function getTweets (offset, node) {
-  new Promise((resolve, reject) => {
-    window.axios.get(`${window.location.origin}/api/page/${offset}`).then(response => {
-      if (response.status !== 200) {
-        reject(new Error('unable to get tweets'))
-      }
-      resolve(renderTweets(response.data, node))
-    })
-  })
+async function getTweets (offset, node) {
+  try {
+    const response = await window.axios.get(
+      `${window.location.origin}/api/page/${offset}`
+    )
+    return renderTweets(response.data, node)
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 function renderTweets (tweets, node) {
@@ -45,9 +45,7 @@ function renderTweets (tweets, node) {
 
     div.innerHTML = `
         <a href="/users/${element.User.id}/tweets">
-          <img class="thumbnail" src="${element.User.avatar}" alt="${
-      element.User.name
-    } avatar">
+          <img class="thumbnail" src="${element.User.avatar}" alt="${element.User.name} avatar">
         </a>
         <div class="post-content">
           <a class="post-user" href="/users/${element.User.id}/tweets">
@@ -59,21 +57,15 @@ function renderTweets (tweets, node) {
             ${element.description}
           </a>
           <div class="action">
-            <button type="button" class="commenting" data-user-id="${userId}" data-tweet-id="${
-      element.id
-    }">
+            <button type="button" class="commenting" data-user-id="${userId}" data-tweet-id="${element.id}">
               <i class='comment commenting'></i>
               ${element.replyCount}
             </button>
 
-            <form action="/tweets/${element.id}/${
-      element.isLiked ? 'unlike' : 'like'
-    }" method="post">
-              <button type="submit" class="liking">
-                <i class='like ${element.isLiked ? 'active' : ''}'></i>
-                ${element.likeCount}
-              </button>
-            </form>
+            <button type="button" class="liking" data-user-id="${userId}" data-tweet-id="${element.id}">
+              <i class='like ${element.isLiked ? 'active' : ''}'></i>
+              ${element.likeCount}
+            </button>
           </div>
         </div>
     `
