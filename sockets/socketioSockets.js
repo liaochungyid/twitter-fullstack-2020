@@ -55,10 +55,15 @@ module.exports = io => {
       io.emit('getPublicMsg', { notifyType: 'signin', user })
 
       // 離線移除清單，廣播
-      socket.on('disconnect', reason => {
+      socket.on('disconnect', async (reason) => {
         publicOnlineUsers.splice(publicOnlineUsers.indexOf(loginUserId), 1)
 
         io.emit('getPublicMsg', { notifyType: 'signout', user })
+
+        io.emit(
+        'getConnectedPublicUser',
+        await socketService.getPreviousUser(publicOnlineUsers)
+      )
       })
 
       // 接收public訊息，儲存，廣播

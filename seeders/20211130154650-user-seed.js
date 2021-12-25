@@ -10,7 +10,12 @@ module.exports = {
       { email: 'user2@example.com', name: 'User2', account: 'user2' },
       { email: 'user3@example.com', name: 'User3', account: 'user3' },
       { email: 'user4@example.com', name: 'User4', account: 'user4' },
-      { email: 'user5@example.com', name: 'User5', account: 'user5' }
+      { email: 'user5@example.com', name: 'User5', account: 'user5' },
+      { email: 'user6@example.com', name: 'User6', account: 'user6' },
+      { email: 'user7@example.com', name: 'User7', account: 'user7' },
+      { email: 'user8@example.com', name: 'User8', account: 'user8' },
+      { email: 'user9@example.com', name: 'User9', account: 'user9' },
+      { email: 'user0@example.com', name: 'User0', account: 'user0' }
     ]
     const coverSeed = [
       'https://images.unsplash.com/photo-1533551268962-824e232f7ee1?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
@@ -18,7 +23,11 @@ module.exports = {
       'https://images.unsplash.com/photo-1498464619740-386503e7e7f5?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
       'https://images.unsplash.com/photo-1505832018823-50331d70d237?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
       'https://images.unsplash.com/photo-1547891654-e66ed7ebb968?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
-      'https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400'
+      'https://images.unsplash.com/photo-1581044777550-4cfa60707c03?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
+      'https://images.unsplash.com/photo-1581044777551-4cfa60707c03?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
+      'https://images.unsplash.com/photo-1581044777552-4cfa60707c03?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
+      'https://images.unsplash.com/photo-1581044777555-4cfa60707c03?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400',
+      'https://images.unsplash.com/photo-1581044777569-4cfa60707c03?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&w=2400'
     ]
     // all users/admin use same password, do it once here
     const password = bcrypt.hashSync('12345678', bcrypt.genSaltSync(10), null)

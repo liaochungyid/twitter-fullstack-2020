@@ -4,7 +4,7 @@ const loginUserId = send.dataset.loginUserId
 const join = document.querySelector('.join')
 const streamMsgDiv = document.querySelector('.stream-message')
 
-const onlineUser = document.querySelector('#onlineUser')
+const onlineUsers = document.querySelector('#onlineUsers')
 const onlineUserCount = document.querySelector('#onlineUserCount')
 
 join.addEventListener('click', function onScreenClick(event) {
@@ -57,8 +57,8 @@ join.addEventListener('click', function onScreenClick(event) {
     scrollDownToBottom()
   })
 
-  // 2.d 執行一次，接收已上線使用者
-  socket.once('getConnectedPublicUser', (data) => {
+  // 2.d 接收已上線使用者
+  socket.on('getConnectedPublicUser', (data) => {
     let html = ''
 
     data.forEach(user => {
@@ -79,7 +79,7 @@ join.addEventListener('click', function onScreenClick(event) {
       `
     })
 
-    onlineUser.innerHTML = html
+    onlineUsers.innerHTML = html
     onlineUserCount.innerText = data.length
   })
 

@@ -35,14 +35,16 @@ a:visited {
   cursor: pointer;
 }
 
-a, button {
-  -webkit-transition: all .3s ease; 
-  -moz-transition: all .3s ease;
-  -ms-transition: all .3s ease;
-  -o-transition: all .3s ease;
-  transition: all .3s ease;
+a,
+button {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
-a:hover, button:hover {
+a:hover,
+button:hover {
   opacity: 0.5;
 }
 
@@ -97,20 +99,21 @@ input:invalid {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 394px;
-  background: #FFFFFF;
-  box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04), 0px 4px 16px rgba(51, 51, 51, 0.08);
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(51, 51, 51, 0.04),
+    0px 4px 16px rgba(51, 51, 51, 0.08);
   border-radius: 8px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  -webkit-transition: all .8s; 
-  -moz-transition: all .8s;
-  -ms-transition: all .8s;
-  -o-transition: all .8s;
-  transition: all .8s;
-  transition-timing-function: cubic-bezier(.25,.1,.25,1.4);
+  -webkit-transition: all 0.8s;
+  -moz-transition: all 0.8s;
+  -ms-transition: all 0.8s;
+  -o-transition: all 0.8s;
+  transition: all 0.8s;
+  transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1.4);
 }
 
 .cb {
@@ -122,32 +125,35 @@ input:invalid {
   font-size: 20px;
   font-weight: bold;
   line-height: 28px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 input:invalid {
-  color: #FC5A5A;
+  color: #fc5a5a;
   font-size: 15px;
   line-height: 15px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 /* layout grid */
-html, body {
+html,
+body {
   position: relative;
   font-size: 14px;
   min-width: 1245px;
   min-height: 520px;
   width: 100vw;
   height: 100vh;
-  font-family: "Noto Sans TC","Microsoft JhengHei",sans-serif;
+  font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
 }
 
 .user-template {
   display: grid;
   grid-template-columns: 1fr 235px 30px 600px 30px 350px 1fr;
   grid-template-rows: 100%;
-  grid-template-areas: "l leftside i main j rightside k";
+  grid-template-areas: 'l leftside i main j rightside k';
   width: 100%;
   height: 100%;
 }
@@ -155,7 +161,7 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 235px 30px 980px 1fr;
   grid-template-rows: 100%;
-  grid-template-areas: "i leftside j main k";
+  grid-template-areas: 'i leftside j main k';
   width: 100%;
   height: 100%;
 }
@@ -164,7 +170,7 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 540px 1fr;
   grid-template-rows: 100%;
-  grid-template-areas: "i main j";
+  grid-template-areas: 'i main j';
   width: 100%;
   height: 100%;
 }
@@ -173,12 +179,15 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 235px 40px minmax(642px, 1062px);
   grid-template-rows: 100%;
-  grid-template-areas: "i leftside j main ";
+  grid-template-areas: 'i leftside j main ';
   width: 100%;
   height: 100%;
 }
 
-.leftside, .main, .rightside, .sign-main,
+.leftside,
+.main,
+.rightside,
+.sign-main,
 .admin-main > :nth-child(2) {
   overflow: scroll;
   overflow-x: hidden;
@@ -219,19 +228,20 @@ html, body {
   margin-bottom: 25px;
 }
 
-.leftside > .navigation > a, .footer > a {
+.leftside > .navigation > a,
+.footer > a {
   color: #1c1c1c;
   font-size: 18px;
   font-weight: bold;
   line-height: 26px;
   display: flex;
-  flex-flow:row nowrap;
+  flex-flow: row nowrap;
   justify-content: start;
   align-items: center;
 }
 
 .leftside > .navigation > a.active {
-  color: #F60
+  color: #f60;
 }
 
 .leftside > .navigation > button.btn-fill {
@@ -251,13 +261,13 @@ html, body {
 /* user-template center content for tweets */
 .main {
   grid-area: main;
-  border: 1px solid #E6ECF0;
+  border: 1px solid #e6ecf0;
 }
 
 .main > .header {
   height: 55px;
   width: 100%;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
   font-size: 18px;
   font-weight: 700;
   line-height: 55px;
@@ -303,7 +313,7 @@ html, body {
 }
 
 .main > .postarea > form > .foot > span {
-  color:#FC5A5A;
+  color: #fc5a5a;
   font-size: 15px;
   font-weight: 500;
   line-height: 15px;
@@ -320,7 +330,7 @@ html, body {
 .main > hr {
   width: 100%;
   height: 10px;
-  background-color: #E6ECF0;
+  background-color: #e6ecf0;
   border: none;
 }
 
@@ -374,14 +384,13 @@ html, body {
 }
 
 .main > .tweets > .tweet > .postcontent > .postuser > .at-name,
-.main > .tweets > .tweet > .postcontent > .postuser > .timer
- {
+.main > .tweets > .tweet > .postcontent > .postuser > .timer {
   color: #657786;
   font-weight: 500;
 }
 
 .main > .tweets > .tweet > .postcontent > .postuser > .timer::before {
-  content: "•";
+  content: '•';
   margin-left: 3px;
   margin-right: 3px;
 }
@@ -406,7 +415,7 @@ html, body {
   font-size: 13px;
   font-weight: 500;
   height: 40px;
-  color: #657786
+  color: #657786;
 }
 .main > .tweets > .tweet > .postcontent > .action button i {
   margin: -3px 0;
@@ -417,13 +426,12 @@ html, body {
 }
 
 .main > .tweets > .tweet > .postcontent > .action > .commenting,
-.main > .tweets > .tweet > .postcontent > .action .liking
- {
+.main > .tweets > .tweet > .postcontent > .action .liking {
   width: 90px;
   line-height: 40px;
   text-align: left;
   display: inline-block;
-  vertical-align:middle;
+  vertical-align: middle;
   justify-self: center;
   padding: 0;
   display: flex;
@@ -586,8 +594,8 @@ html, body {
   border-bottom: 1px solid #e6ecf0;
 }
 
-.main > .paginator > a{
-  color:#657786;
+.main > .paginator > a {
+  color: #657786;
   display: inline-block;
   height: 54px;
   width: 130px;
@@ -640,7 +648,7 @@ html, body {
 }
 
 .main > .followship > .follower > .followerinfo > .followeruser > .at-name {
-  color:#657786;
+  color: #657786;
   font-weight: 500;
 }
 
@@ -658,7 +666,7 @@ html, body {
   position: absolute;
   right: 15px;
   top: 10px;
-  padding: .1px 15px;
+  padding: 0.1px 15px;
 }
 
 /* user-template center content for single tweet page */
@@ -674,7 +682,7 @@ html, body {
   width: 100%;
   display: flex;
   flex-flow: column nowrap;
-  border: 1px solid #E6ECF0;
+  border: 1px solid #e6ecf0;
   border-right: 0px;
   border-left: 0px;
 }
@@ -692,14 +700,14 @@ html, body {
 }
 
 .main > .tweet > .tweetuser > span:nth-child(2) > .name {
-  color:#1C1C1C;
+  color: #1c1c1c;
   font-size: 15px;
   font-weight: 700;
   line-height: 22px;
 }
 
 .main > .tweet > .tweetuser > span:nth-child(2) > .at-name {
-  color:#657786;
+  color: #657786;
   font-size: 15px;
   font-weight: 500;
   line-height: 22px;
@@ -714,7 +722,7 @@ html, body {
 .main > .tweet > .tweetcontent > .content {
   width: 100%;
   height: 136px;
-  color:#1c1c1c;
+  color: #1c1c1c;
   font-size: 23px;
   font-weight: 500;
   line-height: 34px;
@@ -730,11 +738,11 @@ html, body {
   font-weight: 500;
   line-height: 22px;
   padding: 14px 0;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .main > .tweet > .tweetcontent > .datetime > .time::after {
-  content: "•";
+  content: '•';
   margin-left: 6px;
   margin-right: 3px;
 }
@@ -745,7 +753,7 @@ html, body {
   font-weight: 700px;
   line-height: 28px;
   padding: 20px 0;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .main > .tweet > .tweetcontent > .stat a {
@@ -771,7 +779,7 @@ html, body {
 .main > .replies > .reply {
   width: 100%;
   height: 105px;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
   display: flex;
   flex-flow: row nowrap;
 }
@@ -793,7 +801,7 @@ html, body {
 }
 
 .main > .replies > .reply > .comment > .commentuser > .name {
-  color: #1C1C1C;
+  color: #1c1c1c;
   font-weight: 700;
 }
 
@@ -804,7 +812,7 @@ html, body {
 }
 
 .main > .replies > .reply > .comment > .commentuser > .timer::before {
-  content: "•";
+  content: '•';
   margin-left: 3px;
   margin-right: 3px;
 }
@@ -836,7 +844,7 @@ html, body {
 /* user-template-setting main for setting page */
 .user-template-setting > .main > form {
   width: 70%;
-  padding:30px 16px 0;
+  padding: 30px 16px 0;
 }
 
 .user-template-setting > .main > form > button {
@@ -857,7 +865,7 @@ html, body {
   font-size: 15px;
   font-weight: 500;
   line-height: 22px;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
   margin-top: 10px;
 }
 
@@ -865,7 +873,7 @@ html, body {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  color: #1C1C1C;
+  color: #1c1c1c;
   margin-bottom: 5px;
 }
 
@@ -875,13 +883,20 @@ html, body {
 }
 
 .main > .notis > .noti > .content {
-  color:#657786;
+  color: #657786;
   padding: 0 0 5px 15px;
 }
 
 /* user-template right side */
 .rightside {
   grid-area: rightside;
+}
+
+.rightside > .more-btn > .more {
+  display: block;
+  margin: auto;
+  width: 50%;
+  height: 35px;
 }
 
 .rightside > .popular {
@@ -899,7 +914,7 @@ html, body {
   display: block;
   height: 45px;
   width: 100%;
-  color:#1c1c1c;
+  color: #1c1c1c;
   font-size: 18px;
   font-weight: 700;
   line-height: 45px;
@@ -934,13 +949,13 @@ html, body {
 
 .rightside > .popular > .wrap > a > span .name {
   width: 100%;
-  color:#1c1c1c;
+  color: #1c1c1c;
   margin-bottom: 3px;
 }
 
 .rightside > .popular > .wrap > a > span .at-name {
   width: 100%;
-  color:#657786;
+  color: #657786;
 }
 
 .rightside > .popular > .wrap > form > .btn-fill {
@@ -1008,7 +1023,7 @@ html, body {
   flex-flow: row nowrap;
   justify-content: space-evenly;
   align-items: flex-start;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
 .modal > .mask > .dialog > .buttons {
@@ -1032,7 +1047,7 @@ html, body {
 .modal > .mask > .dialog > .postarea,
 .modal > .mask > .dialog > .replyarea {
   width: 100%;
-  border-top: 1px solid #E6ECF0;
+  border-top: 1px solid #e6ecf0;
   display: flex;
   flex-flow: row wrap;
 }
@@ -1072,7 +1087,7 @@ html, body {
 }
 
 .modal > .mask > .dialog > .postarea > form > .foot > span {
-  color:#FC5A5A;
+  color: #fc5a5a;
   font-size: 15px;
   font-weight: 500;
   line-height: 15px;
@@ -1083,7 +1098,7 @@ html, body {
 .modal > .mask > .dialog > .postarea > form button {
   width: 66px;
   margin-right: 15px;
-  margin-bottom: 15px;  
+  margin-bottom: 15px;
   align-self: flex-end;
 }
 
@@ -1103,13 +1118,13 @@ html, body {
 }
 
 .modal > .mask > .dialog > .replyarea > .tweet > a::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 55px;
   left: 39px;
   width: 2px;
   height: 80px;
-  background: #CCD6DD;
+  background: #ccd6dd;
 }
 
 .modal > .mask > .dialog > .replyarea > .tweet > .tweetcontent {
@@ -1125,32 +1140,72 @@ html, body {
   line-height: 22px;
 }
 
-.modal > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetuser > span {
+.modal
+  > .mask
+  > .dialog
+  > .replyarea
+  > .tweet
+  > .tweetcontent
+  > .tweetuser
+  > span {
   font-size: 15px;
   line-height: 22px;
   max-width: 140px;
 }
 
-.modal > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetuser > .name {
+.modal
+  > .mask
+  > .dialog
+  > .replyarea
+  > .tweet
+  > .tweetcontent
+  > .tweetuser
+  > .name {
   color: #1c1c1c;
   font-weight: 700;
   margin-right: 5px;
 }
 
-.modal > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetuser > .at-name,
-.modal > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetuser > .timer
- {
+.modal
+  > .mask
+  > .dialog
+  > .replyarea
+  > .tweet
+  > .tweetcontent
+  > .tweetuser
+  > .at-name,
+.modal
+  > .mask
+  > .dialog
+  > .replyarea
+  > .tweet
+  > .tweetcontent
+  > .tweetuser
+  > .timer {
   color: #657786;
   font-weight: 500;
 }
 
-.modal > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetuser > .timer::before {
-  content: "•";
+.modal
+  > .mask
+  > .dialog
+  > .replyarea
+  > .tweet
+  > .tweetcontent
+  > .tweetuser
+  > .timer::before {
+  content: '•';
   margin-left: 3px;
   margin-right: 3px;
 }
 
-.modal > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetdescription {
+.modal
+  > .mask
+  > .dialog
+  > .replyarea
+  > .tweet
+  > .tweetcontent
+  > .tweetdescription {
   color: #1c1c1c;
   width: 510px;
   height: 66px;
@@ -1167,8 +1222,15 @@ html, body {
   color: #657786;
 }
 
-.modal > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .replyto > .at-name {
-  color:#F60;
+.modal
+  > .mask
+  > .dialog
+  > .replyarea
+  > .tweet
+  > .tweetcontent
+  > .replyto
+  > .at-name {
+  color: #f60;
 }
 
 /* modal for editing modal*/
@@ -1197,7 +1259,6 @@ html, body {
   position: relative;
   padding-bottom: 30px;
 }
-
 
 .modal > .mask > .dialog > form > button {
   position: absolute;
@@ -1272,7 +1333,7 @@ html, body {
 }
 
 .modal > .mask > .dialog > form > .edit-text > .text-label {
-  background-color: #F5F8FA;
+  background-color: #f5f8fa;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   color: #657786;
@@ -1283,7 +1344,7 @@ html, body {
 }
 
 .modal > .mask > .dialog > form > .edit-text > .edit-form {
-  background-color: #F5F8FA;
+  background-color: #f5f8fa;
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
   border-bottom: 1px solid #657786;
@@ -1292,7 +1353,6 @@ html, body {
 
 .modal > .mask > .dialog > form > .edit-text > .edit-form > .edit-name {
   height: 25px;
-
 }
 
 .modal > .mask > .dialog > form > .edit-text > .edit-form > .edit-introduction {
@@ -1312,7 +1372,7 @@ html, body {
 }
 
 .modal > .mask > .dialog > form > .edit-text > .counter {
-  color:#657786;
+  color: #657786;
   font-size: 15px;
   font-weight: 500;
   line-height: 22px;
@@ -1334,7 +1394,13 @@ html, body {
   border-top: 0;
 }
 
-#modal-reply > .mask > .dialog > .replyarea > .tweet > .tweetcontent > .tweetdescription {
+#modal-reply
+  > .mask
+  > .dialog
+  > .replyarea
+  > .tweet
+  > .tweetcontent
+  > .tweetdescription {
   overflow: scroll;
   overflow-x: hidden;
   overflow-y: auto;
@@ -1356,7 +1422,7 @@ html, body {
 }
 
 .sign-template > .sign-main > .header > .title {
-  color: #1C1C1C;
+  color: #1c1c1c;
   font-size: 23px;
   font-weight: 700;
   line-height: 33px;
@@ -1372,7 +1438,7 @@ html, body {
 .sign-template > .sign-main > form > .edit-text,
 .user-template-setting > .main > form > .edit-text {
   position: relative;
-  background-color: #F5F8FA;
+  background-color: #f5f8fa;
   height: 49px;
   border-bottom: 2px solid #657786;
   border-radius: 4px;
@@ -1384,14 +1450,14 @@ html, body {
   position: absolute;
   top: 26px;
   left: 10px;
-  color: #1C1C1C;
+  color: #1c1c1c;
   font-size: 19px;
   font-weight: 500;
   line-height: 22px;
 }
 
 .sign-template > .sign-main > form > .edit-text > label,
-.user-template-setting > .main > form > .edit-text >label {
+.user-template-setting > .main > form > .edit-text > label {
   color: #657786;
   font-size: 15px;
   font-weight: 500;
@@ -1401,7 +1467,7 @@ html, body {
 
 .sign-template > .sign-main > form > .edit-text > input,
 .user-template-setting > .main > form > .edit-text > input {
-  color: #1C1C1C;
+  color: #1c1c1c;
   font-size: 19px;
   font-weight: 500;
   line-height: 28px;
@@ -1427,7 +1493,7 @@ html, body {
 }
 
 .sign-template > .sign-main > form > .buttons > span {
-  color: #0099FF;
+  color: #0099ff;
   margin: 0 5px;
   line-height: 26px;
 }
@@ -1444,8 +1510,8 @@ html, body {
   display: flex;
   flex-flow: column nowrap;
   grid-area: main;
-  border-left: 1px solid #E6ECF0;
-  border-right: 1px solid #E6ECF0;
+  border-left: 1px solid #e6ecf0;
+  border-right: 1px solid #e6ecf0;
 }
 
 /* admin-template main */
@@ -1454,11 +1520,11 @@ html, body {
 .onlineUser > .title,
 .onlineChatroom > .title {
   padding-left: 26.55px;
-  color:#1C1C1C;
+  color: #1c1c1c;
   font-size: 18px;
   font-weight: 700;
   line-height: 54px;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 /* admin-template main for tweets */
@@ -1470,7 +1536,7 @@ html, body {
   display: flex;
   flex-flow: row nowrap;
   height: 75px;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
   position: relative;
 }
 
@@ -1486,14 +1552,26 @@ html, body {
   margin: 10px 0 6px;
 }
 
-.admin-template > .admin-main > .tweets > .tweet > .postcontent > .postuser > .name {
-  color: #1C1C1C;
+.admin-template
+  > .admin-main
+  > .tweets
+  > .tweet
+  > .postcontent
+  > .postuser
+  > .name {
+  color: #1c1c1c;
   font-weight: 700;
   padding-right: 5px;
 }
 
-.admin-template > .admin-main > .tweets > .tweet > .postcontent > .postuser > .timer::before {
-  content: "•";
+.admin-template
+  > .admin-main
+  > .tweets
+  > .tweet
+  > .postcontent
+  > .postuser
+  > .timer::before {
+  content: '•';
   margin-left: 3px;
   margin-right: 6px;
 }
@@ -1509,7 +1587,7 @@ html, body {
 }
 
 /* admin-template main for users */
-.admin-template > .admin-main > .users {  
+.admin-template > .admin-main > .users {
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
@@ -1550,11 +1628,11 @@ html, body {
 }
 
 .admin-template > .admin-main > .users > .usercard > .texts {
-  color: #1C1C1C;
+  color: #1c1c1c;
   font-size: 15px;
   font-weight: 500;
   line-height: 22px;
-  background-color: #F6F7F8;
+  background-color: #f6f7f8;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   width: 100%;
@@ -1580,10 +1658,17 @@ html, body {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  color: #1C1C1C;
+  color: #1c1c1c;
 }
 
-.admin-template > .admin-main > .users > .usercard > .texts > .counting > span > i {
+.admin-template
+  > .admin-main
+  > .users
+  > .usercard
+  > .texts
+  > .counting
+  > span
+  > i {
   margin-left: 15px;
   margin-right: 5px;
 }
@@ -1596,7 +1681,14 @@ html, body {
   line-height: 20px;
 }
 
-.admin-template > .admin-main > .users > .usercard > .texts > .followship > span > span {
+.admin-template
+  > .admin-main
+  > .users
+  > .usercard
+  > .texts
+  > .followship
+  > span
+  > span {
   color: #657786;
 }
 
@@ -1633,11 +1725,11 @@ html, body {
 }
 
 #modal-findChatUser .usercard > .texts {
-  color: #1C1C1C;
+  color: #1c1c1c;
   font-size: 15px;
   font-weight: 500;
   line-height: 22px;
-  background-color: #F6F7F8;
+  background-color: #f6f7f8;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   width: 100%;
@@ -1660,7 +1752,7 @@ html, body {
 
 /* general style */
 *:disabled {
-  opacity:0.2;
+  opacity: 0.2;
 }
 
 .d-none {
@@ -1670,14 +1762,15 @@ html, body {
 .btn-fill {
   color: #fff !important;
   justify-content: center !important;
-  background-color: #F60;
+  background-color: #f60;
   border-radius: 50px;
   font-weight: 500 !important;
   text-align: center;
   font-size: 18px;
 }
 
-.btn-fill.sm, .btn-fill.xs {
+.btn-fill.sm,
+.btn-fill.xs {
   font-size: 15px;
 }
 
@@ -1689,15 +1782,15 @@ html, body {
 }
 
 .btn-text {
-  color: #0099FF;
+  color: #0099ff;
   font-size: 18px;
   font-weight: 700;
   line-height: 26px;
-  text-decoration: underline #0099FF;
+  text-decoration: underline #0099ff;
 }
 
 .btn-text:hover {
-  text-decoration: underline #0099FF;
+  text-decoration: underline #0099ff;
 }
 
 .btn-outline {
@@ -1711,7 +1804,8 @@ html, body {
   font-size: 18px;
 }
 
-.btn-outline.sm, .btn-outline.xs {
+.btn-outline.sm,
+.btn-outline.xs {
   font-size: 15px;
 }
 
@@ -1733,22 +1827,22 @@ img.thumbnail {
 }
 
 div.focus {
-  border-color: #50B5FF !important;
+  border-color: #50b5ff !important;
 }
 
 div.invalid {
-  border-color: #FC5A5A !important;
+  border-color: #fc5a5a !important;
 }
 
 div.invalid::after {
   position: absolute;
   top: 56px;
   left: 0;
-  color: #FC5A5A;
+  color: #fc5a5a;
   font-size: 15px;
   font-weight: 500;
   line-height: 15px;
-  content: attr(err_msg)
+  content: attr(err_msg);
 }
 
 .onlineChatroom > .screen {
@@ -1769,7 +1863,7 @@ div.invalid::after {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
 /* chatroom */
@@ -1783,7 +1877,7 @@ div.invalid::after {
 .onlineUser {
   width: 30%;
   height: 100%;
-  border-right: 1px solid #E6ECF0;
+  border-right: 1px solid #e6ecf0;
   display: flex;
   flex-flow: column nowrap;
 }
@@ -1823,7 +1917,7 @@ div.invalid::after {
   flex-flow: row nowrap;
   justify-content: flex-start;
   align-items: center;
-  border-bottom: 1px solid #E6ECF0;
+  border-bottom: 1px solid #e6ecf0;
 }
 
 .onlineUser > .users > .usercard > img {
@@ -1858,7 +1952,6 @@ div.invalid::after {
   font-size: 15px;
   line-height: 22px;
 }
-
 
 .onlineUser > .users > .usercard > .userfile > .who > .lastcall {
   font-size: 15px;
@@ -1949,7 +2042,7 @@ div.invalid::after {
 }
 
 .onlineChatroom > .stream-message > .noti-message > span {
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
   font-weight: 700;
   border-radius: 20px;
   padding: 4px 10px;
@@ -1994,7 +2087,7 @@ div.invalid::after {
 
 .onlineChatroom > .stream-message > .other-message > .content > .content {
   border-radius: 25px 25px 25px 0;
-  background-color: #E6ECF0;
+  background-color: #e6ecf0;
   padding: 10px;
 }
 
@@ -2002,14 +2095,13 @@ div.invalid::after {
   color: #657786;
 }
 
-
 .onlineChatroom > .onlineSendbox {
   width: 100%;
   padding: 10px;
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  border-top: 1px solid #E6ECF0;
+  border-top: 1px solid #e6ecf0;
 }
 
 .onlineChatroom > .onlineSendbox textarea {

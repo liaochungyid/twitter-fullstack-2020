@@ -6,7 +6,7 @@ const chatTime = require('../../utils/tweetTime')
 module.exports = {
   getNew: async (req, res) => {
     try {
-      const userId = helpers.getUser(req).id
+      const userId = req.params.userId
 
       let activeTime = await User.findAll({ where: { id: userId } })
       activeTime = activeTime[0].activeTime // 取得登入者上次活動時間 datetime
@@ -55,7 +55,7 @@ module.exports = {
       let news = [...newTweets, ...newLikes] // 預計設訂閱關聯性以後加入 ...subscribers,
       news = news.sort((a, b) => a.createdAt - b.createdAt)
       news.forEach(n => {
-        n.createdAt = chatTime.msgTime(n.createdAt)
+        n.createdAt = chatTime.toTimeOrDatetime(n.createdAt)
       })
 
       return res.json(news)

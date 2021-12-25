@@ -103,14 +103,11 @@ module.exports = {
         where: { UserId: userId, TweetId: req.params.tweetId }
       }))
 
-      const pops = await userController.getPopular(req, res)
-
       return res.render('user', {
         tweet: tweet.toJSON(),
         replies: replies.map(reply => reply.toJSON()),
         isLiked,
-        partial: 'tweet',
-        pops
+        partial: 'tweet'
       })
     } catch (err) {
       console.error(err)

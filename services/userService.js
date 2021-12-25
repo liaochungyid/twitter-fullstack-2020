@@ -225,7 +225,7 @@ module.exports = {
 
   getPopular: async (req, res) => {
     try {
-      const offsetCounter = req.params.offset * 10
+      const offsetCounter = req.params.offset * 5
       const myId = String(helpers.getUser(req).id)
 
       let pops = await User.findAll({
@@ -235,12 +235,9 @@ module.exports = {
         },
         attributes: [
           'id',
-          'email',
           'name',
           'avatar',
           'account',
-          'role',
-          'createdAt',
           [
             sequelize.literal(
               '(SELECT COUNT(*) FROM Followships WHERE Followships.followingId = User.id)'
@@ -249,7 +246,7 @@ module.exports = {
           ]
         ],
         order: [[ sequelize.literal('followerCount'), 'DESC']],
-        limit: 10,
+        limit: 5,
         offset: offsetCounter || 0
       })
 

@@ -84,32 +84,34 @@
         <div class="rightside">
 
           <div class="popular">
-            <span>Popular</span>
+            {{!-- <span>Popular</span>
 
-            {{#each pops}}
             <div class="wrap">
-              <a href="/users/{{this.id}}/tweets"><img class="thumbnail" src="{{this.avatar}}"
-                  alt="{{this.name}} avatar">
+              <a href="/users/this.id/tweets"><img class="thumbnail" src="this.avatar"
+                  alt="this.name avatar">
                 <span>
-                  <span class="name">{{this.name}}</span>
-                  <span class="at-name ellipsis">@{{this.account}}</span>
+                  <span class="name">this.name</span>
+                  <span class="at-name ellipsis">@this.account</span>
                 </span>
               </a>
-              {{#if this.isFollowing}}
-              <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
+              
+              <form action="/followships/this.id?_method=DELETE" method="POST">
                 <button type="submit" class="btn-fill sm">正在跟隨</button>
               </form>
-              {{else}}
+              
               <form action="/followships" method="POST">
-                <input type="hidden" name="id" value="{{this.id}}">
+                <input type="hidden" name="id" value="this.id">
                 <button type="submit" class="btn-outline sm">跟隨</button>
               </form>
-              {{/if}}
-            </div>
-            {{/each}}
+      
+            </div> --}}
 
           </div>
 
+          <div class="more-btn">
+            <button type="button" class="btn-fill sm more">更多...</button>
+          </div>
+          <script src="/javascripts/pops.js"></script>
         </div>
         {{/ifCond}}
         {{/ifCond}}
