@@ -1,4 +1,5 @@
 const helpers = require('../_helpers')
+const constants = require('../config/constants')
 const db = require('../models')
 const { sequelize } = db
 const { User, Tweet, Reply, Like } = db
@@ -54,7 +55,7 @@ module.exports = {
     try {
       const { description } = req.body
 
-      if (description.length > 140 || !description.length) {
+      if (description.length > constants.maxTweetLength || !description.length) {
         return res.redirect('back')
       }
 

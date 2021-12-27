@@ -5,16 +5,13 @@ const userId = document.querySelector('input[name="userId"]').value
 // 取得歷史通知
 getNotis(userId, notis)
 
-function getNotis (userId, node) {
-  new Promise((resolve, reject) => {
-    axios.get(`${location.origin}/api/news/${userId}`)
-      .then(response => {
-        if (response.status !== 200) {
-          reject(new Error('unable to get notifications'))
-        }
-        resolve(renderNotis(response.data, node))
-      })
-  })
+async function getNotis (userId, node) {
+  try {
+    const response = await window.axios.get(`${window.location.origin}/api/news/${userId}`)
+    return renderNotis(response.data, node)
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 function renderNotis (notis, node) {

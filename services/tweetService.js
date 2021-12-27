@@ -1,4 +1,5 @@
 const helpers = require('../_helpers')
+const constants = require('../config/constants')
 
 const db = require('../models')
 const { sequelize } = db
@@ -7,7 +8,7 @@ const { User, Tweet } = db
 module.exports = {
   getTweets: async (req, res) => {
     try {
-      const offsetCounter = req.params.offset * 25
+      const offsetCounter = req.params.offset * constants.tweetsPerPage
       const userId = helpers.getUser(req).id
       const tweets = await Tweet.findAll({
         attributes: [
@@ -44,7 +45,7 @@ module.exports = {
         order: [['createdAt', 'DESC']],
         raw: true,
         nest: true,
-        limit: 25,
+        limit: constants.tweetsPerPage,
         offset: offsetCounter || 0
       })
       return tweets

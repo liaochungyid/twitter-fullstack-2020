@@ -1,5 +1,7 @@
 const helpers = require('../_helpers')
 
+const constants = require('../config/constants')
+
 const db = require('../models')
 const { sequelize } = db
 const { Op } = db.Sequelize
@@ -225,7 +227,7 @@ module.exports = {
 
   getPopular: async (req, res) => {
     try {
-      const offsetCounter = req.params.offset * 5
+      const offsetCounter = req.params.offset * constants.popularPerPage
       const myId = String(helpers.getUser(req).id)
 
       let pops = await User.findAll({
@@ -246,7 +248,7 @@ module.exports = {
           ]
         ],
         order: [[sequelize.literal('followerCount'), 'DESC']],
-        limit: 5,
+        limit: constants.popularPerPage,
         offset: offsetCounter || 0
       })
 

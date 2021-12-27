@@ -31,7 +31,7 @@ if (notiNoti) {
 }
 
 // 顯示或移除 綠點提示
-function notiDisplayDot(node, boolean) {
+function notiDisplayDot (node, boolean) {
   if (boolean) {
     if (!node.classList.contains('dot-noti-sm')) {
       node.classList.add('dot-noti-sm')
@@ -42,7 +42,7 @@ function notiDisplayDot(node, boolean) {
 }
 
 // 顯示或移除 數量提示
-function notiDisplayCount(node, length) {
+function notiDisplayCount (node, length) {
   // or 0 資料庫可能crash
   const unreadCount = length | 0
   if (unreadCount === 0) {

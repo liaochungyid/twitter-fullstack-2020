@@ -2,7 +2,7 @@ const helpers = require('../_helpers')
 const bcrypt = require('bcryptjs')
 const utility = require('../utils/utility')
 
-const tweetService = require('../services/tweetService')
+const constants = require('../config/constants')
 const userService = require('../services/userService')
 
 const db = require('../models')
@@ -157,17 +157,25 @@ module.exports = {
       if (checkPassword !== password) {
         errors.push({ message: '兩次密碼輸入不同！' })
       }
-      if (account.length > 30) {
-        errors.push({ message: 'account 長度不可大於 30 字元！' })
+      if (account.length > constants.maxAccountLength) {
+        errors.push({
+          message: `account 長度不可大於 ${constants.maxAccountLength} 字元！`
+        })
       }
-      if (account.length < 4) {
-        errors.push({ message: 'account 長度不可小於 4 字元！' })
+      if (account.length < constants.minAccountLength) {
+        errors.push({
+          message: `account 長度不可小於 ${constants.minAccountLength} 字元！`
+        })
       }
-      if (password.length < 4) {
-        errors.push({ message: 'password 長度不可小於 4 字元！' })
+      if (password.length < constants.minPasswordLength) {
+        errors.push({
+          message: `password 長度不可小於 ${constants.minPasswordLength} 字元！`
+        })
       }
-      if (name.length > 50) {
-        errors.push({ message: 'name 長度不可超過 50 字元' })
+      if (name.length > constants.maxNameLength) {
+        errors.push({
+          message: `name 長度不可超過 ${constants.maxNameLength} 字元`
+        })
       }
 
       if (errors.length) {
@@ -240,18 +248,26 @@ module.exports = {
       if (user2) {
         errors.push({ message: 'email 已重複註冊！' })
       }
-      if (account.length > 30) {
-        errors.push({ message: 'account 長度不可大於 30 字元！' })
+      if (account.length > constants.maxAccountLength) {
+        errors.push({
+          message: `account 長度不可大於 ${constants.maxAccountLength} 字元！`
+        })
       }
-      if (account.length < 4) {
-        errors.push({ message: 'account 長度不可小於 4 字元！' })
+      if (account.length < constants.minAccountLength) {
+        errors.push({
+          message: `account 長度不可小於 ${constants.minAccountLength} 字元！`
+        })
       }
       // 使用者沒有更改密碼，即密碼為空，需要用 password 確定是否有輸入
-      if (password && password.length < 4) {
-        errors.push({ message: 'password 長度不可小於 4 字元！' })
+      if (password && password.length < constants.minPasswordLength) {
+        errors.push({
+          message: `password 長度不可小於 ${constants.minPasswordLength} 字元！`
+        })
       }
-      if (name.length > 50) {
-        errors.push({ message: 'name 長度不可超過 50 字元' })
+      if (name.length > constants.maxNameLength) {
+        errors.push({
+          message: `name 長度不可超過 ${constants.maxNameLength} 字元`
+        })
       }
 
       if (errors.length) {
@@ -299,11 +315,21 @@ module.exports = {
         'https://cdn.discordapp.com/attachments/918417533680361505/918418130169131028/cover.svg'
 
       if (!name.length) {
-        req.flash('errorMessage', '名稱長度不能為零')
+        req.flash('errorMessage', '請輸入名稱')
         return res.redirect('back')
       }
-      if (name.length > 50) {
-        req.flash('errorMessage', '名稱長度不能超過50字')
+      if (name.length > constants.maxNameLength) {
+        req.flash(
+          'errorMessage',
+          `名稱長度不能超過 ${constants.maxNameLength} 字`
+        )
+        return res.redirect('back')
+      }
+      if (introduction.length > constants.maxIntroductionLength) {
+        req.flash(
+          'errorMessage',
+          `自我介紹長度不能超過 ${constants.maxIntroductionLength} 字`
+        )
         return res.redirect('back')
       }
 

@@ -1,5 +1,3 @@
-const userService = require('../services/userService')
-
 module.exports = {
   notificationsPage: async (req, res) => {
     try {

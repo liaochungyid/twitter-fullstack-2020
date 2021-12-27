@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 
 const db = require('../../models')
 const { User, sequelize } = db
+const userService = require('../../services/userService')
 
 const jwt = require('jsonwebtoken')
 
@@ -147,5 +148,10 @@ module.exports = {
     } catch (err) {
       console.error(err)
     }
+  },
+
+  getPops: async (req, res) => {
+    const pops = await userService.getPopular(req, res)
+    return res.json(pops)
   }
 }

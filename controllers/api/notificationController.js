@@ -64,7 +64,7 @@ module.exports = {
     }
   },
 
-  createNotification: async (req, res) => {
+  addNotification: async (req, res) => {
     try {
       const loginUser = helpers.getUser(req).id
 
@@ -80,7 +80,7 @@ module.exports = {
     }
   },
 
-  deleteNotification: async (req, res) => {
+  removeNotification: async (req, res) => {
     try {
       const loginUser = helpers.getUser(req).id
 

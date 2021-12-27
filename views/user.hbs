@@ -26,25 +26,25 @@
             {{/ifCond}}
 
             {{#ifCond partial "profileNotis"}}
-            <a class="active" href='/users/{{loginUser.id}}/profileNotis'><i class='noti active' id="notiNoti"
+            <a class="active" href='/notifications'><i class='noti active' id="notiNoti"
                 data-login-user="{{loginUser.id}}"></i>通知</a>
             {{else}}
-            <a class="" href='/users/{{loginUser.id}}/profileNotis'><i class='noti' id="notiNoti"
+            <a class="" href='/notifications'><i class='noti' id="notiNoti"
                 data-login-user="{{loginUser.id}}"></i>通知</a>
             {{/ifCond}}
 
             {{#ifCond partial "profileChatPub"}}
-            <a class="active" href='/users/{{loginUser.id}}/profileChatPub'><i class='message active'
+            <a class="active" href='/chatroom'><i class='message active'
                 id="pubChatNoti"></i>公開聊天室</a>
             {{else}}
-            <a class="" href='/users/{{loginUser.id}}/profileChatPub'><i class='message' id="pubChatNoti"></i>公開聊天室</a>
+            <a class="" href='/chatroom'><i class='message' id="pubChatNoti"></i>公開聊天室</a>
             {{/ifCond}}
 
             {{#ifCond partial "profileChatPris"}}
-            <a class="active" href='/users/{{loginUser.id}}/profileChatPris'><i class='message active'
+            <a class="active" href='/messages'><i class='message active'
                 id="priChatNoti"></i>私人訊息</a>
             {{else}}
-            <a class="" href='/users/{{loginUser.id}}/profileChatPris'><i class='message' id="priChatNoti"></i>私人訊息</a>
+            <a class="" href='/messages'><i class='message' id="priChatNoti"></i>私人訊息</a>
             {{/ifCond}}
 
             {{#ifCond loginUser.id user.id}}

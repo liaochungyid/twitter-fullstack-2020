@@ -1,5 +1,4 @@
 const send = document.querySelector('#send')
-const loginUserId = send.dataset.loginUserId
 
 const join = document.querySelector('.join')
 const streamMsgDiv = document.querySelector('.stream-message')
