@@ -115,11 +115,6 @@ module.exports = {
 
   settingsPage: async (req, res) => {
     try {
-      if (helpers.getUser(req).id !== Number(req.params.userId)) {
-        req.flash('errorMessage', '你無法瀏覽此頁面')
-        return res.redirect('/tweets')
-      }
-
       return res.render('user', {
         partial: 'profileSettings'
       })
@@ -217,11 +212,7 @@ module.exports = {
 
   updateSettings: async (req, res) => {
     try {
-      const userId = Number(req.params.userId)
-      if (helpers.getUser(req).id !== userId) {
-        req.flash('errorMessage', '你無權查看此頁面')
-        return res.redirect('back')
-      }
+      const userId = Number(helpers.getUser(req).id)
 
       const user = await User.findByPk(userId)
       const { account, name, email, password, checkPassword } = req.body

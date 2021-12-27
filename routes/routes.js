@@ -13,9 +13,13 @@ const replyController = require('../controllers/replyController')
 const tweetController = require('../controllers/tweetController')
 const userController = require('../controllers/userController')
 
-// 首頁
+// currentUser 頁面
 router.get('/', authenticated, userController.indexPage)
 router.get('/tweets', authenticated, userController.indexPage)
+router.get('/settings', authenticated, userController.settingsPage)
+router.get('/chatroom', authenticated, chatController.chatroomPage)
+router.get('/messages', authenticated, messageController.messagesPage)
+router.get('/notifications', authenticated, notificationController.notificationsPage)
 // tweet 動作
 router.post('/tweets', authenticated, tweetController.addTweet)
 router.get('/tweets/:tweetId', authenticated, tweetController.getTweet)
@@ -27,12 +31,8 @@ router.get('/users/:userId/replies', authenticated, userController.repliesPage)
 router.get('/users/:userId/likes', authenticated, userController.likesPage)
 router.get('/users/:userId/followers', authenticated, userController.followersPage)
 router.get('/users/:userId/followings', authenticated, userController.followingsPage)
-router.get('/users/:userId/settings', authenticated, userController.settingsPage)
-router.get('/chatroom', authenticated, chatController.chatroomPage)
-router.get('/messages', authenticated, messageController.messagesPage)
-router.get('/notifications', authenticated, notificationController.notificationsPage)
 // user 動作
-router.put('/users/:userId/settings', authenticated, userController.updateSettings)
+router.put('/settings', authenticated, userController.updateSettings)
 router.put('/users/:userId/update', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.updateProfile)
 // admin 相關
 router.get('/admin', authenticatedAdmin, adminController.tweetsPage)
