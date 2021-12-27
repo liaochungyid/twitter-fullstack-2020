@@ -6,7 +6,7 @@ module.exports = {
   addFollow: async (req, res, callback) => {
     try {
       const followerId = Number(helpers.getUser(req).id)
-      const followingId = Number(req.body.id)
+      const followingId = Number(req.params.userId)
       let result = ''
 
       if (followerId === followingId) {

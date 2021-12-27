@@ -7,8 +7,6 @@ const upload = multer({ dest: 'temp/' })
 
 const adminController = require('../controllers/adminController')
 const chatController = require('../controllers/chatController')
-const followshipController = require('../controllers/followshipController')
-const likeController = require('../controllers/likeController')
 const messageController = require('../controllers/messageController')
 const notificationController = require('../controllers/notificationController')
 const replyController = require('../controllers/replyController')
@@ -36,8 +34,6 @@ router.get('/notifications', authenticated, notificationController.notifications
 // user 動作
 router.put('/users/:userId/settings', authenticated, userController.updateSettings)
 router.put('/users/:userId/update', authenticated, upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'cover', maxCount: 1 }]), userController.updateProfile)
-router.post('/followships', authenticated, followshipController.addFollow)
-router.delete('/followships/:userId', authenticated, followshipController.removeFollow)
 // admin 相關
 router.get('/admin', authenticatedAdmin, adminController.tweetsPage)
 router.get('/admin/tweets', authenticatedAdmin, adminController.tweetsPage)
@@ -53,8 +49,5 @@ router.post('/signin', passport.authenticate('local', { failureRedirect: '/signi
 router.get('/signout', userController.signOut)
 router.post('/admin/signin', passport.authenticate('local', { failureRedirect: '/admin/signin', failureFlash: true }), userController.signIn)
 router.get('/admin/signout', userController.signOut)
-// 測試檔
-router.post('/tweets/:tweetId/like', authenticated, likeController.addLike)
-router.post('/tweets/:tweetId/unlike', authenticated, likeController.removeLike)
 
 module.exports = router

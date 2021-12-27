@@ -141,6 +141,8 @@ body.addEventListener('click', async event => {
     }
   } else if (target.classList.contains('like')) {
     toggleLikeButton(target)
+  } else if (target.classList.contains('btn-followship')) {
+    toggleFollowshipButton(target)
   }
 })
 
@@ -339,4 +341,34 @@ async function toggleLikeButton (target) {
 
   target.nextElementSibling.innerHTML = likeCount
   target.classList.toggle('active')
+}
+
+async function toggleFollowshipButton (target) {
+  const { userId } = target.dataset
+  let response
+
+  if (target.classList.contains('btn-outline')) {
+    response = await window.axios.post(
+      `${window.location.origin}/api/followships/${userId}`,
+      { userId }
+    )
+  } else if (target.classList.contains('btn-fill')) {
+    response = await window.axios.delete(
+      `${window.location.origin}/api/followships/${userId}`,
+      { userId }
+    )
+  }
+
+  if (response.data.status !== 'success') {
+    return null
+  }
+
+  if (target.innerHTML === '正在跟隨') {
+    target.innerHTML = '跟隨'
+  } else {
+    target.innerHTML = '正在跟隨'
+  }
+
+  target.classList.toggle('btn-outline')
+  target.classList.toggle('btn-fill')
 }

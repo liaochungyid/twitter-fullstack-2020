@@ -40,11 +40,7 @@ function renderPops (pops, node) {
             <span class="at-name ellipsis">@${element.account}</span>
           </span>
         </a>
-        
-        <form action="/followships/${element.isFollowing ? element.id : ''}${element.isFollowing ? '?_method=DELETE"' : '"'} method="POST">
-        <input type="hidden" name="id" value="${element.isFollowing ? '' : element.id}">
-          <button type="submit" class="${element.isFollowing ? 'btn-fill' : 'btn-outline'} sm">${element.isFollowing ? '正在跟隨' : '跟隨'}</button>
-        </form>
+        <button type="button" class="${element.isFollowing ? 'btn-fill' : 'btn-outline'} sm btn-followship" data-user-id="${element.id}" >${element.isFollowing ? '正在跟隨' : '跟隨'}</button>
       `
 
       node.append(div)
