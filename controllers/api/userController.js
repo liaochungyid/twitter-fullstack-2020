@@ -150,7 +150,7 @@ module.exports = {
     }
   },
 
-  getPops: async (req, res) => {
+  getPopular: async (req, res) => {
     const pops = await userService.getPopular(req, res)
     return res.json(pops)
   }
