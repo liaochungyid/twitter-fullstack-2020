@@ -16,9 +16,9 @@
     <a><i class='btn-message'></i></a>
     <a><i class='btn-noti {{#if isNotified}}active{{/if}}' data-user-id="{{user.id}}"></i></a>
     {{#if this.user.isFollowed}}
-    <button type="button" class="btn-fill sm btn-followship" data-user-id="{{this.id}}">正在跟隨</button>
+    <button type="button" class="btn-fill sm btn-followship" data-user-id="{{user.id}}">正在跟隨</button>
     {{else}}
-    <button type="button" class="btn-outline sm btn-followship" data-user-id="{{this.id}}">跟隨</button>
+    <button type="button" class="btn-outline sm btn-followship" data-user-id="{{user.id}}">跟隨</button>
     {{/if}}
     {{/ifCond}}
   </div>
