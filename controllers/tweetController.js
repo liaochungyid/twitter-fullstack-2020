@@ -2,7 +2,6 @@ const helpers = require('../_helpers')
 const constants = require('../config/constants')
 
 const db = require('../models')
-const { sequelize } = db
 const { User, Tweet, Reply, Like } = db
 const tweetTime = require('../utils/tweetTime')
 
@@ -11,51 +10,6 @@ const tweetService = require('../services/tweetService')
 const userService = require('../services/userService')
 
 module.exports = {
-  getTweets: async (req, res) => {
-    try {
-      const userId = helpers.getUser(req).id
-      const tweets = await Tweet.findAll({
-        attributes: [
-          'id',
-          'UserId',
-          'description',
-          'createdAt',
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Replies WHERE Replies.TweetId = Tweet.id)'
-            ),
-            'replyCount'
-          ],
-          [
-            sequelize.literal(
-              '(SELECT COUNT(*) FROM Likes WHERE Likes.TweetId = Tweet.id)'
-            ),
-            'likeCount'
-          ],
-          [
-            sequelize.literal(
-              `(SELECT Likes.UserId FROM Likes WHERE Likes.TweetId = Tweet.id AND Likes.UserId = ${userId})`
-            ),
-            'isLiked'
-          ]
-        ],
-        include: [
-          {
-            model: User,
-            attributes: ['id', 'name', 'account', 'avatar'],
-            require: false
-          }
-        ],
-        order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
-      })
-      return tweets
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
   addTweet: async (req, res) => {
     try {
       const { description } = req.body
@@ -104,17 +58,12 @@ module.exports = {
     }
   },
 
-  indexPage: async (req, res) => {
-    try {
-      if (helpers.getUser(req).role === 'admin') {
-        req.flash('errorMessage', '你無法瀏覽此頁面')
-        return res.redirect('/admin/tweets')
-      }
-
-      return res.render('user', { partial: 'tweets' })
-    } catch (err) {
-      console.error(err)
+  indexPage: (req, res) => {
+    if (helpers.getUser(req).role === 'admin') {
+      req.flash('errorMessage', '你無法瀏覽此頁面')
+      return res.redirect('/admin/tweets')
     }
+    return res.render('user', { partial: 'tweets' })
   },
 
   tweetsPage: async (req, res) => {

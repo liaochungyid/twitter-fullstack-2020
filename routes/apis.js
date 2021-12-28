@@ -13,7 +13,7 @@ router.post('/followships/:userId', followshipController.addFollow)
 router.delete('/followships/:userId', followshipController.removeFollow)
 router.get('/chatusers/:userId', userController.getUsers) // find chat api
 router.get('/tweets/:tweetId', tweetController.getTweet) // reply modal api
-router.get('/page/:offset', tweetController.getTweets) // 按鈕點擊"更多推文" API
+router.get('/tweets/pages/:offset', tweetController.getTweets) // 按鈕點擊"更多推文" API
 router.get('/pops/:offset', userController.getPopular) // 按鈕點擊"更多熱門使用者" API
 
 router.post('/notify/:userId', notificationController.addNotification)

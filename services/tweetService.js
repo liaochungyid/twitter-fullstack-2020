@@ -1,6 +1,7 @@
 const helpers = require('../_helpers')
 const constants = require('../config/constants')
 const query = require('../repositories/query')
+const moment = require('moment')
 
 const db = require('../models')
 const { sequelize } = db
@@ -11,7 +12,7 @@ module.exports = {
     try {
       const offsetCounter = req.params.offset * constants.tweetsPerPage
       const userId = helpers.getUser(req).id
-      const tweets = await Tweet.findAll({
+      let tweets = await Tweet.findAll({
         attributes: [
           'id',
           'UserId',
@@ -49,6 +50,10 @@ module.exports = {
         limit: constants.tweetsPerPage,
         offset: offsetCounter || 0
       })
+      tweets = tweets.map(tweet => ({
+        ...tweet,
+        createdAt: moment(tweet.createdAt).fromNow()
+      }))
       return tweets
     } catch (err) {
       console.error(err)

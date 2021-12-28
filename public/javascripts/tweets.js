@@ -25,7 +25,7 @@ main.addEventListener('scroll', async event => {
 async function getTweets (offset, node) {
   try {
     const response = await window.axios.get(
-      `${window.location.origin}/api/page/${offset}`
+      `${window.location.origin}/api/tweets/pages/${offset}`
     )
     return renderTweets(response.data, node)
   } catch (err) {
@@ -45,9 +45,7 @@ function renderTweets (tweets, node) {
 
     div.innerHTML = `
         <a href="/users/${element.User.id}/tweets">
-          <img class="thumbnail" src="${element.User.avatar}" alt="${
-      element.User.name
-    } avatar">
+          <img class="thumbnail" src="${element.User.avatar}" alt="${element.User.name} avatar">
         </a>
         <div class="post-content">
           <a class="post-user" href="/users/${element.User.id}/tweets">

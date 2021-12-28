@@ -11,6 +11,8 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
+const moment = require('moment')
+moment.locale('zh-tw')
 
 const app = express()
 
