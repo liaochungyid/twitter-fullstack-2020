@@ -20,4 +20,7 @@ router.post('/notify/:userId', notificationController.addNotification)
 router.delete('/notify/:userId', notificationController.removeNotification)
 router.get('/news/:userId', notificationController.getNew) // 訂閱物件通知的 api
 
+router.get('/users/:userId', userController.getEditModal)
+router.post('/users/:userId', userController.updateUser)
+
 module.exports = router
