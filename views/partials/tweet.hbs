@@ -24,8 +24,7 @@
     </div>
 
     <div class="datetime">
-      <span class="time">{{tweet.time}}</span>
-      <span class="date">{{tweet.date}}</span>
+      {{tweet.createdAt}}
     </div>
 
     <div class="stat">
@@ -34,7 +33,7 @@
         <a>回覆</a>
       </span>
       <span class="liked">
-        {{tweet.Likes.length}}
+        <span id="likeCounter">{{tweet.likeCount}}</span>
         <a>喜歡次數</a>
       </span>
     </div>
@@ -44,18 +43,14 @@
         <i class='comment lg commenting'></i>
       </button>
 
-      {{#if isLiked}}
-      <form action="/tweets/{{tweet.id}}/unlike" method="POST" style="display: inline;">
-        <button type="submit" class="btn btn-danger">
-          <i class='like lg active'></i>
-        </button>
-      </form>
+      {{#if tweet.isLiked}}
+      <button type="button" class="liking">
+        <i class="like lg active" data-tweet-id="{{tweet.id}}"></i>
+      </button>
       {{else}}
-      <form action="/tweets/{{tweet.id}}/like" method="POST" style="display: inline;">
-        <button type="submit" class="btn btn-primary">
-          <i class='like lg'></i>
-        </button>
-      </form>
+      <button type="button" class="liking">
+        <i class="like lg" data-tweet-id="{{tweet.id}}"></i>
+      </button>
       {{/if}}
 
     </div>

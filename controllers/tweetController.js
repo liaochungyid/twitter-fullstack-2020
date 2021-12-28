@@ -1,61 +1,27 @@
 const helpers = require('../_helpers')
-const constants = require('../config/constants')
-
-const db = require('../models')
-const { User, Tweet, Reply, Like } = db
-const tweetTime = require('../utils/tweetTime')
 
 const notificationService = require('../services/notificationService')
 const tweetService = require('../services/tweetService')
 const userService = require('../services/userService')
 
 module.exports = {
-  addTweet: async (req, res) => {
-    try {
-      const { description } = req.body
-
-      if (
-        description.length > constants.maxTweetLength ||
-        !description.length
-      ) {
+  addTweet: (req, res) => {
+    tweetService.addTweet(req, res, data => {
+      if (data.status === 'success') {
+        return res.redirect('/tweets')
+      }
+      if (data.status === 'error') {
         return res.redirect('back')
       }
-
-      await Tweet.create({ UserId: helpers.getUser(req).id, description })
-      return res.redirect('/tweets')
-    } catch (err) {
-      console.error(err)
-    }
+    })
   },
 
-  getTweet: async (req, res) => {
-    try {
-      const tweet = await Tweet.findByPk(req.params.tweetId, {
-        include: [User, Like]
-      })
-      tweet.dataValues.time = tweetTime.time(tweet.dataValues.createdAt)
-      tweet.dataValues.date = tweetTime.date(tweet.dataValues.createdAt)
-
-      const replies = await Reply.findAll({
-        where: { TweetId: tweet.id },
-        include: [{ model: User, attributes: { exclude: ['password'] } }],
-        order: [['createdAt', 'DESC']]
-      })
-
-      const userId = helpers.getUser(req).id
-      const isLiked = !!(await Like.findOne({
-        where: { UserId: userId, TweetId: req.params.tweetId }
-      }))
-
-      return res.render('user', {
-        tweet: tweet.toJSON(),
-        replies: replies.map(reply => reply.toJSON()),
-        isLiked,
-        partial: 'tweet'
-      })
-    } catch (err) {
-      console.error(err)
-    }
+  getTweet: (req, res) => {
+    tweetService.getTweet(req, res, data => {
+      if (data.status === 'success') {
+        return res.render('user', data)
+      }
+    })
   },
 
   indexPage: (req, res) => {

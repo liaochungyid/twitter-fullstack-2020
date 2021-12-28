@@ -1,5 +1,6 @@
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const imgur = require('imgur-node-api')
+const moment = require('moment')
 
 module.exports = {
   uploadToImgur: file => {
@@ -12,6 +13,13 @@ module.exports = {
         resolve(res.data.link)
       })
     })
+  },
+
+  toTweetTime: time => {
+    return moment(time)
+      .format('a h:mm [·] LL')
+      .replace('pm', '下午')
+      .replace('am', '上午')
   },
 
   sumLikes: arr => {

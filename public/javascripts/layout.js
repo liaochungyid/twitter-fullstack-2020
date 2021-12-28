@@ -318,8 +318,10 @@ function slashNtoBr (str, delStr = '\n', newStr = '<br>') {
 
 async function toggleLikeButton (target) {
   const { tweetId } = target.dataset
+  const likeCounter =
+    target.nextElementSibling || document.querySelector('#likeCounter')
   let response
-  let likeCount = Number(target.nextElementSibling.innerHTML)
+  let likeCount = Number(likeCounter.innerHTML)
 
   if (target.classList.contains('active')) {
     response = await window.axios.delete(
@@ -339,7 +341,7 @@ async function toggleLikeButton (target) {
     return null
   }
 
-  target.nextElementSibling.innerHTML = likeCount
+  likeCounter.innerHTML = likeCount
   target.classList.toggle('active')
 }
 

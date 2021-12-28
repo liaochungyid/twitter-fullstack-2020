@@ -21,14 +21,7 @@ module.exports = {
             [query.getUserFollowerCount(), 'followerCount'],
             [query.getUserIsFollowed(helpers.getUser(req).id), 'isFollowed']
           ],
-          exclude: [
-            'email',
-            'password',
-            'role',
-            'activeTime',
-            'createdAt',
-            'updatedAt'
-          ]
+          exclude: constants.privateData
         },
         raw: true
       })
