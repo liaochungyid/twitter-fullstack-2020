@@ -7,7 +7,9 @@ getNotis(userId, notis)
 
 async function getNotis (userId, node) {
   try {
-    const response = await window.axios.get(`${window.location.origin}/api/news/${userId}`)
+    const response = await window.axios.get(
+      `${window.location.origin}/api/users/${userId}/notifications`
+    )
     return renderNotis(response.data, node)
   } catch (err) {
     console.log(err)
@@ -16,7 +18,9 @@ async function getNotis (userId, node) {
 
 function renderNotis (notis, node) {
   // 無資料時
-  if (!notis.length) { return null }
+  if (!notis.length) {
+    return null
+  }
 
   let html = ''
 

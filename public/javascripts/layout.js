@@ -128,11 +128,11 @@ body.addEventListener('click', async event => {
 
     if (target.classList.contains('active')) {
       results = await window.axios.delete(
-        `${window.location.origin}/api/notify/${userId}`
+        `${window.location.origin}/api/users/${userId}/notifications`
       )
     } else {
       results = await window.axios.post(
-        `${window.location.origin}/api/notify/${userId}`
+        `${window.location.origin}/api/users/${userId}/notifications`
       )
     }
 
