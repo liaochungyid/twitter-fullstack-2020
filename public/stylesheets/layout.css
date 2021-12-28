@@ -563,7 +563,7 @@ body {
 
 .main > .information > .introduction {
   color: #000;
-  font-size: 14%;
+  font-size: 14px;
   font-weight: 400px;
   line-height: 20px;
   display: block;
@@ -1234,7 +1234,7 @@ body {
 }
 
 /* modal for editing modal*/
-#modal-edit > .mask > .dialog {
+#modalEdit > .mask > .dialog {
   height: 657px;
 }
 

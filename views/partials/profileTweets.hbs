@@ -11,7 +11,7 @@
   <div class="buttons">
     {{#ifCond loginUser.id user.id}}
     <button type="button" class="btn-outline sm"
-      onclick="document.querySelector('#modal-edit').classList.remove('d-none');">編輯個人資料</button>
+      onclick="document.querySelector('#modalEdit').classList.remove('d-none');">編輯個人資料</button>
     {{else}}
     <a><i class='btn-message'></i></a>
     <a><i class='btn-noti {{#if isNotified}}active{{/if}}' data-user-id="{{user.id}}"></i></a>
