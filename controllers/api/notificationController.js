@@ -66,8 +66,10 @@ module.exports = {
       })
       newLikes = newLikes.map(newLike => ({
         ...newLike.dataValues,
-        type: '新的被讚事件'
+        type: '新的被讚事件',
+        
       }))
+      
 
 
       // 三個事件結合整理成一個array
