@@ -26,19 +26,19 @@ module.exports = {
       const { account, name, email, password, checkPassword } = req.body
       const errors = []
 
-      const [user1, user2] = await Promise.all([
+      const [checkAccount, checkEmail] = await Promise.all([
         User.findOne({ where: { account } }),
         User.findOne({ where: { email } })
       ])
 
-      if (user1) {
-        errors.push({ message: 'account 已重覆註冊！' })
-      }
-      if (user2) {
-        errors.push({ message: 'email 已重複註冊！' })
-      }
       if (checkPassword !== password) {
         errors.push({ message: '兩次密碼輸入不同！' })
+      }
+      if (checkAccount) {
+        errors.push({ message: 'account 已重覆註冊！' })
+      }
+      if (checkEmail) {
+        errors.push({ message: 'email 已重複註冊！' })
       }
       if (account.length > constants.maxAccountLength) {
         errors.push({
@@ -101,12 +101,11 @@ module.exports = {
   updateSettings: async (req, res) => {
     try {
       const userId = Number(helpers.getUser(req).id)
-
       const user = await User.findByPk(userId)
       const { account, name, email, password, checkPassword } = req.body
       const errors = []
 
-      const [user1, user2] = await Promise.all([
+      const [checkAccount, checkEmail] = await Promise.all([
         User.findOne({
           where: {
             account,
@@ -121,10 +120,10 @@ module.exports = {
       if (checkPassword !== password) {
         errors.push({ message: '兩次密碼輸入不同！' })
       }
-      if (user1) {
+      if (checkAccount) {
         errors.push({ message: 'account 已重覆註冊！' })
       }
-      if (user2) {
+      if (checkEmail) {
         errors.push({ message: 'email 已重複註冊！' })
       }
       if (account.length > constants.maxAccountLength) {
@@ -213,19 +212,19 @@ module.exports = {
       }
 
       const { files } = req
-      const avatarPath = files.avatar ? files.avatar[0].path : false
-      const coverPath = files.cover ? files.cover[0].path : false
+      const avatar = files.avatar ? files.avatar[0] : false
+      const cover = files.cover ? files.cover[0] : false
       const user = await User.findByPk(userId)
 
-      if (avatarPath) {
-        const avatarLink = await utility.uploadToImgur(avatarPath)
+      if (avatar) {
+        const avatarLink = await utility.uploadToImgur(avatar)
         await user.update({
           avatar: avatarLink
         })
       }
 
-      if (coverPath) {
-        const coverLink = await utility.uploadToImgur(coverPath)
+      if (cover) {
+        const coverLink = await utility.uploadToImgur(cover)
         await user.update({
           cover: coverLink
         })

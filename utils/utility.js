@@ -2,10 +2,10 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const imgur = require('imgur-node-api')
 
 module.exports = {
-  uploadToImgur: filePath => {
+  uploadToImgur: file => {
     imgur.setClientID(IMGUR_CLIENT_ID)
     return new Promise((resolve, reject) => {
-      imgur.upload(filePath, (err, res) => {
+      imgur.upload(file.path, (err, res) => {
         if (err) {
           reject(err)
         }
