@@ -42,17 +42,6 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Tweet)
     User.hasMany(models.Reply)
     User.hasMany(models.Like)
-    User.hasMany(models.Message)
-    User.belongsToMany(User, {
-      through: models.Message,
-      foreignKey: 'senderId',
-      as: 'Senders'
-    })
-    User.belongsToMany(User, {
-      through: models.Message,
-      foreignKey: 'receiverId',
-      as: 'Receivers'
-    })
     User.belongsToMany(User, {
       through: models.Notification,
       foreignKey: 'observedId',

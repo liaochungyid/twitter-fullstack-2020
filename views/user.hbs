@@ -1,4 +1,5 @@
 <script src="https://cdn.socket.io/4.4.0/socket.io.js"></script>
+<script async src="/javascripts/notiSocket.js"></script>
 
 {{#ifCond partial "profileSettings"}}
 <div class="user-template-setting">
@@ -70,7 +71,6 @@
         </div>
 
         <div class="main">
-          <script async src="/javascripts/notiSocket.js"></script>
 
           {{!-- USER PARTIALS --}}
           {{> (lookup . "partial") }}

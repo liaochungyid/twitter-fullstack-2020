@@ -42,6 +42,8 @@ module.exports = {
   getUsers: async (req, res) => {
     try {
       let users = await User.findAll({
+        raw:true,
+        nest:true,
         attributes: [
           'id',
           'email',
@@ -58,8 +60,8 @@ module.exports = {
           ]
         ]
       })
-      console.log(users)
-      users = users.filter(user => user.dataValues.role !== 'admin')
+
+      users = users.filter(user => user.role !== 'admin')
 
       users = users.sort((a, b) => b.followerCount - a.followerCount)
 

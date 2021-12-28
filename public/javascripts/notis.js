@@ -5,6 +5,9 @@ const userId = document.querySelector('input[name="userId"]').value
 // 取得歷史通知
 getNotis(userId, notis)
 
+// 更新user activeTime
+socket.emit('updateActiveTime', userId)
+
 async function getNotis (userId, node) {
   try {
     const response = await window.axios.get(`${window.location.origin}/api/news/${userId}`)
