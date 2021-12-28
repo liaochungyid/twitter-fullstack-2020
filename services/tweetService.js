@@ -1,5 +1,6 @@
 const helpers = require('../_helpers')
 const constants = require('../config/constants')
+const query = require('../repositories/query')
 
 const db = require('../models')
 const { sequelize } = db
@@ -47,6 +48,27 @@ module.exports = {
         nest: true,
         limit: constants.tweetsPerPage,
         offset: offsetCounter || 0
+      })
+      return tweets
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  getUserTweets: async (req, res) => {
+    try {
+      const userId = Number(req.params.userId)
+      const tweets = await Tweet.findAll({
+        where: { UserId: userId },
+        attributes: {
+          include: [
+            [query.getTweetReplyCount(), 'replyCount'],
+            [query.getTweetLikeCount(), 'likeCount'],
+            [query.getTweetIsLiked(helpers.getUser(req).id), 'isLiked']
+          ]
+        },
+        order: [['createdAt', 'DESC']],
+        raw: true
       })
       return tweets
     } catch (err) {

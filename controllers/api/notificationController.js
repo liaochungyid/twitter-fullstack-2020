@@ -4,6 +4,40 @@ const { User, Like, Tweet, Notification } = db
 const chatTime = require('../../utils/tweetTime')
 
 module.exports = {
+  addNotification: async (req, res) => {
+    try {
+      const loginUser = helpers.getUser(req).id
+
+      await Notification.create({
+        observerId: loginUser,
+        observedId: req.params.userId
+      })
+
+      return res.json({ status: 'success', message: '已加入關注' })
+    } catch (err) {
+      console.error(err)
+      return res.json({ status: 'error', message: '加入關注失敗' })
+    }
+  },
+
+  removeNotification: async (req, res) => {
+    try {
+      const loginUser = helpers.getUser(req).id
+
+      await Notification.destroy({
+        where: {
+          observerId: loginUser,
+          observedId: req.params.userId
+        }
+      })
+
+      return res.json({ status: 'success', message: '已移除關注' })
+    } catch (err) {
+      console.error(err)
+      return res.json({ status: 'error', message: '取消關注失敗' })
+    }
+  },
+
   getNew: async (req, res) => {
     try {
       const userId = req.params.userId
@@ -61,40 +95,6 @@ module.exports = {
       return res.json(news)
     } catch (err) {
       console.error(err)
-    }
-  },
-
-  addNotification: async (req, res) => {
-    try {
-      const loginUser = helpers.getUser(req).id
-
-      await Notification.create({
-        observerId: loginUser,
-        observedId: req.params.userId
-      })
-
-      return res.json({ status: 'success', message: '已加入關注' })
-    } catch (err) {
-      console.error(err)
-      return res.json({ status: 'error', message: '加入關注失敗' })
-    }
-  },
-
-  removeNotification: async (req, res) => {
-    try {
-      const loginUser = helpers.getUser(req).id
-
-      await Notification.destroy({
-        where: {
-          observerId: loginUser,
-          observedId: req.params.userId
-        }
-      })
-
-      return res.json({ status: 'success', message: '已移除關注' })
-    } catch (err) {
-      console.error(err)
-      return res.json({ status: 'error', message: '取消關注失敗' })
     }
   }
 }

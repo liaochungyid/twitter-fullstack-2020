@@ -102,18 +102,18 @@ module.exports = io => {
   })
 
   // ------------- functions -------------
-  function broadcastNotiNoti(userIdList, data) {
+  function broadcastNotiNoti (userIdList, data) {
     // data require type('未讀的追蹤者推文' or '未讀的被讚事件'), TweetId, Tweet(all) User(avatar, name)
     io.to(userIdList).emit('getNotiNoti', data)
   }
 
-  function broadcastPrivateNoti(roomList, userIdList, data) {
+  function broadcastPrivateNoti (roomList, userIdList, data) {
     // data require receiverId, text, date, time
     io.to(roomList).emit('getPrivateNoti', data)
     io.to(userIdList).emit('getPrivateNoti', true)
   }
 
-  function broadcastPublicNoti(userIdList, data) {
+  function broadcastPublicNoti (userIdList, data) {
     // data require text, userId, date, time, user(name, account, avatar)
     io.emit('getPublicNoti', data)
     io.to(userIdList).emit('getPublicNoti', true)

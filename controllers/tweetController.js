@@ -1,9 +1,14 @@
 const helpers = require('../_helpers')
 const constants = require('../config/constants')
+
 const db = require('../models')
 const { sequelize } = db
 const { User, Tweet, Reply, Like } = db
 const tweetTime = require('../utils/tweetTime')
+
+const notificationService = require('../services/notificationService')
+const tweetService = require('../services/tweetService')
+const userService = require('../services/userService')
 
 module.exports = {
   getTweets: async (req, res) => {
@@ -55,7 +60,10 @@ module.exports = {
     try {
       const { description } = req.body
 
-      if (description.length > constants.maxTweetLength || !description.length) {
+      if (
+        description.length > constants.maxTweetLength ||
+        !description.length
+      ) {
         return res.redirect('back')
       }
 
@@ -90,6 +98,38 @@ module.exports = {
         replies: replies.map(reply => reply.toJSON()),
         isLiked,
         partial: 'tweet'
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  indexPage: async (req, res) => {
+    try {
+      if (helpers.getUser(req).role === 'admin') {
+        req.flash('errorMessage', '你無法瀏覽此頁面')
+        return res.redirect('/admin/tweets')
+      }
+
+      return res.render('user', { partial: 'tweets' })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  tweetsPage: async (req, res) => {
+    try {
+      const [user, tweets, isNotified] = await Promise.all([
+        userService.getUserProfile(req, res),
+        tweetService.getUserTweets(req, res),
+        notificationService.getUserIsNotified(req, res)
+      ])
+
+      return res.render('user', {
+        user,
+        tweets,
+        isNotified,
+        partial: 'profileTweets'
       })
     } catch (err) {
       console.error(err)

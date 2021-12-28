@@ -15,7 +15,7 @@ more.addEventListener('click', async event => {
   await getPopular(PopsOffset, popular)
 })
 
-async function getPopular(offset, node) {
+async function getPopular (offset, node) {
   try {
     const response = await window.axios.get(
       `${window.location.origin}/api/pops/${offset}`
@@ -26,7 +26,7 @@ async function getPopular(offset, node) {
   }
 }
 
-function renderPops(pops, node) {
+function renderPops (pops, node) {
   if (pops.length) {
     pops.forEach(element => {
       const div = document.createElement('div')
