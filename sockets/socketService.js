@@ -146,6 +146,8 @@ const socketService = {
         order: [['createdAt', 'DESC']]
       })
 
+      if (!previousPrivateMsg.length) return []
+
       const noRepeatOpUser = [...new Set(
         Array.from(previousPrivateMsg)
           .map(value => value.senderId === userId ? value.receiverId : value.senderId)

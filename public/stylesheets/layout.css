@@ -931,7 +931,7 @@ body {
 }
 
 .right-side > .popular > .wrap > a,
-.right-side > .popular > .wrap > form {
+.right-side > .popular > .wrap > button {
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
@@ -958,7 +958,7 @@ body {
   color: #657786;
 }
 
-.right-side > .popular > .wrap > form > .btn-fill {
+.right-side > .popular > .wrap > .btn-fill {
   display: inline-block;
   width: 90px;
   height: 35px;
@@ -967,7 +967,7 @@ body {
   margin: auto 15px;
 }
 
-.right-side > .popular > .wrap > form > .btn-outline {
+.right-side > .popular > .wrap > .btn-outline {
   display: inline-block;
   width: 60px;
   height: 35px;

@@ -102,6 +102,8 @@ module.exports = io => {
       // 如有先前連線roomId，先斷開
       if (roomId) {
         socket.leave(roomId)
+        socket.removeAllListeners('createPrivateMsg')
+        socket.removeAllListeners('updateReadMsg')
       }
 
       // 上線加入清單
