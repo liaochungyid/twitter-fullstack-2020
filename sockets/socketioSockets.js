@@ -3,13 +3,18 @@ const socketService = require('./socketService')
 module.exports = io => {
   const notiOnlineUsers = []
   const publicOnlineUsers = []
-  const privateOnlineUsers = []
 
   io.on('connection', socket => {
-    // userId for this connection
+    // userId and roomId for this connection
     let userId
+    let roomId
 
     // ------------- noti -------------
+    // user 進入noti page 更新activeTime
+    socket.on('updateActiveTime', userId => {
+      socketService.updateActiveTime(userId)
+    })
+    
     socket.on('connectLogin', loginUserId => {
       // 登入，加入清單 notiOnlineUsers，建立room
       notiOnlineUsers.push(loginUserId)
@@ -23,14 +28,13 @@ module.exports = io => {
 
       // 送出歷史通知 (Public, Private, Noti)
       Promise.all([
-        socketService.getPublicNoti(userId),
         socketService.getPrivateNoti(userId),
         socketService.getNotiNoti(userId)
       ]).then(results => {
         io.to(userId).emit('getPreviousNoti', {
-          getPublicNoti: results[0],
-          getPrivateNoti: results[1],
-          getNotiNoti: results[2]
+          getPublicNoti: publicOnlineUsers.length !== 0,
+          getPrivateNoti: results[0],
+          getNotiNoti: results[1]
         })
       })
     })
@@ -44,6 +48,10 @@ module.exports = io => {
 
       // 送出public歷史訊息
       io.emit('getPreviousMessages', await socketService.getPreviousMsg())
+
+      // 發送更新左列選單通知綠點
+      io.emit('updatePublicNoti',
+        publicOnlineUsers.length !== 0)
 
       // 送出public已在線使用者
       io.emit(
@@ -64,63 +72,77 @@ module.exports = io => {
           'getConnectedPublicUser',
           await socketService.getPreviousUser(publicOnlineUsers)
         )
+
+        // 發送更新左列選單通知綠點
+        io.emit('updatePublicNoti',
+          publicOnlineUsers.length !== 0)
       })
 
       // 接收public訊息，儲存，廣播
       socket.on('createPublicMsg', async data => {
         const [msg, user] = await Promise.all([
-          socketService.createMessage(data),
+          socketService.createChat(data),
           socketService.getUserInfo(data.UserId)
         ])
 
         io.emit('getPublicMsg', { notifyType: 'message', msg, user })
       })
     })
-    // updateOnlineUser()
-    // console.log(socket)
-
-    // let user
-
-    // socket.on('connectLogin', (data) => {
-    //   onlineUser.push(data)
-    //   user = data
-    //   socket.emit('noti-message-login', data)
-    //   updateOnlineUser()
-    // })
-
-    // socket.on('send pub msg', (data) => {
-    //   socket.emit('pub msg', data)
-    // })
-
-    // socket.on('disconnect', () => {
-    //   socket.emit('noti-message-logout', user)
-    //   onlineUser.splice(onlineUser.indexOf(user), 1)
-    //   updateOnlineUser()
-    // })
 
     // ------------- private -------------
+    socket.on('getConnectedPrivateUser', async loginUserId => {
+      // 送出private 聊天過的使用者紀錄
+      io.emit(
+        `getConnectedPrivateUser${loginUserId}`,
+        await socketService.getPreviousPrivateUsers(loginUserId)
+      )
+    })
+
+    socket.on('connectPrivateUser', async data => {
+      // 如有先前連線roomId，先斷開
+      if (roomId) {
+        socket.leave(roomId)
+      }
+
+      // 上線加入清單
+      const loginUserId = Number(data.loginUserId)
+      const opId = Number(data.opId)
+      roomId = await creatRoomId(loginUserId, opId)
+
+      socket.join(roomId)
+      
+      // 送出private 歷史訊息
+      io.to(roomId).emit('getPreviousPrivateMsg', {
+        msg: await socketService.getPreviousMsg([loginUserId, opId]),
+        op: await socketService.getUserInfo(opId)
+      })
+
+      // 接收private訊息，儲存，廣播
+      socket.on('createPrivateMsg', async data => {
+        const [msg, op] = await Promise.all([
+          socketService.createMessage(data),
+          socketService.getUserInfo(data.senderId)
+        ])
+
+        io.to(roomId).emit('getPrivateMsg', { msg, op })
+        // 更新對方privateNoti (數量+1)
+        io.to(data.receiverId).emit('updatePrivateNoti', 1)
+      })
+
+      // 已讀訊息更新
+      socket.on('updateReadMsg', async data => {
+        socketService.updateReadMsg(data)
+
+        // 發送更新左列選單通知數量
+        io.to(userId).emit('updatePrivateNoti', - data.length)
+      })
+    })
+
   })
 
-  // ------------- functions -------------
-  function broadcastNotiNoti(userIdList, data) {
-    // data require type('未讀的追蹤者推文' or '未讀的被讚事件'), TweetId, Tweet(all) User(avatar, name)
-    io.to(userIdList).emit('getNotiNoti', data)
+  // -------------functions-------------
+  async function creatRoomId (userId, opId) {  
+    // 生成roomId
+    return userId < opId ? userId + '=' + opId : opId + '=' + userId
   }
-
-  function broadcastPrivateNoti(roomList, userIdList, data) {
-    // data require receiverId, text, date, time
-    io.to(roomList).emit('getPrivateNoti', data)
-    io.to(userIdList).emit('getPrivateNoti', true)
-  }
-
-  function broadcastPublicNoti(userIdList, data) {
-    // data require text, userId, date, time, user(name, account, avatar)
-    io.emit('getPublicNoti', data)
-    io.to(userIdList).emit('getPublicNoti', true)
-  }
-
-  // function updatePublicOnlineUsers() {
-  //   io.emit('onlineUser', onlineUser, { onlineCount: onlineUser.length })
-  //   console.log(onlineUser)
-  // }
 }

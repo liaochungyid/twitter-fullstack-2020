@@ -1699,18 +1699,18 @@ body {
 }
 
 /* modal for find-chat */
-#modal-findChatUser .user-card {
+#modalFindChatUser .user-card {
   display: inline-block;
   width: 186px;
   height: 220px;
   margin: 10px 0 0 8px;
 }
 
-#modal-findChatUser .user-card > .imgs {
+#modalFindChatUser .user-card > .imgs {
   position: relative;
 }
 
-#modal-findChatUser .user-card > .imgs > .thumbnail-card {
+#modalFindChatUser .user-card > .imgs > .thumbnail-card {
   background-color: #c4c4c4;
   border: 4px solid #fff;
   position: absolute;
@@ -1721,7 +1721,7 @@ body {
   height: 100px;
 }
 
-#modal-findChatUser .user-card > .imgs > .img-card {
+#modalFindChatUser .user-card > .imgs > .img-card {
   background-color: #c4c4c4;
   width: 186px;
   height: 124px;
@@ -1730,7 +1730,7 @@ body {
   border-top-right-radius: 10px;
 }
 
-#modal-findChatUser .user-card > .texts {
+#modalFindChatUser .user-card > .texts {
   color: #1c1c1c;
   font-size: 15px;
   font-weight: 500;
@@ -1746,12 +1746,12 @@ body {
   align-items: center;
 }
 
-#modal-findChatUser .user-card > .texts > .name {
+#modalFindChatUser .user-card > .texts > .name {
   font-weight: 900;
   margin-bottom: 2px;
 }
 
-#modal-findChatUser .user-card > .texts > .account {
+#modalFindChatUser .user-card > .texts > .account {
   color: #657786;
   margin-bottom: 15px;
 }
@@ -1917,7 +1917,7 @@ div.invalid::after {
 
 .onlineUser > .users > .user-card {
   width: 90%;
-  height: 60px;
+  height: 80px;
   margin: 10px;
   display: flex;
   flex-flow: row nowrap;
@@ -1978,7 +1978,6 @@ div.invalid::after {
 .onlineUser > .users > .user-card > .user-file > .who > .last-call {
   color: #657786;
   font-weight: 500;
-  flex: 1 0 0;
   word-break: keep-all;
 }
 
