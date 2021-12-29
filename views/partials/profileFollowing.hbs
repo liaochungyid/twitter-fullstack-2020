@@ -30,14 +30,9 @@
     {{#ifCond this.id ../loginUser.id}}
     {{else}}
     {{#if this.isFollowed}}
-    <form action="/followships/{{this.id}}?_method=DELETE" method="POST">
-      <button type="submit" class="btn-fill xs">正在跟隨</button>
-    </form>
+    <button type="button" class="btn-fill xs btn-followship" data-user-id="{{this.id}}">正在跟隨</button>
     {{else}}
-    <form action="/followships" method="POST">
-      <input type="hidden" name="id" value="{{this.id}}">
-      <button type="submit" class="btn-outline xs">跟隨</button>
-    </form>
+    <button type="button" class="btn-outline xs btn-followship" data-user-id="{{this.id}}">跟隨</button>
     {{/if}}
     {{/ifCond}}
   </div>

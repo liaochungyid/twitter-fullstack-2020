@@ -5,9 +5,14 @@ const userId = document.querySelector('input[name="userId"]').value
 // 取得歷史通知
 getNotis(userId, notis)
 
+// 更新user activeTime
+socket.emit('updateActiveTime', userId)
+
 async function getNotis (userId, node) {
   try {
-    const response = await window.axios.get(`${window.location.origin}/api/news/${userId}`)
+    const response = await window.axios.get(
+      `${window.location.origin}/api/users/${userId}/notifications`
+    )
     return renderNotis(response.data, node)
   } catch (err) {
     console.log(err)
@@ -16,7 +21,9 @@ async function getNotis (userId, node) {
 
 function renderNotis (notis, node) {
   // 無資料時
-  if (!notis.length) { return null }
+  if (!notis.length) {
+    return null
+  }
 
   let html = ''
 

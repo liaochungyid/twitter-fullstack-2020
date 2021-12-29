@@ -1,19 +1,23 @@
+const notificationService = require('../services/notificationService')
 const likeService = require('../services/likeService')
+const userService = require('../services/userService')
 
 module.exports = {
-  addLike: (req, res) => {
-    likeService.addLike(req, res, data => {
-      if (data.status === 'success') {
-        return res.redirect('back')
-      }
-    })
-  },
-
-  removeLike: (req, res) => {
-    likeService.removeLike(req, res, data => {
-      if (data.status === 'success') {
-        return res.redirect('back')
-      }
-    })
+  likesPage: async (req, res) => {
+    try {
+      const [user, tweets, isNotified] = await Promise.all([
+        userService.getUserProfile(req, res),
+        likeService.getUserLikes(req, res),
+        notificationService.getUserIsNotified(req, res)
+      ])
+      return res.render('user', {
+        user,
+        tweets,
+        isNotified,
+        partial: 'profileLikes'
+      })
+    } catch (err) {
+      console.error(err)
+    }
   }
 }

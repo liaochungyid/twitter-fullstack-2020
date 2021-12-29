@@ -1,4 +1,5 @@
 <script src="https://cdn.socket.io/4.4.0/socket.io.js"></script>
+<script async src="/javascripts/notiSocket.js"></script>
 
 {{#ifCond partial "profileSettings"}}
 <div class="user-template-setting">
@@ -54,9 +55,9 @@
             {{/ifCond}}
 
             {{#ifCond partial "profileSettings"}}
-            <a class="active" href='/users/{{loginUser.id}}/settings'><i class='setting active'></i>設定</a>
+            <a class="active" href='/settings'><i class='setting active'></i>設定</a>
             {{else}}
-            <a class="" href='/users/{{loginUser.id}}/settings'><i class='setting'></i>設定</a>
+            <a class="" href='/settings'><i class='setting'></i>設定</a>
             {{/ifCond}}
 
 
@@ -70,7 +71,6 @@
         </div>
 
         <div class="main">
-          <script async src="/javascripts/notiSocket.js"></script>
 
           {{!-- USER PARTIALS --}}
           {{> (lookup . "partial") }}
@@ -92,14 +92,9 @@
                 </span>
               </a>
 
-              <form action="/followships/this.id?_method=DELETE" method="POST">
-                <button type="submit" class="btn-fill sm">正在跟隨</button>
-              </form>
+              <button type="button" class="btn-fill sm btn-followship">正在跟隨</button>
 
-              <form action="/followships" method="POST">
-                <input type="hidden" name="id" value="this.id">
-                <button type="submit" class="btn-outline sm">跟隨</button>
-              </form>
+              <button type="button" class="btn-outline sm btn-followship">跟隨</button>
 
             </div> --}}
 

@@ -39,8 +39,7 @@ describe('# followship request', () => {
       it('can not follow self', (done) => {
         // 送出 request POST /followships
         request(app)
-          .post('/followships')
-          .send('id=1') // 追蹤自己，所以送出資料為 id = 1
+          .post('/api/followships/1')
           .set('Accept', 'application/json')
           .expect(200)
           .end(function (err, res) {
@@ -63,10 +62,9 @@ describe('# followship request', () => {
       it('can follow user2', (done) => {
         // 送出 request POST /followships
         request(app)
-          .post('/followships')
-          .send('id=2') // 追蹤 user2，所以送出資料為 id = 2
+          .post('/api/followships/2')
           .set('Accept', 'application/json')
-          .expect(302)
+          .expect(200)
           .end(function (err, res) {
             if (err) return done(err)
             // 查詢 user 1 的資料
@@ -128,9 +126,9 @@ describe('# followship request', () => {
       it('will update followings data number to 0', (done) => {
         // 送出 request DELETE /followships
         request(app)
-          .delete('/followships/2') // 取消追蹤 user2
+          .delete('/api/followships/2') // 取消追蹤 user2
           .set('Accept', 'application/json')
-          .expect(302)
+          .expect(200)
           .end(function (err, res) {
             if (err) return done(err)
             // 查詢 user 1 的資料

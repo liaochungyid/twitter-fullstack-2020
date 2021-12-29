@@ -1,131 +1,15 @@
 const helpers = require('../_helpers')
+const constants = require('../config/constants')
 const bcrypt = require('bcryptjs')
 const utility = require('../utils/utility')
-
-const constants = require('../config/constants')
-const userService = require('../services/userService')
 
 const db = require('../models')
 const { Op } = db.Sequelize
 const { User } = db
 
 module.exports = {
-  // PAGES
-  indexPage: async (req, res) => {
-    try {
-      if (helpers.getUser(req).role === 'admin') {
-        req.flash('errorMessage', '你無法瀏覽此頁面')
-        return res.redirect('/admin/tweets')
-      }
-
-      return res.render('user', {
-        partial: 'tweets'
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
-  tweetsPage: async (req, res) => {
-    try {
-      const [user, tweets, isNotified] = await Promise.all([
-        userService.getUserProfile(req, res),
-        userService.getUserTweets(req, res),
-        userService.getUserIsNotified(req, res)
-      ])
-
-      return res.render('user', {
-        user,
-        tweets,
-        isNotified,
-        partial: 'profileTweets'
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
-  repliesPage: async (req, res) => {
-    try {
-      const [user, replies, isNotified] = await Promise.all([
-        userService.getUserProfile(req, res),
-        userService.getUserReplies(req, res),
-        userService.getUserIsNotified(req, res)
-      ])
-      return res.render('user', {
-        user,
-        replies,
-        isNotified,
-        partial: 'profileReplies'
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
-  likesPage: async (req, res) => {
-    try {
-      const [user, tweets, isNotified] = await Promise.all([
-        userService.getUserProfile(req, res),
-        userService.getUserLikes(req, res),
-        userService.getUserIsNotified(req, res)
-      ])
-      return res.render('user', {
-        user,
-        tweets,
-        isNotified,
-        partial: 'profileLikes'
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
-  followersPage: async (req, res) => {
-    try {
-      const [user, followers] = await Promise.all([
-        userService.getUserProfile(req, res),
-        userService.getUserFollowers(req, res)
-      ])
-      return res.render('user', {
-        user,
-        followers,
-        partial: 'profileFollower'
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
-  followingsPage: async (req, res) => {
-    try {
-      const [user, followings] = await Promise.all([
-        userService.getUserProfile(req, res),
-        userService.getUserFollowings(req, res)
-      ])
-      return res.render('user', {
-        user,
-        followings,
-        partial: 'profileFollowing'
-      })
-    } catch (err) {
-      console.error(err)
-    }
-  },
-
-  settingsPage: async (req, res) => {
-    try {
-      if (helpers.getUser(req).id !== Number(req.params.userId)) {
-        req.flash('errorMessage', '你無法瀏覽此頁面')
-        return res.redirect('/tweets')
-      }
-
-      return res.render('user', {
-        partial: 'profileSettings'
-      })
-    } catch (err) {
-      console.error(err)
-    }
+  settingsPage: (req, res) => {
+    return res.render('user', { partial: 'profileSettings' })
   },
 
   signUpPage: async (req, res) => {
@@ -137,25 +21,24 @@ module.exports = {
     return res.render('signin', { isBackend })
   },
 
-  // ACTIONS
   signUp: async (req, res) => {
     try {
       const { account, name, email, password, checkPassword } = req.body
       const errors = []
 
-      const [user1, user2] = await Promise.all([
+      const [checkAccount, checkEmail] = await Promise.all([
         User.findOne({ where: { account } }),
         User.findOne({ where: { email } })
       ])
 
-      if (user1) {
-        errors.push({ message: 'account 已重覆註冊！' })
-      }
-      if (user2) {
-        errors.push({ message: 'email 已重複註冊！' })
-      }
       if (checkPassword !== password) {
         errors.push({ message: '兩次密碼輸入不同！' })
+      }
+      if (checkAccount) {
+        errors.push({ message: 'account 已重覆註冊！' })
+      }
+      if (checkEmail) {
+        errors.push({ message: 'email 已重複註冊！' })
       }
       if (account.length > constants.maxAccountLength) {
         errors.push({
@@ -217,17 +100,12 @@ module.exports = {
 
   updateSettings: async (req, res) => {
     try {
-      const userId = Number(req.params.userId)
-      if (helpers.getUser(req).id !== userId) {
-        req.flash('errorMessage', '你無權查看此頁面')
-        return res.redirect('back')
-      }
-
+      const userId = Number(helpers.getUser(req).id)
       const user = await User.findByPk(userId)
       const { account, name, email, password, checkPassword } = req.body
       const errors = []
 
-      const [user1, user2] = await Promise.all([
+      const [checkAccount, checkEmail] = await Promise.all([
         User.findOne({
           where: {
             account,
@@ -242,10 +120,10 @@ module.exports = {
       if (checkPassword !== password) {
         errors.push({ message: '兩次密碼輸入不同！' })
       }
-      if (user1) {
+      if (checkAccount) {
         errors.push({ message: 'account 已重覆註冊！' })
       }
-      if (user2) {
+      if (checkEmail) {
         errors.push({ message: 'email 已重複註冊！' })
       }
       if (account.length > constants.maxAccountLength) {
@@ -334,19 +212,19 @@ module.exports = {
       }
 
       const { files } = req
-      const avatarPath = files.avatar ? files.avatar[0].path : false
-      const coverPath = files.cover ? files.cover[0].path : false
+      const avatar = files.avatar ? files.avatar[0] : false
+      const cover = files.cover ? files.cover[0] : false
       const user = await User.findByPk(userId)
 
-      if (avatarPath) {
-        const avatarLink = await utility.uploadToImgur(avatarPath)
+      if (avatar) {
+        const avatarLink = await utility.uploadToImgur(avatar)
         await user.update({
           avatar: avatarLink
         })
       }
 
-      if (coverPath) {
-        const coverLink = await utility.uploadToImgur(coverPath)
+      if (cover) {
+        const coverLink = await utility.uploadToImgur(cover)
         await user.update({
           cover: coverLink
         })

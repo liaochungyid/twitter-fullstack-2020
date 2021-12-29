@@ -1,23 +1,36 @@
 const followshipService = require('../services/followshipService')
+const userService = require('../services/userService')
 
 module.exports = {
-  addFollow: async (req, res) => {
-    followshipService.addFollow(req, res, data => {
-      if (data.status === 'success') {
-        return res.redirect('back')
-      }
-      if (data.status === 'error') {
-        req.flash('errorMessage', data.message)
-        return res.redirect(200, 'back')
-      }
-    })
+  followersPage: async (req, res) => {
+    try {
+      const [user, followers] = await Promise.all([
+        userService.getUserProfile(req, res),
+        followshipService.getUserFollowers(req, res)
+      ])
+      return res.render('user', {
+        user,
+        followers,
+        partial: 'profileFollower'
+      })
+    } catch (err) {
+      console.error(err)
+    }
   },
 
-  removeFollow: async (req, res) => {
-    followshipService.removeFollow(req, res, data => {
-      if (data.status === 'success') {
-        return res.redirect('back')
-      }
-    })
+  followingsPage: async (req, res) => {
+    try {
+      const [user, followings] = await Promise.all([
+        userService.getUserProfile(req, res),
+        followshipService.getUserFollowings(req, res)
+      ])
+      return res.render('user', {
+        user,
+        followings,
+        partial: 'profileFollowing'
+      })
+    } catch (err) {
+      console.error(err)
+    }
   }
 }

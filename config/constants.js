@@ -6,5 +6,13 @@ module.exports = {
   minPasswordLength: 4,
   tweetsPerPage: 25,
   popularPerPage: 5,
-  maxIntroductionLength: 160
+  maxIntroductionLength: 160,
+  privateData: [
+    'email',
+    'password',
+    'role',
+    'activeTime',
+    'createdAt',
+    'updatedAt'
+  ]
 }
