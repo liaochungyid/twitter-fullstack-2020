@@ -7,6 +7,17 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   )
-  Notification.associate = function (models) {}
+  Notification.associate = function (models) {
+    Notification.belongsTo(models.User, {
+      through: models.Notification,
+      foreignKey: 'observedId',
+      as: 'subed'
+    })
+    Notification.belongsTo(models.User, {
+      through: models.Notification,
+      foreignKey: 'observerId',
+      as: 'suber'
+    })
+  }
   return Notification
 }

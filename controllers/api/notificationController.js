@@ -2,7 +2,7 @@ const helpers = require('../../_helpers')
 const db = require('../../models')
 const { Op } = require('sequelize')
 const { User, Like, Tweet, Notification } = db
-const chatTime = require('../../utils/tweetTime')
+// const chatTime = require('../../utils/tweetTime')
 
 module.exports = {
   getNotifications: async (req, res) => {
@@ -24,64 +24,61 @@ module.exports = {
 
 
       // 1.未讀的被訂閱事件
-      let newSubs = await User.findAll({
-        attributes: { exclude: ['password'] },
+      let newSubs = await Notification.findAll({
+        where: {
+          [Op.and]: [
+            {
+              observedId: userId,
+            },
+            {
+              createdAt: { [Op.gte]: activeTime } // 篩選訂閱時間在 activeTime 之後的事件
+            }
+          ]
+        },
         include: [
-          { model: User,
+          { model: User, 
             attributes: { exclude: ['password'] },
-            as: 'Observeds',
-            where: { // 第二層 where 定義 include進的 model 條件 
-              createdAt: { [Op.gte]: activeTime } // 篩選按讚時間在 activeTime 之後的事件
-            } 
+            as: 'suber'
           },
         ]
       })
       newSubs = newSubs.map(suber => ({
-        ...suber.dataValues,
-        eventTime: suber.dataValues.Observeds[0].Notification.createdAt, // 事件時間
-        type: '新的被訂閱事件'
+        type: '新的被訂閱事件',
+        eventTime: suber.createdAt, // 事件時間
+        ...suber.dataValues
       }))
 
 
       // 2.未讀的訂閱者新推文
-      let newTweets = await User.findAll({
-        // where: { createdAt: { [Op.gte]: activeTime } },
-        include: { 
-          model: Tweet,
-          where: { // 第二層 where 定義 include進的 model 條件 
-            [Op.and]: [
-              {
-                UserId: { 
-                  [Op.in]: subscribes 
-                } // 篩選 id 包含在 subscribes 陣列內的
-              },
-              {
-                createdAt: { 
-                  [Op.gte]: activeTime 
-                }
-              }
-            ]
-
-
-
-            // UserId: { [Op.in]: subscribes }, // 篩選 id 包含在 subscribes 陣列內的
-            // createdAt: { [Op.gte]: activeTime }
-          } 
-        }
+      let newTweets = await Tweet.findAll({
+        where: { 
+          [Op.and]: [
+            {
+              UserId: { [Op.in]: subscribes } // 篩選 id 包含在 subscribes 陣列內的
+            },
+            {
+              createdAt: { [Op.gte]: activeTime }
+            }
+          ]
+        },
+        include: [{
+          model: User,
+          attributes: { exclude: ['password'] },
+        }]
       })
       newTweets = newTweets.map(newTweet => ({
+        type: '新的訂閱推文事件',
+        eventTime: newTweet.dataValues.createdAt, // 事件時間
         ...newTweet.dataValues,
-        type: '有新的訂閱推文事件'
       }))
 
 
-      return res.json(newTweets)
-
       // 3.未讀的被讚事件
-      let newLikes = await User.findAll({
-        // where: {
-        //   UserId: userId,
-        // },
+      // 先取得自從上次上線以後被按過讚的推文陣列
+      let notiTweets = await Tweet.findAll({
+        where: {
+          UserId: userId,
+        },
         include: { 
           model: Like, 
           where: { // 第二層 where 定義 include進的 model 條件 
@@ -89,20 +86,38 @@ module.exports = {
           } 
         }
       })
+      notiTweets = notiTweets.map(tweet => (
+        tweet.dataValues.id
+      ))
+      // 再用 推文陣列 查Like
+      let newLikes = await Like.findAll({
+        where: {
+          [Op.and]: [
+            {
+              TweetId: { [Op.in]: notiTweets }
+            }, 
+            {
+              createdAt: { [Op.gte]: activeTime } // 篩選按讚時間在 activeTime 之後的事件
+            } 
+          ]
+        },
+        include: { 
+          model: User
+        }
+      })
       newLikes = newLikes.map(newLike => ({
-        ...newLike.dataValues,
         type: '新的被讚事件',
-        
+        eventTime: newLike.dataValues.createdAt, // 事件時間
+        ...newLike.dataValues,
       }))
-      
-      // return res.json(newLikes)
+
 
       // 三個事件結合整理成一個array
       let news = [...newSubs, ...newTweets, ...newLikes]
-      news = news.sort((a, b) => a.createdAt - b.createdAt)
-      for (let i of news) {
-        i.createdAt = chatTime.toTimeOrDatetime(i.createdAt)
-      }
+      news = news.sort((a, b) => b.eventTime - a.eventTime)
+      // for (let i of news) {
+      //   i.createdAt = chatTime.toTimeOrDatetime(i.createdAt)
+      // }
 
       return res.json(news)
     } catch (err) {
