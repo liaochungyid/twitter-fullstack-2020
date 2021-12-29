@@ -59,15 +59,20 @@ const socketService = {
           attributes: ['id', 'senderId', 'text', 'unread', 'createdAt'],
           where: {
             [Op.or]: [
-            {[Op.and]: [{
-              senderId: userIdList[0],
-              receiverId: userIdList[1]
-            }]},
-            {[Op.and]: [{
-              receiverId: userIdList[0],
-              senderId: userIdList[1]
-            }]}
-          ]},
+              {
+                [Op.and]: [{
+                  senderId: userIdList[0],
+                  receiverId: userIdList[1]
+                }]
+              },
+              {
+                [Op.and]: [{
+                  receiverId: userIdList[0],
+                  senderId: userIdList[1]
+                }]
+              }
+            ]
+          },
           order: [['createdAt', 'DESC']],
           limit,
           offset
@@ -134,47 +139,48 @@ const socketService = {
         attributes: ['senderId', 'receiverId'],
         where: {
           [Op.or]: [
-            {senderId: userId},
-            {receiverId: userId}
+            { senderId: userId },
+            { receiverId: userId }
           ]
         },
         order: [['createdAt', 'DESC']]
       })
-      
+
       const noRepeatOpUser = [...new Set(
         Array.from(previousPrivateMsg)
-        .map(value => value.senderId === userId ? value.receiverId : value.senderId)
+          .map(value => value.senderId === userId ? value.receiverId : value.senderId)
       )]
 
       const previousPrivateUsers = await User.findAll({
         raw: true,
         attributes: ['id', 'name', 'account', 'avatar'],
         where: {
-          id: {[Op.or]: noRepeatOpUser}
+          id: { [Op.or]: noRepeatOpUser }
         }
       })
 
       let previousPrivateUsersMsg = await Promise.all(
         noRepeatOpUser.map(async value => {
-        return await Message.findAll({
-          raw: true,
-          where: {
-            [Op.or]: [
-            {[Op.and]: [{senderId: value, receiverId: userId}]},
-            {[Op.and]: [{receiverId: value, senderId: userId}]}
-          ]},
-          attributes: ['text', 'createdAt'],
-          order: [['createdAt', 'DESC']],
-          limit: 1
-        })
-      }))
+          return await Message.findAll({
+            raw: true,
+            where: {
+              [Op.or]: [
+                { [Op.and]: [{ senderId: value, receiverId: userId }] },
+                { [Op.and]: [{ receiverId: value, senderId: userId }] }
+              ]
+            },
+            attributes: ['text', 'createdAt'],
+            order: [['createdAt', 'DESC']],
+            limit: 1
+          })
+        }))
 
       previousPrivateUsersMsg = await previousPrivateUsersMsg.map(value => {
         return Object.assign(value[0], {
           createdAt: chatTime.toTimeOrDatetime(value[0].createdAt)
         })
       })
-    
+
       return await previousPrivateUsers.map((v, i) => {
         return Object.assign(v,
           previousPrivateUsersMsg[i]
@@ -187,7 +193,7 @@ const socketService = {
   createMessage: async data => {
     try {
       let msg = (await Message.create(data)).dataValues
-      msg = await Message.findOne({ where:msg, raw: true })
+      msg = await Message.findOne({ where: msg, raw: true })
       msg.createdAt = chatTime.toTimeOrDatetime(msg.createdAt)
 
       return msg
@@ -198,9 +204,8 @@ const socketService = {
   updateReadMsg: async msgIds => {
     try {
       Promise.all(msgIds.map(id => {
-        return Message.findByPk(id).then(msg => msg.update({unread: false}))
+        return Message.findByPk(id).then(msg => msg.update({ unread: false }))
       }))
-      
     } catch (err) {
       console.log(err)
     }

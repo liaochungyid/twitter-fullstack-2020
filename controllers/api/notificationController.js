@@ -4,7 +4,7 @@ const { User, Like, Tweet, Notification } = db
 const chatTime = require('../../utils/tweetTime')
 
 module.exports = {
-  getNew: async (req, res) => {
+  getNotifications: async (req, res) => {
     try {
       const userId = req.params.userId
 

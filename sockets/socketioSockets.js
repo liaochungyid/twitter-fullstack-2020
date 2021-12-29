@@ -14,7 +14,7 @@ module.exports = io => {
     socket.on('updateActiveTime', userId => {
       socketService.updateActiveTime(userId)
     })
-    
+
     socket.on('connectLogin', loginUserId => {
       // 登入，加入清單 notiOnlineUsers，建立room
       notiOnlineUsers.push(loginUserId)
@@ -110,7 +110,7 @@ module.exports = io => {
       roomId = await creatRoomId(loginUserId, opId)
 
       socket.join(roomId)
-      
+
       // 送出private 歷史訊息
       io.to(roomId).emit('getPreviousPrivateMsg', {
         msg: await socketService.getPreviousMsg([loginUserId, opId]),
@@ -134,14 +134,13 @@ module.exports = io => {
         socketService.updateReadMsg(data)
 
         // 發送更新左列選單通知數量
-        io.to(userId).emit('updatePrivateNoti', - data.length)
+        io.to(userId).emit('updatePrivateNoti', -data.length)
       })
     })
-
   })
 
   // -------------functions-------------
-  async function creatRoomId (userId, opId) {  
+  async function creatRoomId (userId, opId) {
     // 生成roomId
     return userId < opId ? userId + '=' + opId : opId + '=' + userId
   }

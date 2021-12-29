@@ -7,15 +7,15 @@ let PopsOffset = 0
 const span = document.createElement('span')
 span.innerText = 'Popular'
 popular.append(span)
-getPops(PopsOffset, popular)
+getPopular(PopsOffset, popular)
 
 // 按下more，取的資料append底部
-more.addEventListener('click', async (event) => {
+more.addEventListener('click', async event => {
   PopsOffset += 1
-  await getPops(PopsOffset, popular)
+  await getPopular(PopsOffset, popular)
 })
 
-async function getPops (offset, node) {
+async function getPopular (offset, node) {
   try {
     const response = await window.axios.get(
       `${window.location.origin}/api/pops/${offset}`
@@ -28,23 +28,25 @@ async function getPops (offset, node) {
 
 function renderPops (pops, node) {
   if (pops.length) {
-    pops.forEach((element) => {
+    pops.forEach(element => {
       const div = document.createElement('div')
       div.classList.add('wrap')
 
       div.innerHTML = `
-        <a href="/users/${element.id}/tweets"><img class="thumbnail" src="${element.avatar}"
+        <a href="/users/${element.id}/tweets"><img class="thumbnail" src="${
+        element.avatar
+      }"
             alt="${element.name} avatar">
           <span>
             <span class="name">${element.name}</span>
             <span class="at-name ellipsis">@${element.account}</span>
           </span>
         </a>
-        
-        <form action="/followships/${element.isFollowing ? element.id : ''}${element.isFollowing ? '?_method=DELETE"' : '"'} method="POST">
-        <input type="hidden" name="id" value="${element.isFollowing ? '' : element.id}">
-          <button type="submit" class="${element.isFollowing ? 'btn-fill' : 'btn-outline'} sm">${element.isFollowing ? '正在跟隨' : '跟隨'}</button>
-        </form>
+        <button type="button" class="${
+          element.isFollowing ? 'btn-fill' : 'btn-outline'
+        } sm btn-followship" data-user-id="${element.id}" >${
+        element.isFollowing ? '正在跟隨' : '跟隨'
+      }</button>
       `
 
       node.append(div)

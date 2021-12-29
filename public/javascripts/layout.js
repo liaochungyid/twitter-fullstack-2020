@@ -128,11 +128,11 @@ body.addEventListener('click', async event => {
 
     if (target.classList.contains('active')) {
       results = await window.axios.delete(
-        `${window.location.origin}/api/notify/${userId}`
+        `${window.location.origin}/api/users/${userId}/notifications`
       )
     } else {
       results = await window.axios.post(
-        `${window.location.origin}/api/notify/${userId}`
+        `${window.location.origin}/api/users/${userId}/notifications`
       )
     }
 
@@ -141,6 +141,8 @@ body.addEventListener('click', async event => {
     }
   } else if (target.classList.contains('like')) {
     toggleLikeButton(target)
+  } else if (target.classList.contains('btn-followship')) {
+    toggleFollowshipButton(target)
   }
 })
 
@@ -316,8 +318,10 @@ function slashNtoBr (str, delStr = '\n', newStr = '<br>') {
 
 async function toggleLikeButton (target) {
   const { tweetId } = target.dataset
+  const likeCounter =
+    target.nextElementSibling || document.querySelector('#likeCounter')
   let response
-  let likeCount = Number(target.nextElementSibling.innerHTML)
+  let likeCount = Number(likeCounter.innerHTML)
 
   if (target.classList.contains('active')) {
     response = await window.axios.delete(
@@ -337,6 +341,36 @@ async function toggleLikeButton (target) {
     return null
   }
 
-  target.nextElementSibling.innerHTML = likeCount
+  likeCounter.innerHTML = likeCount
   target.classList.toggle('active')
+}
+
+async function toggleFollowshipButton (target) {
+  const { userId } = target.dataset
+  let response
+
+  if (target.classList.contains('btn-outline')) {
+    response = await window.axios.post(
+      `${window.location.origin}/api/followships/${userId}`,
+      { userId }
+    )
+  } else if (target.classList.contains('btn-fill')) {
+    response = await window.axios.delete(
+      `${window.location.origin}/api/followships/${userId}`,
+      { userId }
+    )
+  }
+
+  if (response.data.status !== 'success') {
+    return null
+  }
+
+  if (target.innerHTML === '正在跟隨') {
+    target.innerHTML = '跟隨'
+  } else {
+    target.innerHTML = '正在跟隨'
+  }
+
+  target.classList.toggle('btn-outline')
+  target.classList.toggle('btn-fill')
 }

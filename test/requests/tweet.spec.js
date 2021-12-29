@@ -217,12 +217,12 @@ describe('# tweet request', () => {
         await db.Tweet.create({ UserId: 1 })
       })
 
-      it('POST /tweets/1/like', (done) => {
-        // 送出 POST /tweets/1/like
+      it('POST /api/tweets/1/likes', (done) => {
+        // 送出 POST /api/tweets/1/likes
         request(app)
-          .post('/tweets/1/like')
+          .post('/api/tweets/1/likes')
           .set('Accept', 'application/json')
-          .expect(302)
+          .expect(200)
           .end(function (err, res) {
             if (err) return done(err)
             done()
@@ -270,12 +270,12 @@ describe('# tweet request', () => {
         await db.Like.create({ UserId: 1, TweetId: 1 })
       })
 
-      it('POST /tweets/1/unlike', (done) => {
-        // 送出 POST /tweets/1/unlike
+      it('DELETE /api/tweets/1/likes', (done) => {
+        // 送出 DELETE /api/tweets/1/likes
         request(app)
-          .post('/tweets/1/unlike')
+          .delete('/api/tweets/1/likes')
           .set('Accept', 'application/json')
-          .expect(302)
+          .expect(200)
           .end(function (err, res) {
             if (err) return done(err)
             done()

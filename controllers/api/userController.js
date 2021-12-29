@@ -42,8 +42,8 @@ module.exports = {
   getUsers: async (req, res) => {
     try {
       let users = await User.findAll({
-        raw:true,
-        nest:true,
+        raw: true,
+        nest: true,
         attributes: [
           'id',
           'email',
@@ -152,7 +152,7 @@ module.exports = {
     }
   },
 
-  getPops: async (req, res) => {
+  getPopular: async (req, res) => {
     const pops = await userService.getPopular(req, res)
     return res.json(pops)
   }

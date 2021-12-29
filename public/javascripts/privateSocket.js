@@ -8,14 +8,14 @@ const findchatUsercard = document.querySelector('.dialog.find-chat')
 const onlineUsers = document.querySelector('#onlineUsers')
 
 // 開啟新聊天室 選單
-findNewPriChat.addEventListener('click', async function onFindNewPriChatClick(event) {
+findNewPriChat.addEventListener('click', async function onFindNewPriChatClick (event) {
   modalFindChatUser.classList.remove('d-none')
 
   const response = await axios.get(
     `${window.location.origin}/api/chatusers/${loginUserId}`
   )
-  
-  let html = ``
+
+  let html = ''
 
   response.data.forEach(item => {
     if (item.id !== loginUserId) {
@@ -38,7 +38,7 @@ findNewPriChat.addEventListener('click', async function onFindNewPriChatClick(ev
 })
 
 // 點擊modal usercard 設定room到send
-findchatUsercard.addEventListener('click', function onModalcardClick(event) {
+findchatUsercard.addEventListener('click', function onModalcardClick (event) {
   let target = event.target
 
   if (!target.classList.contains('dialog')) {
@@ -56,7 +56,7 @@ findchatUsercard.addEventListener('click', function onModalcardClick(event) {
 })
 
 // 點擊users usercard 設定room到send
-onlineUsers.addEventListener('click', function onUsercardClick(event) {
+onlineUsers.addEventListener('click', function onUsercardClick (event) {
   let target = event.target
 
   if (!target.classList.contains('users')) {
@@ -65,7 +65,7 @@ onlineUsers.addEventListener('click', function onUsercardClick(event) {
       // 如果沒有 receiver-id 的 dataset 往父元素找
       target = target.parentElement
     }
-    
+
     addRoomAndGetMsg(loginUserId, target, send, streamMsgDiv)
   }
 })
@@ -103,10 +103,10 @@ socket.once(`getConnectedPrivateUser${loginUserId}`, (data) => {
 
 // 接收訊息
 socket.on('getPrivateMsg', (data) => {
-  let div = document.createElement('div')
+  const div = document.createElement('div')
 
-  const {msg, op} = data
-  
+  const { msg, op } = data
+
   if (Number(loginUserId) === Number(msg.senderId)) {
     div.classList.add('self-message')
     div.innerHTML = `
@@ -129,7 +129,7 @@ socket.on('getPrivateMsg', (data) => {
 })
 
 // send 按鈕callback
-function onSendClick(event) {
+function onSendClick (event) {
   if (event) {
     event.preventDefault()
 
@@ -148,7 +148,6 @@ function onSendClick(event) {
 
 // user card 按下後 系列操作
 async function addRoomAndGetMsg (loginUserId, target, sendNode, streamNode) {
-
   // 刷新畫面
   streamNode.innerHTML = ''
   const opId = target.dataset.receiverId
@@ -168,7 +167,7 @@ async function addRoomAndGetMsg (loginUserId, target, sendNode, streamNode) {
   socket.once('getPreviousPrivateMsg', (data) => {
     streamNode.innerHTML = ''
     let unread = true
-    let readMsg = []
+    const readMsg = []
 
     data.msg.forEach((item) => {
       if (Number(loginUserId) === Number(item.senderId)) {
@@ -179,7 +178,6 @@ async function addRoomAndGetMsg (loginUserId, target, sendNode, streamNode) {
         </div>
         `
       } else {
-
         if (item.unread) {
           readMsg.push(item.id)
           if (unread) {
@@ -205,7 +203,7 @@ async function addRoomAndGetMsg (loginUserId, target, sendNode, streamNode) {
       }
     })
     scrollDownToBottom()
-    
+
     socket.emit('updateReadMsg', readMsg)
   })
 

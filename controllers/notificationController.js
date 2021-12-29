@@ -1,11 +1,5 @@
 module.exports = {
-  notificationsPage: async (req, res) => {
-    try {
-      return res.render('user', {
-        partial: 'profileNotis'
-      })
-    } catch (err) {
-      console.error(err)
-    }
+  notificationsPage: (req, res) => {
+    return res.render('user', { partial: 'profileNotis' })
   }
 }
