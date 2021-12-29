@@ -6,7 +6,7 @@ const moment = require('moment')
 
 const db = require('../models')
 const { sequelize } = db
-const { User, Tweet, Reply } = db
+const { User, Tweet } = db
 
 module.exports = {
   addTweet: async (req, res, callback) => {
@@ -36,7 +36,7 @@ module.exports = {
       const userId = helpers.getUser(req).id
       const tweetId = req.params.tweetId
 
-      const tweetPromise = Tweet.findByPk(tweetId, {
+      const tweet = await Tweet.findByPk(tweetId, {
         attributes: {
           include: [
             [query.getTweetLikeCount(), 'likeCount'],
@@ -50,24 +50,9 @@ module.exports = {
         nest: true
       })
 
-      const repliesPromise = await Reply.findAll({
-        where: { TweetId: tweetId },
-        include: [
-          { model: User, attributes: { exclude: constants.privateData } }
-        ],
-        order: [['createdAt', 'DESC']],
-        raw: true,
-        nest: true
-      })
-
-      const [tweet, replies] = await Promise.all([tweetPromise, repliesPromise])
       tweet.createdAt = utility.toTweetTime(tweet.createdAt)
 
-      return res.render('user', {
-        tweet,
-        replies,
-        partial: 'tweet'
-      })
+      return tweet
     } catch (err) {
       console.error(err)
     }

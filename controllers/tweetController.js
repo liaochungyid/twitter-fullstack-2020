@@ -1,6 +1,7 @@
 const helpers = require('../_helpers')
 
 const notificationService = require('../services/notificationService')
+const replyService = require('../services/replyService')
 const tweetService = require('../services/tweetService')
 const userService = require('../services/userService')
 
@@ -12,14 +13,6 @@ module.exports = {
       }
       if (data.status === 'error') {
         return res.redirect('back')
-      }
-    })
-  },
-
-  getTweet: (req, res) => {
-    tweetService.getTweet(req, res, data => {
-      if (data.status === 'success') {
-        return res.render('user', data)
       }
     })
   },
@@ -45,6 +38,23 @@ module.exports = {
         tweets,
         isNotified,
         partial: 'profileTweets'
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  },
+
+  tweetPage: async (req, res) => {
+    try {
+      const [tweet, replies] = await Promise.all([
+        tweetService.getTweet(req, res),
+        replyService.getReplies(req, res)
+      ])
+
+      return res.render('user', {
+        tweet,
+        replies,
+        partial: 'tweet'
       })
     } catch (err) {
       console.error(err)

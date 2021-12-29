@@ -24,7 +24,7 @@ router.get('/messages', authenticated, messageController.messagesPage)
 router.get('/notifications', authenticated, notificationController.notificationsPage)
 // tweet 動作
 router.post('/tweets', authenticated, tweetController.addTweet)
-router.get('/tweets/:tweetId', authenticated, tweetController.getTweet)
+router.get('/tweets/:tweetId', authenticated, tweetController.tweetPage)
 router.get('/tweets/:tweetId/replies', authenticated, replyController.getReplies)
 router.post('/tweets/:tweetId/replies', authenticated, replyController.addReply)
 // user 頁面

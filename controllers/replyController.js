@@ -1,7 +1,7 @@
 const helpers = require('../_helpers')
 
 const db = require('../models')
-const { User, Reply } = db
+const { Reply } = db
 
 const notificationService = require('../services/notificationService')
 const replyService = require('../services/replyService')
@@ -9,21 +9,8 @@ const userService = require('../services/userService')
 
 module.exports = {
   getReplies: async (req, res) => {
-    try {
-      const TweetId = Number(req.params.tweetId)
-      const replies = await Reply.findAll({
-        where: { TweetId },
-        attributes: ['id', 'comment', 'createdAt'],
-        include: {
-          model: User,
-          attributes: ['id', 'name', 'avatar', 'account'],
-          require: false
-        }
-      })
-      return res.json({ replies })
-    } catch (err) {
-      console.error(err)
-    }
+    const replies = await replyService.getReplies(req, res)
+    return res.json(replies)
   },
 
   addReply: async (req, res) => {
