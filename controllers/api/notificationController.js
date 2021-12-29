@@ -24,39 +24,64 @@ module.exports = {
 
 
       // 1.未讀的被訂閱事件
-      let newSubs = await Notification.findAll({
-        where: {
-          observedId: userId,
-          createdAt: { [Op.gte]: activeTime }
-        }
+      let newSubs = await User.findAll({
+        attributes: { exclude: ['password'] },
+        include: [
+          { model: User,
+            attributes: { exclude: ['password'] },
+            as: 'Observeds',
+            where: { // 第二層 where 定義 include進的 model 條件 
+              createdAt: { [Op.gte]: activeTime } // 篩選按讚時間在 activeTime 之後的事件
+            } 
+          },
+        ]
       })
       newSubs = newSubs.map(suber => ({
         ...suber.dataValues,
-        type: '新的被訂閱通知'
+        eventTime: suber.dataValues.Observeds[0].Notification.createdAt, // 事件時間
+        type: '新的被訂閱事件'
       }))
 
 
       // 2.未讀的訂閱者新推文
-      let newTweets = await Tweet.findAll({
-        where: { createdAt: { [Op.gte]: activeTime } },
+      let newTweets = await User.findAll({
+        // where: { createdAt: { [Op.gte]: activeTime } },
         include: { 
-          model: User,
+          model: Tweet,
           where: { // 第二層 where 定義 include進的 model 條件 
-            id: { [Op.in]: subscribes }, // 篩選 id 包含在 subscribes 陣列內的
+            [Op.and]: [
+              {
+                UserId: { 
+                  [Op.in]: subscribes 
+                } // 篩選 id 包含在 subscribes 陣列內的
+              },
+              {
+                createdAt: { 
+                  [Op.gte]: activeTime 
+                }
+              }
+            ]
+
+
+
+            // UserId: { [Op.in]: subscribes }, // 篩選 id 包含在 subscribes 陣列內的
+            // createdAt: { [Op.gte]: activeTime }
           } 
         }
       })
       newTweets = newTweets.map(newTweet => ({
         ...newTweet.dataValues,
-        type: '新的訂閱推文'
+        type: '有新的訂閱推文事件'
       }))
 
 
+      return res.json(newTweets)
+
       // 3.未讀的被讚事件
-      let newLikes = await Tweet.findAll({
-        where: {
-          UserId: userId,
-        },
+      let newLikes = await User.findAll({
+        // where: {
+        //   UserId: userId,
+        // },
         include: { 
           model: Like, 
           where: { // 第二層 where 定義 include進的 model 條件 
@@ -70,7 +95,7 @@ module.exports = {
         
       }))
       
-
+      // return res.json(newLikes)
 
       // 三個事件結合整理成一個array
       let news = [...newSubs, ...newTweets, ...newLikes]
