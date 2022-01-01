@@ -14,5 +14,7 @@ module.exports = {
     'activeTime',
     'createdAt',
     'updatedAt'
-  ]
+  ],
+  allTime: '2000-01-01 00:00:00',
+  notiMinSize: 10 // 通知功能最少顯示項目數量
 }

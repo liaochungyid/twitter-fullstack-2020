@@ -16,7 +16,7 @@ router.get('/tweets/:tweetId', tweetController.getTweet) // reply modal api
 router.get('/tweets/pages/:offset', tweetController.getTweets) // 按鈕點擊"更多推文" API
 router.get('/pops/:offset', userController.getPopular) // 按鈕點擊"更多熱門使用者" API
 
-router.get('/users/:userId/notifications', notificationController.getNotifications)
+router.get('/users/:userId/notifications', notificationController.transNotifications)
 router.post('/users/:userId/notifications', notificationController.addNotification)
 router.delete('/users/:userId/notifications', notificationController.removeNotification)
 
