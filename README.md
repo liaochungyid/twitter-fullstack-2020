@@ -1,19 +1,19 @@
 <div id="top"></div>
 
-# Aphitter
+# Simple Twitter
 
-![image](https://github.com/yulaie1012/twitter-fullstack-2020/blob/master/public/images/overview.png)
+![image](https://github.com/yulaie1012/twitter-fullstack-2020/blob/master/public/images/cover.png)
 
 本專案為 Alpha Camp 全端開發結業作品
 
-使用 Node.js、express framework、MySQL 等展示簡易的 Twitter 功能
+使用 Node.js、express framework、MySQL、Socket.IO 等展示簡易的 Twitter 功能
 
 * MySQL 資料庫規劃建立
-* 資料庫 CRUD 操作及進階關聯 
+* 資料庫 CRUD 操作及進階關聯
 * RESTful 路由及 API 設計
 * MVC 架構
 
-[Live Demo](https://frozen-dusk-97283.herokuapp.com/)
+[Live Demo](https://simple-twitter-acj.herokuapp.com/signin)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -31,7 +31,7 @@
 
 ## Showcase
 
-![image](https://github.com/yulaie1012/twitter-fullstack-2020/blob/master/public/images/sample.gif)
+![image](https://github.com/yulaie1012/twitter-fullstack-2020/blob/master/public/images/showcase.gif)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -81,6 +81,25 @@
    * 管理者可以瀏覽站內所有的使用者清單，清單的資訊包括
      * 使用者社群活躍數據，包括推文數量、關注人數、跟隨者人數、推文被 like 的數量 （Sprint #2 討論註記：「推文數量」指使用者的推文累積總量；「推文被 like 的數量」指使用者的推文獲得 like 的累積總量）
      * 清單預設按推文數排序
+
+6. **公開聊天室**
+  * 使用者可以在公開聊天室和其他使用者即時聊天
+  * 歷史訊息能夠被保留下來，因此使用者可以和其他使用者即時聊天非即時聊天
+  * 使用者能夠查看公開聊天室中上線的使用者
+
+7. **私人訊息**
+  * 使用者可以發送私人訊息給其他使用者
+  * 歷史訊息能夠被保留下來
+  * 使用者可以在「私人訊息」畫面中，看到一對一的歷史訊息
+  * 使用者收到私人訊息時，側邊欄上的圖示會出現「小紅點」通知
+
+8. **通知**
+  * 使用者可以訂閱其他使用者（即：小鈴鐺）
+    * 資訊包括：
+      1. 發布新的推文
+      2. 自己的推文被人 like
+      3. 自己的推文被人回覆
+      4. 自己被人追蹤
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
